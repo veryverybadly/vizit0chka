@@ -4,245 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: white;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #b6ff00; /* Лаймовый акцент */
-        }
-
-        .btn {
-            background-color: #2a2a2a;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid #b6ff00;
-            display: inline-block;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .btn:hover {
-            background-color: #3a3a3a;
-            transform: translateY(-2px);
-            color: #b6ff00;
-        }
-
-        .section {
-            padding: 4rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            display: none;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #b6ff00;
-            text-align: center;
-        }
-
-        .section p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        .highlight {
-            color: #b6ff00;
-            font-weight: bold;
-        }
-
-        .music-container {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0; /* Убран большой отступ */
-        }
-
-        .disclaimer {
-            color: #aaa;
-            font-size: 0.8rem;
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        /* Стили для гифки в футере */
-        .footer-gif {
-            display: flex;
-            justify-content: center;
-            margin-top: 3rem;
-        }
-
-        .gif-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .gif-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: filter 0.3s ease;
-        }
-
-        .gif-wrapper .static {
-            filter: brightness(0.5);
-        }
-
-        .gif-wrapper .animated {
-            filter: brightness(1);
-            display: none;
-        }
-
-        .gif-wrapper:hover .static {
-            display: none;
-        }
-
-        .gif-wrapper:hover .animated {
-            display: block;
-        }
-
-        /* Стиль для ссылки на Telegram пост */
-        .footer-link {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .footer-link a {
-            color: #b6ff00;
-            text-decoration: underline;
-            font-size: 0.9rem;
-        }
-
-        .footer-link a:hover {
-            opacity: 0.8;
-        }
-
-        /* Стиль для эмодзи */
-        .footer-emoji {
-            display: flex;
-            justify-content: center;
-            margin-top: 1rem;
-            font-size: 1.5rem;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
 </head>
 <body>
+
     <!-- Главный экран -->
-    <section class="hero" id="home">
+    <section id="home">
         <h1>Hello World</h1>
         <p>Добро пожаловать на мой сайт</p>
-        <button class="btn" onclick="scrollToAbout()">About Me</button>
+
+        <button onclick="scrollToAbout()">About Me</button>
+        <button onclick="toggleProjects()">Проекты</button>
     </section>
 
-    <!-- Секция "Обо мне" -->
-    <section class="section" id="about">
+    <hr>
+
+    <!-- Обо мне -->
+    <section id="about" style="display:none;">
         <h2>Обо мне</h2>
-        <p>Привет, меня зовут <span class="highlight">Бадли</span>.</p>
-        <p>Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопке ниже.</p>
+        <p>Привет, меня зовут <b>Бадли</b>.</p>
+        <p>Я увлекаюсь фронтенд разработкой и дизайном.</p>
 
-        <!-- Только Telegram -->
-        <a href="https://t.me/butt11x" target="_blank" class="btn" style="margin-top: 2rem; display: inline-block;">Написать в Telegram</a>
+        <a href="https://t.me/butt11x" target="_blank">
+            <button>Написать в Telegram</button>
+        </a>
 
-        <!-- Эмбед Яндекс.Музыки -->
-        <div class="music-container">
-            <iframe frameborder="0" allow="clipboard-write" style="border:none;width:614px;height:556px;" width="614" height="556" src="https://music.yandex.ru/iframe/playlist/SashaChaburasha/1004">
-                Слушайте <a href="https://music.yandex.ru/playlists/09020fc0-b321-6eca-85f2-1eea0c47c89d?utm_source=desktop&utm_medium=copy_link">playlist123</a> — <a href="https://music.yandex.ru/users/SashaChaburasha">baad.lyy</a> на Яндекс Музыке
-            </iframe>
-        </div>
+        <br><br>
 
-        <!-- Подпись под эмбедом -->
-        <p class="disclaimer">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
+        <iframe
+            frameborder="0"
+            width="300"
+            height="380"
+            src="https://music.yandex.ru/iframe/playlist/SashaChaburasha/1004">
+        </iframe>
 
-        <!-- Футер с гифкой -->
-        <div class="footer-gif">
-            <div class="gif-wrapper" onmouseenter="playGif(this)" onmouseleave="pauseGif(this)">
-                <!-- Статичная версия (замороженный кадр) -->
-                <img class="static" src="static-frame.png" alt="paused gif" />
-                <!-- Анимированная версия (при наведении) -->
-                <img class="animated" src="https://noikcloud.xyz/7f0rMDx" alt="animated gif" />
+        <p>(яндекс мьюзик может не открываться через впн)</p>
+    </section>
+
+    <hr>
+
+    <!-- Проекты -->
+    <section id="projects" style="display:none;">
+        <h2>Проекты</h2>
+
+        <div>
+            <h3 onclick="toggleProject('p1')">▶ Сайт-портфолио</h3>
+            <div id="p1" style="display:none;">
+                <p>Личный сайт на HTML и JavaScript.</p>
             </div>
         </div>
 
-        <!-- Ссылка на Telegram пост -->
-        <div class="footer-link">
-            <a href="https://t.me/nohelloru/6" target="_blank">https://t.me/nohelloru/6</a>
+        <div>
+            <h3 onclick="toggleProject('p2')">▶ Музыкальный проект</h3>
+            <div id="p2" style="display:none;">
+                <p>Подборки и концепты для музыки.</p>
+            </div>
         </div>
 
-        <!-- Эмодзи -->
-        <div class="footer-emoji">
-            😊
+        <div>
+            <h3 onclick="toggleProject('p3')">▶ Эксперименты</h3>
+            <div id="p3" style="display:none;">
+                <p>UI/UX эксперименты и идеи.</p>
+            </div>
         </div>
     </section>
 
     <script>
-        function showSection(id) {
-            const section = document.getElementById(id);
-            if (section) section.style.display = 'block';
-        }
-
         function scrollToAbout() {
-            showSection('about');
-            document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+            const about = document.getElementById('about');
+            about.style.display = 'block';
+            about.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Функции для управления гифкой
-        function playGif(wrapper) {
-            const staticImg = wrapper.querySelector('.static');
-            const animatedImg = wrapper.querySelector('.animated');
-            staticImg.style.display = 'none';
-            animatedImg.style.display = 'block';
+        function toggleProjects() {
+            const projects = document.getElementById('projects');
+            projects.style.display =
+                projects.style.display === 'none' ? 'block' : 'none';
         }
 
-        function pauseGif(wrapper) {
-            const staticImg = wrapper.querySelector('.static');
-            const animatedImg = wrapper.querySelector('.animated');
-            staticImg.style.display = 'block';
-            animatedImg.style.display = 'none';
+        function toggleProject(id) {
+            const block = document.getElementById(id);
+            block.style.display =
+                block.style.display === 'none' ? 'block' : 'none';
         }
     </script>
+
 </body>
 </html>
