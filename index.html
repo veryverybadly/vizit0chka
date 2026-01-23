@@ -45,7 +45,8 @@
             margin-bottom: 2rem;
             color: #b6ff00;
         }
-        /* BUTTON */
+
+        /* BUTTONS */
         .btn {
             background-color: #2a2a2a;
             color: white;
@@ -58,6 +59,8 @@
             border: 2px solid #b6ff00;
             font-size: 1.1rem;
             display: inline-block;
+            text-align: center;
+            min-width: 250px;
         }
 
         .btn:hover {
@@ -89,6 +92,20 @@
         .highlight {
             color: #b6ff00;
             font-weight: bold;
+        }
+
+        /* CONTACT GROUP */
+        .contact-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 2.5rem 0;
+        }
+
+        .old-site-link {
+            margin-top: 10px;
+            opacity: 0.9;
         }
 
         /* PROJECTS */
@@ -144,6 +161,7 @@
             display: flex;
             justify-content: center;
             margin: 2rem 0;
+            overflow-x: auto;
         }
 
         .disclaimer {
@@ -207,29 +225,32 @@
 </head>
 <body>
 
-<!-- HERO -->
 <section class="hero" id="home">
     <h1>Hello World</h1>
     <p>Добро пожаловать на мой сайт</p>
-    <button class="btn" onclick="scrollToAbout()">About Me</button>
+    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()">About Me</button>
 </section>
 
-<!-- ABOUT -->
 <section class="section" id="about">
     <h2>Обо мне</h2>
 
     <p>Привет, меня зовут <span class="highlight">Бадли</span>.</p>
-    <p>Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопке ниже.</p>
+    <p>Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.</p>
 
-    <a href="https://t.me/butt11x" target="_blank" class="btn" style="margin-top: 2rem;">
-        Написать в Telegram
-    </a>
+    <div class="contact-group">
+        <a href="https://t.me/butt11x" target="_blank" class="btn">
+            Написать в Telegram
+        </a>
+        
+        <a href="mailto:your-email@example.com" class="btn">
+            Написать по почте
+        </a>
+
+        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn old-site-link">
+            Зайти на старый сайт
+        </a>
+    </div>
     
-<a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn" style="margin-top: 2rem;">
-        Зайти на старый сайт
-    </a>
-    
-    <!-- PROJECTS -->
     <div class="projects">
         <button class="projects-toggle" onclick="toggleProjects()">
             Мои проекты ▼
@@ -246,13 +267,11 @@
                 Сайт ворк ин прогрес (Пример работы)
             </a>
             <a href="https://github.com/veryverybadly/SampRpNamesGenerator" target="_blank">
-    Samp RP Names Generator (мой первый проект на пайтоне)
-</a>
-
+                Samp RP Names Generator (мой первый проект на пайтоне)
+            </a>
         </div>
     </div>
 
-    <!-- MUSIC -->
     <div class="music-container">
         <iframe frameborder="0" allow="clipboard-write"
             style="border:none;width:614px;height:556px;"
@@ -262,11 +281,10 @@
 
     <p class="disclaimer">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
 
-    <!-- GIF -->
     <div class="footer-gif">
         <div class="gif-wrapper">
-            <img class="static" src="static-frame.png">
-            <img class="animated" src="https://i.postimg.cc/HxcKQFtS/maxwell-(1).gif">
+            <img class="static" src="static-frame.png" alt="static">
+            <img class="animated" src="https://i.postimg.cc/HxcKQFtS/maxwell-(1).gif" alt="animated">
         </div>
     </div>
 
@@ -296,8 +314,3 @@
 
 </body>
 </html>
-
-
-
-
-
