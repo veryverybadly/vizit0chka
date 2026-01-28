@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ymcd — artwork downloader</title>
+    <title>ymcd — artwork & music downloader</title>
     <style>
         * {
             box-sizing: border-box;
@@ -93,14 +93,29 @@
             margin-bottom: 20px;
         }
 
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
         .dl {
             color: #888;
             text-decoration: none;
             font-size: 14px;
+            transition: 0.2s;
         }
 
         .dl:hover {
             color: #fff;
+        }
+
+        #track-btn {
+            display: none;
+            background: #222;
+            color: #fff;
+            border: 1px solid #333;
         }
 
         .back {
@@ -124,47 +139,66 @@
 
     <div class="input-group">
         <input type="text" id="query" placeholder="например: linkin park numb" spellcheck="false">
-        <button onclick="getCover()">find artwork</button>
+        <button onclick="search()">find content</button>
     </div>
 
     <div id="result">
         <img id="cover" src="" alt="">
-        <a id="link" class="dl" href="#" target="_blank">download 1000x1000</a>
+        <div class="links-container">
+            <a id="artwork-link" class="dl" href="#" target="_blank">download artwork (1000x1000)</a>
+            <button id="track-btn" onclick="downloadMp3()">download mp3</button>
+        </div>
     </div>
 </div>
 
 <script>
-    async function getCover() {
+    let currentTrackUrl = '';
+
+    async function search() {
         const q = document.getElementById('query').value;
         const res = document.getElementById('result');
         const img = document.getElementById('cover');
-        const link = document.getElementById('link');
+        const artLink = document.getElementById('artwork-link');
+        const trackBtn = document.getElementById('track-btn');
 
         if (!q) return;
 
         try {
-            const r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=1`);
-            const d = await r.json();
+            const itunesReq = fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=1`);
+            const jamendoReq = fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
+            
+            const [itunesRes, jamendoRes] = await Promise.all([itunesReq, jamendoReq]);
+            const itunesData = await itunesRes.json();
+            const jamendoData = await jamendoRes.json();
 
-            if (d.results.length > 0) {
-                const track = d.results[0];
-                // получаем обложку в высоком качестве
-                const url = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
-                
-                img.src = url;
-                link.href = url;
+            if (itunesData.results.length > 0) {
+                const track = itunesData.results[0];
+                const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
+                img.src = highResUrl;
+                artLink.href = highResUrl;
                 res.style.display = 'block';
+            }
+
+            if (jamendoData.results.length > 0) {
+                currentTrackUrl = jamendoData.results[0].audio;
+                trackBtn.style.display = 'block';
             } else {
-                alert('nothing found');
+                trackBtn.style.display = 'none';
+                if (itunesData.results.length === 0) alert('nothing found');
             }
         } catch (e) {
-            alert('error');
+            alert('error fetching data');
         }
     }
 
-    // поиск по нажатию enter
+    function downloadMp3() {
+        if (currentTrackUrl) {
+            window.open(currentTrackUrl, '_blank');
+        }
+    }
+
     document.getElementById('query').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') getCover();
+        if (e.key === 'Enter') search();
     });
 </script>
 
