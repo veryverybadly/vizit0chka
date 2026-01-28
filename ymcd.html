@@ -3,192 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hello world</title>
-
+    <title>ymcd — cover search</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'segoe ui', tahoma, geneva, verdana, sans-serif;
-            background-color: #121212;
-            color: white;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .fade {
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .fade-out {
-            opacity: 0;
-        }
-
-        .top-nav {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            z-index: 1000;
+            background: #0a0a0a;
+            color: #efefef;
+            font-family: -apple-system, blinkmacsystemfont, 'segoe ui', roboto, oxygen, ubuntu, cantarell, sans-serif;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 10px;
+        .main-card {
+            background: #141414;
+            padding: 40px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            text-align: center;
         }
 
-        .lang-switcher {
-            display: flex;
-            gap: 10px;
+        h1 {
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            font-size: 24px;
         }
 
-        .nav-btn {
-            background: rgba(42, 42, 42, 0.8);
-            border: 1px solid #b6ff00;
+        p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            background: #1d1d1d;
+            border: 1px solid #2a2a2a;
+            padding: 16px;
+            border-radius: 12px;
             color: white;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: 0.3s;
-            font-weight: bold;
-        }
-
-        .nav-btn:hover {
-            background: #b6ff00;
-            color: black;
-            transform: translateY(-2px);
-        }
-
-        .lang-btn {
-            background: rgba(42, 42, 42, 0.8);
-            border: 1px solid #b6ff00;
-            color: white;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 16px;
+            outline: none;
             transition: 0.2s;
         }
 
-        .lang-btn:hover {
-            background: #b6ff00;
-            color: black;
+        input:focus {
+            border-color: #444;
+            background: #222;
         }
 
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #b6ff00;
-        }
-
-        .btn {
-            background-color: #2a2a2a;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
+        button {
+            width: 100%;
+            background: #ffffff;
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
             cursor: pointer;
-            border: 2px solid #b6ff00;
-            font-size: 1.1rem;
-            display: inline-block;
-            text-align: center;
-            min-width: 250px;
+            transition: 0.2s;
         }
 
-        .btn:hover {
-            background-color: #3a3a3a;
-            color: #b6ff00;
-            transform: translateY(-2px);
+        button:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        #preview {
+            margin-top: 30px;
+            display: none;
+            animation: fadein 0.5s ease;
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #cover-img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .dl-link {
+            display: block;
+            text-decoration: none;
+            color: #888;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .dl-link:hover {
+            color: #fff;
+        }
+
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #444;
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-<div class="top-nav">
-    <div class="nav-links">
-        <a href="ymcd.html" class="nav-btn" id="nav-downloader">yandex music cover downloader</a>
+<a href="index.html" class="home-btn">back</a>
+
+<div class="main-card">
+    <h1>ymcd</h1>
+    <p>enter track name and artist</p>
+    
+    <div class="input-wrapper">
+        <input type="text" id="inp" placeholder="например: linkin park numb" spellcheck="false">
     </div>
     
-    <div class="lang-switcher">
-        <button class="lang-btn" onclick="changelanguage('ru')">ru</button>
-        <button class="lang-btn" onclick="changelanguage('en')">en</button>
+    <button onclick="get()">find artwork</button>
+
+    <div id="preview">
+        <img id="cover-img" src="" alt="">
+        <a id="lnk" class="dl-link" href="#" target="_blank">download 1000x1000 px</a>
     </div>
 </div>
 
-<section class="hero fade" id="home">
-    <h1 id="hero-title">hello world</h1>
-    <p id="hero-subtitle">добро пожаловать на мой сайт</p>
-    <button class="btn" style="min-width: auto;" onclick="scrolltoabout()" id="btn-about">about me</button>
-</section>
-
 <script>
-    const translations = {
-        ru: {
-            herosubtitle: "добро пожаловать на мой сайт",
-            btnabout: "about me",
-            downloader: "yandex music cover downloader"
-        },
-        en: {
-            herosubtitle: "welcome to my website",
-            btnabout: "about me",
-            downloader: "yandex music cover downloader"
+    async function get() {
+        const q = document.getelementbyid('inp').value;
+        const res = document.getelementbyid('preview');
+        const img = document.getelementbyid('cover-img');
+        const lnk = document.getelementbyid('lnk');
+
+        if (!q) return;
+
+        try {
+            const r = await fetch(`https://itunes.apple.com/search?term=${encodecomponent(q)}&entity=song&limit=1`);
+            const d = await r.json();
+
+            if (d.results.length > 0) {
+                const t = d.results[0];
+                const url = t.artworkurl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
+                
+                img.src = url;
+                lnk.href = url;
+                res.style.display = 'block';
+            } else {
+                alert('nothing found');
+            }
+        } catch (e) {
+            alert('error');
         }
-    };
-
-    function changelanguage(lang) {
-        const home = document.getelementbyid('home');
-        const downloaderbtn = document.getelementbyid('nav-downloader');
-        
-        home.classlist.add('fade-out');
-        downloaderbtn.style.opacity = '0';
-
-        settimeout(() => {
-            setlanguage(lang);
-            home.classlist.remove('fade-out');
-            downloaderbtn.style.opacity = '1';
-        }, 300);
     }
 
-    function setlanguage(lang) {
-        document.getelementbyid('hero-subtitle').textcontent = translations[lang].herosubtitle;
-        document.getelementbyid('btn-about').textcontent = translations[lang].btnabout;
-        document.getelementbyid('nav-downloader').textcontent = translations[lang].downloader;
-        document.documentelement.lang = lang;
-    }
-
-    function scrolltoabout() {
-        alert('переход к секции');
-    }
+    document.getelementbyid('inp').addeventlistener('keypress', (e) => {
+        if (e.key === 'enter') get();
+    });
 </script>
 
 </body>
