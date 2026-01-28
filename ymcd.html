@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ymcd — artwork & music</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #fff; font-family: -apple-system, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        body { background: #0a0a0a; color: #fff; font-family: -apple-system, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
         
-        .logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 10;
-        }
+        .logo-container { position: fixed; top: 20px; left: 20px; z-index: 10; }
+        .logo-container img { height: 40px; display: block; }
 
-        .logo-container img {
-            height: 40px;
-            display: block;
-        }
+        .help-btn { position: fixed; top: 20px; right: 20px; width: 30px; height: 30px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #555; cursor: pointer; transition: 0.2s; z-index: 10; font-weight: bold; }
+        .help-btn:hover { border-color: #fff; color: #fff; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: #111; padding: 30px; border-radius: 20px; max-width: 400px; text-align: left; border: 1px solid #222; }
+        .modal-content h2 { margin-bottom: 15px; font-size: 20px; }
+        .modal-content li { margin-bottom: 10px; color: #888; font-size: 14px; margin-left: 20px; }
+        .close-modal { margin-top: 20px; width: 100%; background: #fff; color: #000; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; }
 
         .card { width: 100%; max-width: 400px; padding: 30px; text-align: center; }
         h1 { font-size: 32px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; }
@@ -29,6 +29,7 @@
         input:focus { border-color: #fff; }
         button { width: 100%; background: #fff; color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; }
         button:hover { opacity: 0.9; transform: scale(0.98); }
+        
         #result { margin-top: 30px; display: none; }
         canvas { width: 100%; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); margin-bottom: 20px; display: block; }
         .links-container { display: flex; flex-direction: column; gap: 12px; align-items: center; }
@@ -42,6 +43,21 @@
 
 <div class="logo-container">
     <img src="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png" alt="logo">
+</div>
+
+<div class="help-btn" onclick="toggleModal(true)">?</div>
+
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <h2>как пользоваться</h2>
+        <ul>
+            <li>введите имя артиста и название трека в поле поиска.</li>
+            <li>нажмите «find content» или клавишу enter.</li>
+            <li>скачайте чистую обложку или карточку для соцсетей.</li>
+            <li>если трек доступен в базе, появится кнопка загрузки mp3.</li>
+        </ul>
+        <button class="close-modal" onclick="toggleModal(false)">понятно</button>
+    </div>
 </div>
 
 <div class="card">
@@ -69,6 +85,10 @@
 
 <script>
     let currentTrackUrl = '';
+
+    function toggleModal(show) {
+        document.getElementById('helpModal').style.display = show ? 'flex' : 'none';
+    }
 
     async function search() {
         const q = document.getElementById('query').value;
