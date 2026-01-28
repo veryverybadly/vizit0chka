@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hello world</title>
+    <title>Hello World</title>
 
     <style>
         * {
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'segoe ui', tahoma, geneva, verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
             color: white;
             line-height: 1.6;
@@ -24,62 +24,7 @@
             scroll-behavior: smooth;
         }
 
-        .top-nav {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 10px;
-        }
-
-        .lang-switcher {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            background: rgba(42, 42, 42, 0.8);
-            border: 1px solid #b6ff00;
-            color: white;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: 0.3s;
-            font-weight: bold;
-        }
-
-        .nav-btn:hover {
-            background: #b6ff00;
-            color: black;
-            transform: translateY(-2px);
-        }
-
-        .lang-btn {
-            background: rgba(42, 42, 42, 0.8);
-            border: 1px solid #b6ff00;
-            color: white;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: 0.2s;
-        }
-
-        .lang-btn:hover {
-            background: #b6ff00;
-            color: black;
-        }
-
+        /* HERO */
         .hero {
             height: 100vh;
             display: flex;
@@ -101,6 +46,7 @@
             color: #b6ff00;
         }
 
+        /* BUTTONS */
         .btn {
             background-color: #2a2a2a;
             color: white;
@@ -123,6 +69,7 @@
             transform: translateY(-2px);
         }
 
+        /* SECTION */
         .section {
             padding: 4rem 2rem;
             max-width: 800px;
@@ -147,6 +94,7 @@
             font-weight: bold;
         }
 
+        /* CONTACT GROUP */
         .contact-group {
             display: flex;
             flex-direction: column;
@@ -155,6 +103,12 @@
             margin: 2.5rem 0;
         }
 
+        .old-site-link {
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        /* PROJECTS */
         .projects {
             margin-top: 3rem;
             text-align: center;
@@ -171,6 +125,11 @@
             transition: 0.3s;
         }
 
+        .projects-toggle:hover {
+            background-color: #3a3a3a;
+            color: #b6ff00;
+        }
+
         .projects-list {
             max-height: 0;
             overflow: hidden;
@@ -179,7 +138,8 @@
             text-align: left;
         }
 
-        .projects-list a, .projects-list div {
+        .projects-list a,
+        .projects-list div {
             display: block;
             padding: 12px;
             border-bottom: 1px solid #2a2a2a;
@@ -187,6 +147,16 @@
             text-decoration: none;
         }
 
+        .projects-list div {
+            color: #aaa;
+            cursor: default;
+        }
+
+        .projects-list a:hover {
+            background-color: #1c1c1c;
+        }
+
+        /* MUSIC */
         .music-container {
             display: flex;
             justify-content: center;
@@ -200,6 +170,7 @@
             text-align: center;
         }
 
+        /* GIF FOOTER */
         .footer-gif {
             display: flex;
             justify-content: center;
@@ -240,6 +211,7 @@
 
         .footer-link a {
             color: #b6ff00;
+            font-size: 0.9rem;
             text-decoration: underline;
         }
 
@@ -253,130 +225,93 @@
 </head>
 <body>
 
-<div class="top-nav">
-    <div class="nav-links">
-        <a href="ymcd.html" class="nav-btn" id="nav-downloader">yandex music cover downloader</a>
-    </div>
-    <div class="lang-switcher">
-        <button class="lang-btn" onclick="changelanguage('ru')">ru</button>
-        <button class="lang-btn" onclick="changelanguage('en')">en</button>
-    </div>
-</div>
-
 <section class="hero" id="home">
-    <h1>hello world</h1>
-    <p id="hero-subtitle">добро пожаловать на мой сайт</p>
-    <button class="btn" style="min-width: auto;" onclick="scrolltoabout()" id="btn-about">about me</button>
+    <h1>Hello World</h1>
+    <p>Добро пожаловать на мой сайт</p>
+    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()">About Me</button>
 </section>
 
 <section class="section" id="about">
-    <h2 id="about-title">обо мне</h2>
-    <p id="about-intro">привет, меня зовут <span class="highlight">бадли</span>.</p>
-    <p id="about-text">я увлекаюсь фронтенд разработкой и дизайном. связаться со мной можно по кнопкам ниже.</p>
+    <h2>Обо мне</h2>
+
+    <p>Привет, меня зовут <span class="highlight">Бадли</span>.</p>
+    <p>Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.</p>
 
     <div class="contact-group">
-        <a href="https://t.me/butt11x" target="_blank" class="btn" id="link-tg">написать в telegram</a>
-        <a href="mailto:badlya_bad@xyecoc.com" class="btn" id="link-mail">написать по почте (мб отвечу)</a>
-        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn" id="link-old">зайти на старый сайт</a>
+        <a href="https://t.me/butt11x" target="_blank" class="btn">
+            Написать в Telegram
+        </a>
+        
+        <a href="mailto:badlya_bad@xyecoc.com" class="btn">
+            Написать по почте (мб отвечу)
+        </a>
+
+        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn old-site-link">
+            Зайти на старый сайт
+        </a>
     </div>
     
     <div class="projects">
-        <button class="projects-toggle" onclick="toggleprojects()" id="btn-projects">мои проекты ▼</button>
-        <div class="projects-list" id="projectslist">
-            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" id="p1">сайт-переходник на мои соцсети (разработка приостановлена)</a>
-            <div id="p2">сайт майнкрафт сервера</div>
-            <a href="https://luckyworldweb.neocities.org/" target="_blank" id="p3">сайт ворк ин прогрес (пример работы)</a>
-            <a href="https://github.com/veryverybadly/samprpnamesgenerator" target="_blank" id="p4">samp rp names generator (мой первый проект на пайтоне)</a>
+        <button class="projects-toggle" onclick="toggleProjects()">
+            Мои проекты ▼
+        </button>
+
+        <div class="projects-list" id="projectsList">
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">
+                Сайт-переходник на мои соцсети (разработка приостановлена)
+            </a>
+
+            <div>Сайт майнкрафт сервера</div>
+
+            <a href="https://luckyworldweb.neocities.org/" target="_blank">
+                Сайт ворк ин прогрес (Пример работы)
+            </a>
+            <a href="https://github.com/veryverybadly/SampRpNamesGenerator" target="_blank">
+                Samp RP Names Generator (мой первый проект на пайтоне)
+            </a>
         </div>
     </div>
 
     <div class="music-container">
-        <iframe frameborder="0" allow="clipboard-write" style="border:none;width:614px;height:556px;" src="https://music.yandex.ru/iframe/playlist/sashachaburasha/1004"></iframe>
+        <iframe frameborder="0" allow="clipboard-write"
+            style="border:none;width:614px;height:556px;"
+            src="https://music.yandex.ru/iframe/playlist/SashaChaburasha/1004">
+        </iframe>
     </div>
 
-    <p class="disclaimer" id="music-note">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
+    <p class="disclaimer">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
 
     <div class="footer-gif">
         <div class="gif-wrapper">
             <img class="static" src="static-frame.png" alt="static">
-            <img class="animated" src="https://i.postimg.cc/hxckqfts/maxwell-(1).gif" alt="animated">
+            <img class="animated" src="https://i.postimg.cc/HxcKQFtS/maxwell-(1).gif" alt="animated">
         </div>
     </div>
 
     <div class="footer-link">
         <a href="https://t.me/nohelloru/6" target="_blank">t.me/nohelloru</a>
     </div>
+
     <div class="footer-emoji">😊</div>
 </section>
 
 <script>
-    const translations = {
-        ru: {
-            herosubtitle: "добро пожаловать на мой сайт",
-            btnabout: "about me",
-            downloader: "yandex music cover downloader",
-            abouttitle: "обо мне",
-            aboutintro: 'привет, меня зовут <span class="highlight">бадли</span>.',
-            abouttext: "я увлекаюсь фронтенд разработкой и дизайном. связаться со мной можно по кнопкам ниже.",
-            linktg: "написать в telegram",
-            linkmail: "написать по почте (мб отвечу)",
-            linkold: "зайти на старый сайт",
-            btnprojects: "мои проекты ▼",
-            p1: "сайт-переходник на мои соцсети (разработка приостановлена)",
-            p2: "сайт майнкрафт сервера",
-            p3: "сайт ворк ин прогрес (пример работы)",
-            p4: "samp rp names generator (мой первый проект на пайтоне)",
-            musicnote: "(яндекс мьюзик может не открываться через впн, отключите его 👌)"
-        },
-        en: {
-            herosubtitle: "welcome to my website",
-            btnabout: "about me",
-            downloader: "yandex music cover downloader",
-            abouttitle: "about me",
-            aboutintro: 'hi, my name is <span class="highlight">badly</span>.',
-            abouttext: "i'm into frontend development and design. you can contact me via the links below.",
-            linktg: "write in telegram",
-            linkmail: "write by mail (maybe i'll answer)",
-            linkold: "go to old site",
-            btnprojects: "my projects ▼",
-            p1: "social media landing page (development suspended)",
-            p2: "minecraft server site",
-            p3: "work in progress site (work example)",
-            p4: "samp rp names generator (my first python project)",
-            musicnote: "(yandex music may not work with vpn, please disable it 👌)"
-        }
-    };
-
-    function scrolltoabout() {
-        const about = document.getelementbyid('about');
+    function scrollToAbout() {
+        const about = document.getElementById('about');
         about.style.display = 'block';
-        about.scrollintoview({ behavior: 'smooth' });
+        about.scrollIntoView({ behavior: 'smooth' });
     }
 
-    function toggleprojects() {
-        const list = document.getelementbyid('projectslist');
-        list.style.maxheight = list.style.maxheight ? null : list.scrollheight + 'px';
-    }
-
-    function changelanguage(lang) {
-        document.getelementbyid('hero-subtitle').textcontent = translations[lang].herosubtitle;
-        document.getelementbyid('btn-about').textcontent = translations[lang].btnabout;
-        document.getelementbyid('nav-downloader').textcontent = translations[lang].downloader;
-        document.getelementbyid('about-title').textcontent = translations[lang].abouttitle;
-        document.getelementbyid('about-intro').innerhtml = translations[lang].aboutintro;
-        document.getelementbyid('about-text').textcontent = translations[lang].abouttext;
-        document.getelementbyid('link-tg').textcontent = translations[lang].linktg;
-        document.getelementbyid('link-mail').textcontent = translations[lang].linkmail;
-        document.getelementbyid('link-old').textcontent = translations[lang].linkold;
-        document.getelementbyid('btn-projects').textcontent = translations[lang].btnprojects;
-        document.getelementbyid('p1').textcontent = translations[lang].p1;
-        document.getelementbyid('p2').textcontent = translations[lang].p2;
-        document.getelementbyid('p3').textcontent = translations[lang].p3;
-        document.getelementbyid('p4').textcontent = translations[lang].p4;
-        document.getelementbyid('music-note').textcontent = translations[lang].musicnote;
-        document.documentelement.lang = lang;
+    function toggleProjects() {
+        const list = document.getElementById('projectsList');
+        if (list.style.maxHeight) {
+            list.style.maxHeight = null;
+        } else {
+            list.style.maxHeight = list.scrollHeight + 'px';
+        }
     }
 </script>
 
 </body>
 </html>
+
