@@ -15,52 +15,62 @@
         .help-btn { position: fixed; top: 20px; right: 20px; width: 30px; height: 30px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #555; cursor: pointer; transition: 0.2s; z-index: 10; font-weight: bold; }
         .help-btn:hover { border-color: #fff; color: #fff; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 20px; max-width: 440px; text-align: left; border: 1px solid #222; max-height: 90vh; overflow-y: auto; }
-        .modal-content h2 { margin-bottom: 15px; font-size: 20px; }
-        .modal-content li { margin-bottom: 10px; color: #888; font-size: 14px; margin-left: 20px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: #111; padding: 30px; border-radius: 20px; max-width: 440px; width: 100%; text-align: left; border: 1px solid #222; max-height: 90vh; overflow-y: auto; }
         
-        .instruction-gif { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid #222; }
-        
-        .close-modal { margin-top: 20px; width: 100%; background: #fff; color: #000; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-
         .card { width: 100%; max-width: 400px; padding: 30px; text-align: center; }
         h1 { font-size: 32px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; }
         p { color: #555; font-size: 14px; margin-bottom: 30px; }
+        
         .input-group { display: flex; flex-direction: column; gap: 12px; }
         input { width: 100%; background: #111; border: 1px solid #222; padding: 16px; border-radius: 12px; color: #fff; font-size: 16px; outline: none; transition: 0.2s; }
         input:focus { border-color: #fff; }
-        button { width: 100%; background: #fff; color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; }
-        button:hover { opacity: 0.9; transform: scale(0.98); }
+        
+        .primary-btn { width: 100%; background: #fff; color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        .secondary-btn { width: 100%; background: #111; color: #fff; border: 1px solid #222; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .primary-btn:hover, .secondary-btn:hover { opacity: 0.8; }
         
         #result { margin-top: 30px; display: none; }
         canvas { width: 100%; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); margin-bottom: 20px; display: block; }
+        
         .links-container { display: flex; flex-direction: column; gap: 12px; align-items: center; }
         .dl { color: #888; text-decoration: none; font-size: 14px; transition: 0.2s; cursor: pointer; }
         .dl:hover { color: #fff; }
+        
         #track-btn { background: #222; color: #fff; border: 1px solid #333; margin-top: 10px; display: none; }
         .notice { margin-top: 40px; font-size: 11px; color: #333; line-height: 1.4; }
+        
+        .instruction-gif { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid #222; }
     </style>
 </head>
 <body>
 
-<div class="logo-container">
-    <img src="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png" alt="logo">
-</div>
-
-<div class="help-btn" onclick="toggleModal(true)">?</div>
+<div class="logo-container"><img src="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png" alt="logo"></div>
+<div class="help-btn" onclick="toggleModal('helpModal', true)">?</div>
 
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <h2>как пользоваться</h2>
-        <ul>
-            <li>введите имя артиста и название трека.</li>
-            <li>нажмите «find content» или клавишу enter.</li>
+        <ul style="margin-left:20px; color:#888; font-size:14px;">
+            <li style="margin-bottom:10px">введите имя артиста и название трека.</li>
+            <li style="margin-bottom:10px">нажмите «find content» или клавишу enter.</li>
             <li>скачайте обложку или сгенерированную карточку.</li>
-            <li>загрузите mp3 файл, если он доступен.</li>
         </ul>
-        <img src="https://i.postimg.cc/4y9W0wyk/qa-1.gif" alt="инструкция" class="instruction-gif">
-        <button class="close-modal" onclick="toggleModal(false)">понятно</button>
+        <img src="https://i.postimg.cc/4y9W0wyk/qa-1.gif" class="instruction-gif">
+        <button class="primary-btn" style="margin-top:20px" onclick="toggleModal('helpModal', false)">понятно</button>
+    </div>
+</div>
+
+<div id="builderModal" class="modal">
+    <div class="modal-content">
+        <h2 style="margin-bottom:20px">конструктор карточек</h2>
+        <div class="input-group">
+            <input type="file" id="customFile" accept="image/*" style="padding:10px">
+            <input type="text" id="customTitle" placeholder="заголовок (название)">
+            <input type="text" id="customArtist" placeholder="подзаголовок (автор)">
+            <button class="primary-btn" onclick="buildCustomCard()">сгенерировать</button>
+            <button class="secondary-btn" style="border:none" onclick="toggleModal('builderModal', false)">отмена</button>
+        </div>
     </div>
 </div>
 
@@ -70,7 +80,8 @@
 
     <div class="input-group">
         <input type="text" id="query" placeholder="например: linkin park numb" spellcheck="false">
-        <button id="search-btn" onclick="search()">find content</button>
+        <button id="search-btn" class="primary-btn" onclick="search()">find content</button>
+        <button class="secondary-btn" onclick="toggleModal('builderModal', true)">конструктор карточек</button>
     </div>
 
     <div id="result">
@@ -78,20 +89,18 @@
         <div class="links-container">
             <a id="artwork-only" class="dl" href="#" target="_blank">download artwork only</a>
             <span class="dl" onclick="downloadCard()">download track card (png)</span>
-            <button id="track-btn" onclick="downloadMp3()">download mp3</button>
+            <button id="track-btn" class="primary-btn" onclick="downloadMp3()">download mp3</button>
         </div>
     </div>
 
-    <div class="notice">
-        некоторые треки могут быть недоступны для скачивания, так как сервис находится в процессе доработки.
-    </div>
+    <div class="notice">некоторые треки могут быть недоступны для скачивания, так как сервис находится в процессе доработки.</div>
 </div>
 
 <script>
     let currentTrackUrl = '';
 
-    function toggleModal(show) {
-        document.getElementById('helpModal').style.display = show ? 'flex' : 'none';
+    function toggleModal(id, show) {
+        document.getElementById(id).style.display = show ? 'flex' : 'none';
     }
 
     async function search() {
@@ -102,7 +111,6 @@
         const btn = document.getElementById('search-btn');
 
         if (!q) return;
-
         btn.innerText = 'searching...';
         trackBtn.style.display = 'none';
 
@@ -113,26 +121,38 @@
             if (itunesData.results.length > 0) {
                 const track = itunesData.results[0];
                 const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
-                
                 artLink.href = highResUrl;
+                artLink.style.display = 'block';
                 await drawCard(highResUrl, track.trackName, track.artistName);
                 res.style.display = 'block';
 
                 const jamendoRes = await fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
                 const jamendoData = await jamendoRes.json();
-
-                if (jamendoData.results && jamendoData.results.length > 0) {
+                if (jamendoData.results?.length > 0) {
                     currentTrackUrl = jamendoData.results[0].audio;
                     trackBtn.style.display = 'block';
                 }
-            } else {
-                alert('nothing found');
-            }
-        } catch (e) {
-            alert('error');
-        } finally {
-            btn.innerText = 'find content';
-        }
+            } else { alert('nothing found'); }
+        } catch (e) { alert('error'); } finally { btn.innerText = 'find content'; }
+    }
+
+    function buildCustomCard() {
+        const file = document.getElementById('customFile').files[0];
+        const title = document.getElementById('customTitle').value || 'untitled';
+        const artist = document.getElementById('customArtist').value || 'unknown';
+        
+        if (!file) return alert('select image');
+        
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            document.getElementById('artwork-only').style.display = 'none';
+            document.getElementById('track-btn').style.display = 'none';
+            await drawCard(e.target.result, title, artist);
+            document.getElementById('result').style.display = 'block';
+            toggleModal('builderModal', false);
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        };
+        reader.readAsDataURL(file);
     }
 
     async function drawCard(imgUrl, title, artist) {
@@ -146,19 +166,12 @@
                 ctx.fillStyle = '#121212';
                 ctx.fillRect(0, 0, 1000, 1200);
                 ctx.drawImage(img, 0, 0, 1000, 1000);
-                
-                const gradient = ctx.createLinearGradient(0, 700, 0, 1000);
-                gradient.addColorStop(0, 'rgba(18,18,18,0)');
-                gradient.addColorStop(1, '#121212');
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 700, 1000, 300);
-
-                ctx.fillStyle = '#fff';
-                ctx.font = '900 60px system-ui';
+                const grad = ctx.createLinearGradient(0, 700, 0, 1000);
+                grad.addColorStop(0, 'rgba(18,18,18,0)'); grad.addColorStop(1, '#121212');
+                ctx.fillStyle = grad; ctx.fillRect(0, 700, 1000, 300);
+                ctx.fillStyle = '#fff'; ctx.font = '900 60px system-ui';
                 ctx.fillText(title.toLowerCase(), 50, 1080);
-                
-                ctx.fillStyle = '#555';
-                ctx.font = '500 40px system-ui';
+                ctx.fillStyle = '#555'; ctx.font = '500 40px system-ui';
                 ctx.fillText(artist.toLowerCase(), 50, 1140);
                 resolve();
             };
@@ -167,20 +180,15 @@
     }
 
     function downloadCard() {
-        const canvas = document.getElementById('cardCanvas');
         const link = document.createElement('a');
         link.download = 'track-card.png';
-        link.href = canvas.toDataURL('image/png');
+        link.href = document.getElementById('cardCanvas').toDataURL('image/png');
         link.click();
     }
 
-    function downloadMp3() {
-        if (currentTrackUrl) window.open(currentTrackUrl, '_blank');
-    }
+    function downloadMp3() { if (currentTrackUrl) window.open(currentTrackUrl, '_blank'); }
 
-    document.getElementById('query').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') search();
-    });
+    document.getElementById('query').addEventListener('keypress', (e) => { if (e.key === 'Enter') search(); });
 </script>
 
 </body>
