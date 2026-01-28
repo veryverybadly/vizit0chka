@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ymcd — yandex artwork</title>
+    <title>ymcd — artwork downloader</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,7 +12,7 @@
         }
 
         body {
-            background: #000;
+            background: #0a0a0a;
             color: #fff;
             font-family: -apple-system, system-ui, sans-serif;
             display: flex;
@@ -21,21 +21,21 @@
             min-height: 100vh;
         }
 
-        .container {
+        .card {
             width: 100%;
-            max-width: 450px;
-            padding: 20px;
+            max-width: 400px;
+            padding: 30px;
             text-align: center;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 900;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             letter-spacing: -1px;
         }
 
-        .desc {
+        p {
             color: #555;
             font-size: 14px;
             margin-bottom: 30px;
@@ -45,139 +45,126 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            width: 100%;
         }
 
         input {
             width: 100%;
             background: #111;
             border: 1px solid #222;
-            padding: 18px;
-            border-radius: 14px;
+            padding: 16px;
+            border-radius: 12px;
             color: #fff;
-            font-size: 15px;
+            font-size: 16px;
             outline: none;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
         input:focus {
-            border-color: #ffdb4d;
+            border-color: #fff;
         }
 
         button {
             width: 100%;
-            background: #ffdb4d;
+            background: #fff;
             color: #000;
             border: none;
-            padding: 18px;
-            border-radius: 14px;
+            padding: 16px;
+            border-radius: 12px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.2s;
         }
 
         button:hover {
             opacity: 0.9;
+            transform: scale(0.98);
         }
 
         #result {
-            margin-top: 40px;
+            margin-top: 30px;
             display: none;
         }
 
         #cover {
             width: 100%;
             border-radius: 12px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
         }
 
-        .actions {
-            margin-top: 20px;
-        }
-
-        .link {
-            color: #ffdb4d;
+        .dl {
+            color: #888;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
         }
 
-        .loader {
-            display: none;
-            margin-top: 20px;
-            color: #ffdb4d;
+        .dl:hover {
+            color: #fff;
+        }
+
+        .back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #333;
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<a href="index.html" class="back">← home</a>
+
+<div class="card">
     <h1>ymcd</h1>
-    <p class="desc">вставь ссылку на трек или альбом яндекс музыки</p>
+    <p>введите название трека и автора</p>
 
     <div class="input-group">
-        <input type="text" id="url" placeholder="https://music.yandex.ru/album/..." spellcheck="false">
-        <button onclick="fetchCover()">get artwork</button>
+        <input type="text" id="query" placeholder="например: linkin park numb" spellcheck="false">
+        <button onclick="getCover()">find artwork</button>
     </div>
-
-    <div id="loader" class="loader">searching...</div>
 
     <div id="result">
         <img id="cover" src="" alt="">
-        <div class="actions">
-            <a id="hd" class="link" href="#" target="_blank">скачать оригинал</a>
-        </div>
+        <a id="link" class="dl" href="#" target="_blank">download 1000x1000</a>
     </div>
 </div>
 
 <script>
-    async function fetchCover() {
-        const input = document.getElementById('url').value;
-        const result = document.getElementById('result');
+    async function getCover() {
+        const q = document.getElementById('query').value;
+        const res = document.getElementById('result');
         const img = document.getElementById('cover');
-        const hd = document.getElementById('hd');
-        const loader = document.getElementById('loader');
+        const link = document.getElementById('link');
 
-        if (!input || !input.includes('music.yandex.ru')) {
-            alert('введите ссылку яндекс музыки');
-            return;
-        }
-
-        result.style.display = 'none';
-        loader.style.display = 'block';
+        if (!q) return;
 
         try {
-            const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(input)}`);
-            const data = await res.json();
-            const html = data.contents;
+            const r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=1`);
+            const d = await r.json();
 
-            const match = html.match(/og:image" content="([^"]+)"/) || 
-                          html.match(/meta property="og:image" content="([^"]+)"/);
-
-            if (match && match[1]) {
-                let src = match[1];
-                src = src.replace('%%', '1000x1000').replace(/(\d+x\d+)/, '1000x1000');
+            if (d.results.length > 0) {
+                const track = d.results[0];
+                // получаем обложку в высоком качестве
+                const url = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
                 
-                if (!src.startsWith('http')) src = 'https:' + src;
-
-                img.onload = () => {
-                    loader.style.display = 'none';
-                    result.style.display = 'block';
-                };
-                img.src = src;
-                hd.href = src;
+                img.src = url;
+                link.href = url;
+                res.style.display = 'block';
             } else {
-                throw new Error();
+                alert('nothing found');
             }
         } catch (e) {
-            loader.style.display = 'none';
-            alert('не удалось найти обложку');
+            alert('error');
         }
     }
 
-    document.getElementById('url').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') fetchCover();
+    // поиск по нажатию enter
+    document.getElementById('query').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') getCover();
     });
 </script>
 
