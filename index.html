@@ -130,6 +130,20 @@
             color: #b6ff00;
             transform: translateY(-2px);
         }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            display: none; /* скрыто до нажатия кнопки */
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #b6ff00;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -151,17 +165,24 @@
     <button class="btn" style="min-width: auto;" onclick="scrollToAbout()" id="btn-about">about me</button>
 </section>
 
+<section class="section" id="about">
+    <h2 id="about-title">обо мне</h2>
+    <p>здесь будет контент секции, как в оригинале.</p>
+</section>
+
 <script>
     const translations = {
         ru: {
             herosubtitle: "добро пожаловать на мой сайт",
             btnabout: "about me",
-            downloader: "yandex music cover downloader"
+            downloader: "yandex music cover downloader",
+            abouttitle: "обо мне"
         },
         en: {
             herosubtitle: "welcome to my website",
             btnabout: "about me",
-            downloader: "yandex music cover downloader"
+            downloader: "yandex music cover downloader",
+            abouttitle: "about me"
         }
     };
 
@@ -183,11 +204,14 @@
         document.getElementById('hero-subtitle').textContent = translations[lang].herosubtitle;
         document.getElementById('btn-about').textContent = translations[lang].btnabout;
         document.getElementById('nav-downloader').textContent = translations[lang].downloader;
+        document.getElementById('about-title').textContent = translations[lang].abouttitle;
         document.documentElement.lang = lang;
     }
 
     function scrollToAbout() {
-        alert('переход к секции');
+        const about = document.getElementById('about');
+        about.style.display = 'block';
+        about.scrollIntoView({ behavior: 'smooth' });
     }
 </script>
 
