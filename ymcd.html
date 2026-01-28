@@ -7,11 +7,11 @@
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             background: #000;
             color: #fff;
             font-family: -apple-system, system-ui, sans-serif;
@@ -126,7 +126,7 @@
     <div id="result">
         <img id="cover" src="" alt="">
         <div class="actions">
-            <a id="hd" class="link" href="#" target="_blank">скачать 1000x1000</a>
+            <a id="hd" class="link" href="#" target="_blank">скачать оригинал</a>
         </div>
     </div>
 </div>
@@ -140,7 +140,7 @@
         const loader = document.getElementById('loader');
 
         if (!input || !input.includes('music.yandex.ru')) {
-            alert('введите корректную ссылку');
+            alert('введите ссылку яндекс музыки');
             return;
         }
 
@@ -148,9 +148,8 @@
         loader.style.display = 'block';
 
         try {
-            const proxy = 'https://api.allorigins.win/get?url=';
-            const response = await fetch(proxy + encodeURIComponent(input));
-            const data = await response.json();
+            const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(input)}`);
+            const data = await res.json();
             const html = data.contents;
 
             const match = html.match(/og:image" content="([^"]+)"/) || 
@@ -158,13 +157,8 @@
 
             if (match && match[1]) {
                 let src = match[1];
+                src = src.replace('%%', '1000x1000').replace(/(\d+x\d+)/, '1000x1000');
                 
-                if (src.includes('%%')) {
-                    src = src.replace('%%', '1000x1000');
-                } else {
-                    src = src.replace(/(\d+x\d+)/, '1000x1000');
-                }
-
                 if (!src.startsWith('http')) src = 'https:' + src;
 
                 img.onload = () => {
@@ -178,7 +172,7 @@
             }
         } catch (e) {
             loader.style.display = 'none';
-            alert('ошибка поиска');
+            alert('не удалось найти обложку');
         }
     }
 
