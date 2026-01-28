@@ -24,7 +24,15 @@
             scroll-behavior: smooth;
         }
 
-        /* LANG SWITCHER */
+        /* анимация для смены языка */
+        #home, #about {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
+
         .lang-switcher {
             position: fixed;
             top: 20px;
@@ -42,6 +50,7 @@
             cursor: pointer;
             border-radius: 4px;
             font-size: 0.9rem;
+            transition: 0.2s;
         }
 
         .lang-btn:hover {
@@ -49,7 +58,6 @@
             color: black;
         }
 
-        /* HERO */
         .hero {
             height: 100vh;
             display: flex;
@@ -71,7 +79,6 @@
             color: #b6ff00;
         }
 
-        /* BUTTONS */
         .btn {
             background-color: #2a2a2a;
             color: white;
@@ -94,7 +101,6 @@
             transform: translateY(-2px);
         }
 
-        /* SECTION */
         .section {
             padding: 4rem 2rem;
             max-width: 800px;
@@ -119,7 +125,6 @@
             font-weight: bold;
         }
 
-        /* CONTACT GROUP */
         .contact-group {
             display: flex;
             flex-direction: column;
@@ -133,7 +138,6 @@
             opacity: 0.9;
         }
 
-        /* PROJECTS */
         .projects {
             margin-top: 3rem;
             text-align: center;
@@ -181,7 +185,6 @@
             background-color: #1c1c1c;
         }
 
-        /* MUSIC */
         .music-container {
             display: flex;
             justify-content: center;
@@ -195,7 +198,6 @@
             text-align: center;
         }
 
-        /* GIF FOOTER */
         .footer-gif {
             display: flex;
             justify-content: center;
@@ -251,8 +253,8 @@
 <body>
 
 <div class="lang-switcher">
-    <button class="lang-btn" onclick="setLanguage('ru')">RU</button>
-    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+    <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
+    <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
 </div>
 
 <section class="hero" id="home">
@@ -360,6 +362,20 @@
             musicNote: "(yandex music may not work with VPN, please disable it 👌)"
         }
     };
+
+    function changeLanguage(lang) {
+        const home = document.getElementById('home');
+        const about = document.getElementById('about');
+        
+        home.classList.add('fade-out');
+        about.classList.add('fade-out');
+
+        setTimeout(() => {
+            setLanguage(lang);
+            home.classList.remove('fade-out');
+            about.classList.remove('fade-out');
+        }, 300);
+    }
 
     function setLanguage(lang) {
         document.getElementById('hero-subtitle').textContent = translations[lang].heroSubtitle;
