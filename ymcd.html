@@ -7,142 +7,23 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #0a0a0a; color: #fff; font-family: -apple-system, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .logo-container img {
+            height: 40px;
+            display: block;
+        }
+
         .card { width: 100%; max-width: 400px; padding: 30px; text-align: center; }
         h1 { font-size: 32px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; }
         p { color: #555; font-size: 14px; margin-bottom: 30px; }
         .input-group { display: flex; flex-direction: column; gap: 12px; }
         input { width: 100%; background: #111; border: 1px solid #222; padding: 16px; border-radius: 12px; color: #fff; font-size: 16px; outline: none; transition: 0.2s; }
         input:focus { border-color: #fff; }
-        button { width: 100%; background: #fff; color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; }
-        button:hover { opacity: 0.9; transform: scale(0.98); }
-        #result { margin-top: 30px; display: none; }
-        canvas { width: 100%; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); margin-bottom: 20px; display: block; }
-        .links-container { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-        .dl { color: #888; text-decoration: none; font-size: 14px; transition: 0.2s; cursor: pointer; }
-        .dl:hover { color: #fff; }
-        #track-btn { background: #222; color: #fff; border: 1px solid #333; margin-top: 10px; display: none; }
-        .back { position: fixed; top: 20px; left: 20px; color: #333; text-decoration: none; font-size: 12px; text-transform: uppercase; }
-        .notice { margin-top: 40px; font-size: 11px; color: #333; line-height: 1.4; }
-    </style>
-</head>
-<body>
-
-<a href="index.html" class="back">← home</a>
-
-<div class="card">
-    <h1>ymcd</h1>
-    <p>введите название трека и автора</p>
-
-    <div class="input-group">
-        <input type="text" id="query" placeholder="например: linkin park numb" spellcheck="false">
-        <button id="search-btn" onclick="search()">find content</button>
-    </div>
-
-    <div id="result">
-        <canvas id="cardCanvas" width="1000" height="1200"></canvas>
-        <div class="links-container">
-            <a id="artwork-only" class="dl" href="#" target="_blank">download artwork only</a>
-            <span class="dl" onclick="downloadCard()">download track card (png)</span>
-            <button id="track-btn" onclick="downloadMp3()">download mp3</button>
-        </div>
-    </div>
-
-    <div class="notice">
-        некоторые треки могут быть недоступны для скачивания, так как сервис находится в процессе доработки.
-    </div>
-</div>
-
-<script>
-    let currentTrackUrl = '';
-
-    async function search() {
-        const q = document.getElementById('query').value;
-        const res = document.getElementById('result');
-        const artLink = document.getElementById('artwork-only');
-        const trackBtn = document.getElementById('track-btn');
-        const btn = document.getElementById('search-btn');
-
-        if (!q) return;
-
-        btn.innerText = 'searching...';
-        trackBtn.style.display = 'none';
-
-        try {
-            const itunesRes = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=1`);
-            const itunesData = await itunesRes.json();
-
-            if (itunesData.results.length > 0) {
-                const track = itunesData.results[0];
-                const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
-                
-                artLink.href = highResUrl;
-                await drawCard(highResUrl, track.trackName, track.artistName);
-                res.style.display = 'block';
-
-                const jamendoRes = await fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
-                const jamendoData = await jamendoRes.json();
-
-                if (jamendoData.results && jamendoData.results.length > 0) {
-                    currentTrackUrl = jamendoData.results[0].audio;
-                    trackBtn.style.display = 'block';
-                }
-            } else {
-                alert('nothing found');
-            }
-        } catch (e) {
-            alert('error');
-        } finally {
-            btn.innerText = 'find content';
-        }
-    }
-
-    async function drawCard(imgUrl, title, artist) {
-        const canvas = document.getElementById('cardCanvas');
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        
-        return new Promise((resolve) => {
-            img.onload = () => {
-                ctx.fillStyle = '#121212';
-                ctx.fillRect(0, 0, 1000, 1200);
-                ctx.drawImage(img, 0, 0, 1000, 1000);
-                
-                const gradient = ctx.createLinearGradient(0, 700, 0, 1000);
-                gradient.addColorStop(0, 'rgba(18,18,18,0)');
-                gradient.addColorStop(1, '#121212');
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 700, 1000, 300);
-
-                ctx.fillStyle = '#fff';
-                ctx.font = '900 60px system-ui';
-                ctx.fillText(title.toLowerCase(), 50, 1080);
-                
-                ctx.fillStyle = '#555';
-                ctx.font = '500 40px system-ui';
-                ctx.fillText(artist.toLowerCase(), 50, 1140);
-                resolve();
-            };
-            img.src = imgUrl;
-        });
-    }
-
-    function downloadCard() {
-        const canvas = document.getElementById('cardCanvas');
-        const link = document.createElement('a');
-        link.download = 'track-card.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    }
-
-    function downloadMp3() {
-        if (currentTrackUrl) window.open(currentTrackUrl, '_blank');
-    }
-
-    document.getElementById('query').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') search();
-    });
-</script>
-
-</body>
-</html>
+        button { width
