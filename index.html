@@ -100,4 +100,96 @@
 
         .hero h1 {
             font-size: 3rem;
-            margin-bottom: 1
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #b6ff00;
+        }
+
+        .btn {
+            background-color: #2a2a2a;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #b6ff00;
+            font-size: 1.1rem;
+            display: inline-block;
+            text-align: center;
+            min-width: 250px;
+        }
+
+        .btn:hover {
+            background-color: #3a3a3a;
+            color: #b6ff00;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-nav">
+    <div class="nav-links">
+        <a href="ymcd.html" class="nav-btn" id="nav-downloader">yandex music cover downloader</a>
+    </div>
+    
+    <div class="lang-switcher">
+        <button class="lang-btn" onclick="changeLanguage('ru')">ru</button>
+        <button class="lang-btn" onclick="changeLanguage('en')">en</button>
+    </div>
+</div>
+
+<section class="hero fade" id="home">
+    <h1 id="hero-title">hello world</h1>
+    <p id="hero-subtitle">добро пожаловать на мой сайт</p>
+    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()" id="btn-about">about me</button>
+</section>
+
+<script>
+    const translations = {
+        ru: {
+            herosubtitle: "добро пожаловать на мой сайт",
+            btnabout: "about me",
+            downloader: "yandex music cover downloader"
+        },
+        en: {
+            herosubtitle: "welcome to my website",
+            btnabout: "about me",
+            downloader: "yandex music cover downloader"
+        }
+    };
+
+    function changeLanguage(lang) {
+        const home = document.getElementById('home');
+        const downloaderBtn = document.getElementById('nav-downloader');
+        
+        home.classList.add('fade-out');
+        downloaderBtn.style.opacity = '0';
+
+        setTimeout(() => {
+            setLanguage(lang);
+            home.classList.remove('fade-out');
+            downloaderBtn.style.opacity = '1';
+        }, 300);
+    }
+
+    function setLanguage(lang) {
+        document.getElementById('hero-subtitle').textContent = translations[lang].herosubtitle;
+        document.getElementById('btn-about').textContent = translations[lang].btnabout;
+        document.getElementById('nav-downloader').textContent = translations[lang].downloader;
+        document.documentElement.lang = lang;
+    }
+
+    function scrollToAbout() {
+        alert('переход к секции');
+    }
+</script>
+
+</body>
+</html>
