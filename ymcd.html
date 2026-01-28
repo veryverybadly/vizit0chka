@@ -41,7 +41,8 @@
     <div id="result">
         <canvas id="cardCanvas" width="1000" height="1200"></canvas>
         <div class="links-container">
-            <span class="dl" onclick="downloadCard()">download card (png)</span>
+            <a id="artwork-only" class="dl" href="#" target="_blank">download artwork only</a>
+            <span class="dl" onclick="downloadCard()">download track card (png)</span>
             <button id="track-btn" onclick="downloadMp3()">download mp3</button>
         </div>
     </div>
@@ -57,6 +58,7 @@
     async function search() {
         const q = document.getElementById('query').value;
         const res = document.getElementById('result');
+        const artLink = document.getElementById('artwork-only');
         const trackBtn = document.getElementById('track-btn');
         const btn = document.getElementById('search-btn');
 
@@ -73,6 +75,7 @@
                 const track = itunesData.results[0];
                 const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
                 
+                artLink.href = highResUrl;
                 await drawCard(highResUrl, track.trackName, track.artistName);
                 res.style.display = 'block';
 
@@ -103,7 +106,6 @@
             img.onload = () => {
                 ctx.fillStyle = '#121212';
                 ctx.fillRect(0, 0, 1000, 1200);
-                
                 ctx.drawImage(img, 0, 0, 1000, 1000);
                 
                 const gradient = ctx.createLinearGradient(0, 700, 0, 1000);
@@ -119,7 +121,6 @@
                 ctx.fillStyle = '#555';
                 ctx.font = '500 40px system-ui';
                 ctx.fillText(artist.toLowerCase(), 50, 1140);
-                
                 resolve();
             };
             img.src = imgUrl;
@@ -129,7 +130,7 @@
     function downloadCard() {
         const canvas = document.getElementById('cardCanvas');
         const link = document.createElement('a');
-        link.download = 'card.png';
+        link.download = 'track-card.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
     }
