@@ -3,176 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ymcd — cover search</title>
+    <title>ymcd — yandex artwork</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: #0a0a0a;
-            color: #efefef;
-            font-family: -apple-system, blinkmacsystemfont, 'segoe ui', roboto, oxygen, ubuntu, cantarell, sans-serif;
+            background: #000;
+            color: #fff;
+            font-family: -apple-system, system-ui, sans-serif;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
         }
 
-        .main-card {
-            background: #141414;
-            padding: 40px;
-            border-radius: 24px;
+        .container {
             width: 100%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            max-width: 450px;
+            padding: 20px;
             text-align: center;
         }
 
         h1 {
-            font-weight: 800;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
             letter-spacing: -1px;
-            margin-bottom: 8px;
-            font-size: 24px;
         }
 
-        p {
-            color: #666;
+        .desc {
+            color: #555;
             font-size: 14px;
             margin-bottom: 30px;
         }
 
-        .input-wrapper {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
         input {
             width: 100%;
-            background: #1d1d1d;
-            border: 1px solid #2a2a2a;
-            padding: 16px;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
+            background: #111;
+            border: 1px solid #222;
+            padding: 18px;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 15px;
             outline: none;
-            transition: 0.2s;
+            transition: 0.3s;
         }
 
         input:focus {
-            border-color: #444;
-            background: #222;
+            border-color: #ffdb4d;
         }
 
         button {
             width: 100%;
-            background: #ffffff;
+            background: #ffdb4d;
             color: #000;
             border: none;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 14px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
+            margin-top: 15px;
             cursor: pointer;
             transition: 0.2s;
         }
 
         button:hover {
+            transform: scale(0.99);
             opacity: 0.9;
-            transform: scale(0.98);
         }
 
-        #preview {
-            margin-top: 30px;
+        #result {
+            margin-top: 40px;
             display: none;
-            animation: fadein 0.5s ease;
+            animation: slideup 0.4s ease;
         }
 
-        @keyframes fadein {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideup {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        #cover-img {
+        #cover {
             width: 100%;
-            aspect-ratio: 1/1;
             border-radius: 12px;
-            object-fit: cover;
-            margin-bottom: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.8);
         }
 
-        .dl-link {
-            display: block;
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .link {
+            color: #ffdb4d;
             text-decoration: none;
-            color: #888;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        .dl-link:hover {
-            color: #fff;
-        }
-
-        .home-btn {
-            position: absolute;
+        .back {
+            position: fixed;
             top: 20px;
             left: 20px;
-            color: #444;
+            color: #333;
             text-decoration: none;
             font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="home-btn">back</a>
+<a href="index.html" class="back">← home</a>
 
-<div class="main-card">
+<div class="container">
     <h1>ymcd</h1>
-    <p>enter track name and artist</p>
-    
-    <div class="input-wrapper">
-        <input type="text" id="inp" placeholder="например: linkin park numb" spellcheck="false">
-    </div>
-    
-    <button onclick="get()">find artwork</button>
+    <p class="desc">вставь ссылку на трек или альбом яндекс музыки</p>
 
-    <div id="preview">
-        <img id="cover-img" src="" alt="">
-        <a id="lnk" class="dl-link" href="#" target="_blank">download 1000x1000 px</a>
+    <input type="text" id="url" placeholder="https://music.yandex.ru/album/..." spellcheck="false">
+    <button onclick="fetchcover()">get artwork</button>
+
+    <div id="result">
+        <img id="cover" src="" alt="">
+        <div class="actions">
+            <a id="hd" class="link" href="#" target="_blank">открыть оригинал (1000x1000)</a>
+        </div>
     </div>
 </div>
 
 <script>
-    async function get() {
-        const q = document.getelementbyid('inp').value;
-        const res = document.getelementbyid('preview');
-        const img = document.getelementbyid('cover-img');
-        const lnk = document.getelementbyid('lnk');
+    function fetchcover() {
+        const input = document.getelementbyid('url').value;
+        const result = document.getelementbyid('result');
+        const img = document.getelementbyid('cover');
+        const hd = document.getelementbyid('hd');
 
-        if (!q) return;
+        // логика извлечения id аналогично kelcuprum
+        let coverurl = '';
 
-        try {
-            const r = await fetch(`https://itunes.apple.com/search?term=${encodecomponent(q)}&entity=song&limit=1`);
-            const d = await r.json();
-
-            if (d.results.length > 0) {
-                const t = d.results[0];
-                const url = t.artworkurl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
-                
-                img.src = url;
-                lnk.href = url;
-                res.style.display = 'block';
-            } else {
-                alert('nothing found');
-            }
-        } catch (e) {
-            alert('error');
+        if (input.includes('album/')) {
+            const albumid = input.split('album/')[1].split('/')[0];
+            coverurl = `https://music.yandex.ru/blocks/playlist/playlist.jsx?lang=ru&uid=0&kinds=${albumid}`;
+            
+            // для альбомов и треков используем апи превью
+            // здесь мы имитируем прямой запрос к картинке по шаблону яндекса
+            // формат: avatars.yandex.net/get-music-content/ID_ГРУППЫ/ID_ОБЛОЖКИ/orig
+            
+            // самый простой способ, который работает для большинства ссылок:
+            // мы используем cors-прокси для получения мета-данных
+            fetch(`https://api.allorigins.win/get?url=${encodecomponent(input)}`)
+                .then(r => r.json())
+                .then(data => {
+                    const html = data.contents;
+                    const match = html.match(/og:image" content="([^"]+)/);
+                    if (match && match[1]) {
+                        let src = match[1].replace('%%', '1000x1000');
+                        if (!src.startswith('http')) src = 'https:' + src;
+                        
+                        img.src = src;
+                        hd.href = src;
+                        result.style.display = 'block';
+                    } else {
+                        alert('не удалось найти обложку');
+                    }
+                })
+                .catch(() => alert('ошибка доступа'));
+        } else {
+            alert('вставьте корректную ссылку на альбом или трек');
         }
     }
 
-    document.getelementbyid('inp').addeventlistener('keypress', (e) => {
-        if (e.key === 'enter') get();
+    document.getelementbyid('url').addeventlistener('keypress', (e) => {
+        if (e.key === 'enter') fetchcover();
     });
 </script>
 
