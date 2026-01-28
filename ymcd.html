@@ -16,9 +16,12 @@
         .help-btn:hover { border-color: #fff; color: #fff; }
 
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 20px; max-width: 400px; text-align: left; border: 1px solid #222; }
+        .modal-content { background: #111; padding: 30px; border-radius: 20px; max-width: 440px; text-align: left; border: 1px solid #222; max-height: 90vh; overflow-y: auto; }
         .modal-content h2 { margin-bottom: 15px; font-size: 20px; }
         .modal-content li { margin-bottom: 10px; color: #888; font-size: 14px; margin-left: 20px; }
+        
+        .instruction-gif { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid #222; }
+        
         .close-modal { margin-top: 20px; width: 100%; background: #fff; color: #000; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; }
 
         .card { width: 100%; max-width: 400px; padding: 30px; text-align: center; }
@@ -51,11 +54,12 @@
     <div class="modal-content">
         <h2>как пользоваться</h2>
         <ul>
-            <li>введите имя артиста и название трека в поле поиска.</li>
+            <li>введите имя артиста и название трека.</li>
             <li>нажмите «find content» или клавишу enter.</li>
-            <li>скачайте чистую обложку или карточку для соцсетей.</li>
-            <li>если трек доступен в базе, появится кнопка загрузки mp3.</li>
+            <li>скачайте обложку или сгенерированную карточку.</li>
+            <li>загрузите mp3 файл, если он доступен.</li>
         </ul>
+        <img src="https://i.postimg.cc/4y9W0wyk/qa-1.gif" alt="инструкция" class="instruction-gif">
         <button class="close-modal" onclick="toggleModal(false)">понятно</button>
     </div>
 </div>
