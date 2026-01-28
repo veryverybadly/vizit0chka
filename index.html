@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>hello world</title>
 
     <style>
         * {
@@ -13,7 +13,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'segoe ui', tahoma, geneva, verdana, sans-serif;
             background-color: #121212;
             color: white;
             line-height: 1.6;
@@ -24,8 +24,7 @@
             scroll-behavior: smooth;
         }
 
-        /* анимация для смены языка */
-        #home, #about {
+        .fade {
             transition: opacity 0.3s ease-in-out;
         }
 
@@ -33,22 +32,53 @@
             opacity: 0;
         }
 
-        .lang-switcher {
+        .top-nav {
             position: fixed;
             top: 20px;
+            left: 20px;
             right: 20px;
             z-index: 1000;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
             gap: 10px;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #b6ff00;
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: #b6ff00;
+            color: black;
+            transform: translateY(-2px);
         }
 
         .lang-btn {
             background: rgba(42, 42, 42, 0.8);
             border: 1px solid #b6ff00;
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 0.9rem;
             transition: 0.2s;
         }
@@ -100,315 +130,64 @@
             color: #b6ff00;
             transform: translateY(-2px);
         }
-
-        .section {
-            padding: 4rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            display: none;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: #b6ff00;
-            text-align: center;
-        }
-
-        .section p {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .highlight {
-            color: #b6ff00;
-            font-weight: bold;
-        }
-
-        .contact-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin: 2.5rem 0;
-        }
-
-        .old-site-link {
-            margin-top: 10px;
-            opacity: 0.9;
-        }
-
-        .projects {
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .projects-toggle {
-            background-color: #2a2a2a;
-            color: white;
-            border: 2px solid #b6ff00;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .projects-toggle:hover {
-            background-color: #3a3a3a;
-            color: #b6ff00;
-        }
-
-        .projects-list {
-            max-height: 0;
-            overflow: hidden;
-            margin-top: 1rem;
-            transition: max-height 0.4s ease;
-            text-align: left;
-        }
-
-        .projects-list a,
-        .projects-list div {
-            display: block;
-            padding: 12px;
-            border-bottom: 1px solid #2a2a2a;
-            color: #b6ff00;
-            text-decoration: none;
-        }
-
-        .projects-list div {
-            color: #aaa;
-            cursor: default;
-        }
-
-        .projects-list a:hover {
-            background-color: #1c1c1c;
-        }
-
-        .music-container {
-            display: flex;
-            justify-content: center;
-            margin: 2rem 0;
-            overflow-x: auto;
-        }
-
-        .disclaimer {
-            color: #aaa;
-            font-size: 0.8rem;
-            text-align: center;
-        }
-
-        .footer-gif {
-            display: flex;
-            justify-content: center;
-            margin-top: 3rem;
-        }
-
-        .gif-wrapper {
-            width: 100px;
-            height: 100px;
-            overflow: hidden;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .gif-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .animated {
-            display: none;
-        }
-
-        .gif-wrapper:hover .static {
-            display: none;
-        }
-
-        .gif-wrapper:hover .animated {
-            display: block;
-        }
-
-        .footer-link {
-            display: flex;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .footer-link a {
-            color: #b6ff00;
-            font-size: 0.9rem;
-            text-decoration: underline;
-        }
-
-        .footer-emoji {
-            display: flex;
-            justify-content: center;
-            margin-top: 1rem;
-            font-size: 1.5rem;
-        }
     </style>
 </head>
 <body>
 
-<div class="lang-switcher">
-    <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
-    <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
-</div>
-
-<section class="hero" id="home">
-    <h1 id="hero-title">Hello World</h1>
-    <p id="hero-subtitle">Добро пожаловать на мой сайт</p>
-    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()" id="btn-about">About Me</button>
-</section>
-
-<section class="section" id="about">
-    <h2 id="about-title">Обо мне</h2>
-
-    <p id="about-intro">Привет, меня зовут <span class="highlight">Бадли</span>.</p>
-    <p id="about-text">Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.</p>
-
-    <div class="contact-group">
-        <a href="https://t.me/butt11x" target="_blank" class="btn" id="link-tg">
-            Написать в Telegram
-        </a>
-        
-        <a href="mailto:badlya_bad@xyecoc.com" class="btn" id="link-mail">
-            Написать по почте (мб отвечу)
-        </a>
-
-        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn old-site-link" id="link-old">
-            Зайти на старый сайт
-        </a>
+<div class="top-nav">
+    <div class="nav-links">
+        <a href="ymcd.html" class="nav-btn" id="nav-downloader">yandex music cover downloader</a>
     </div>
     
-    <div class="projects">
-        <button class="projects-toggle" onclick="toggleProjects()" id="btn-projects">
-            Мои проекты ▼
-        </button>
-
-        <div class="projects-list" id="projectsList">
-            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" id="p1">
-                Сайт-переходник на мои соцсети (разработка приостановлена)
-            </a>
-
-            <div id="p2">Сайт майнкрафт сервера</div>
-
-            <a href="https://luckyworldweb.neocities.org/" target="_blank" id="p3">
-                Сайт ворк ин прогрес (Пример работы)
-            </a>
-            <a href="https://github.com/veryverybadly/SampRpNamesGenerator" target="_blank" id="p4">
-                Samp RP Names Generator (мой первый проект на пайтоне)
-            </a>
-        </div>
+    <div class="lang-switcher">
+        <button class="lang-btn" onclick="changelanguage('ru')">ru</button>
+        <button class="lang-btn" onclick="changelanguage('en')">en</button>
     </div>
+</div>
 
-    <div class="music-container">
-        <iframe frameborder="0" allow="clipboard-write"
-            style="border:none;width:614px;height:556px;"
-            src="https://music.yandex.ru/iframe/playlist/SashaChaburasha/1004">
-        </iframe>
-    </div>
-
-    <p class="disclaimer" id="music-note">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
-
-    <div class="footer-gif">
-        <div class="gif-wrapper">
-            <img class="static" src="static-frame.png" alt="static">
-            <img class="animated" src="https://i.postimg.cc/HxcKQFtS/maxwell-(1).gif" alt="animated">
-        </div>
-    </div>
-
-    <div class="footer-link">
-        <a href="https://t.me/nohelloru/6" target="_blank">t.me/nohelloru</a>
-    </div>
-
-    <div class="footer-emoji">😊</div>
+<section class="hero fade" id="home">
+    <h1 id="hero-title">hello world</h1>
+    <p id="hero-subtitle">добро пожаловать на мой сайт</p>
+    <button class="btn" style="min-width: auto;" onclick="scrolltoabout()" id="btn-about">about me</button>
 </section>
 
 <script>
     const translations = {
         ru: {
-            heroSubtitle: "Добро пожаловать на мой сайт",
-            btnAbout: "About Me",
-            aboutTitle: "Обо мне",
-            aboutIntro: 'Привет, меня зовут <span class="highlight">Бадли</span>.',
-            aboutText: "Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.",
-            linkTg: "Написать в Telegram",
-            linkMail: "Написать по почте (мб отвечу)",
-            linkOld: "Зайти на старый сайт",
-            btnProjects: "Мои проекты ▼",
-            p1: "Сайт-переходник на мои соцсети (разработка приостановлена)",
-            p2: "Сайт майнкрафт сервера",
-            p3: "Сайт ворк ин прогрес (Пример работы)",
-            p4: "Samp RP Names Generator (мой первый проект на пайтоне)",
-            musicNote: "(яндекс мьюзик может не открываться через впн, отключите его 👌)"
+            herosubtitle: "добро пожаловать на мой сайт",
+            btnabout: "about me",
+            downloader: "yandex music cover downloader"
         },
         en: {
-            heroSubtitle: "Welcome to my website",
-            btnAbout: "About Me",
-            aboutTitle: "About Me",
-            aboutIntro: 'Hi, my name is <span class="highlight">Badly</span>.',
-            aboutText: "I'm into frontend development and design. You can contact me via the links below.",
-            linkTg: "Message on Telegram",
-            linkMail: "Send an Email (might reply)",
-            linkOld: "Visit old website",
-            btnProjects: "My Projects ▼",
-            p1: "Link-tree site for my socials (development paused)",
-            p2: "Minecraft server website",
-            p3: "Work in progress site (Work sample)",
-            p4: "Samp RP Names Generator (my first Python project)",
-            musicNote: "(yandex music may not work with VPN, please disable it 👌)"
+            herosubtitle: "welcome to my website",
+            btnabout: "about me",
+            downloader: "yandex music cover downloader"
         }
     };
 
-    function changeLanguage(lang) {
-        const home = document.getElementById('home');
-        const about = document.getElementById('about');
+    function changelanguage(lang) {
+        const home = document.getelementbyid('home');
+        const downloaderbtn = document.getelementbyid('nav-downloader');
         
-        home.classList.add('fade-out');
-        about.classList.add('fade-out');
+        home.classlist.add('fade-out');
+        downloaderbtn.style.opacity = '0';
 
-        setTimeout(() => {
-            setLanguage(lang);
-            home.classList.remove('fade-out');
-            about.classList.remove('fade-out');
+        settimeout(() => {
+            setlanguage(lang);
+            home.classlist.remove('fade-out');
+            downloaderbtn.style.opacity = '1';
         }, 300);
     }
 
-    function setLanguage(lang) {
-        document.getElementById('hero-subtitle').textContent = translations[lang].heroSubtitle;
-        document.getElementById('btn-about').textContent = translations[lang].btnAbout;
-        document.getElementById('about-title').textContent = translations[lang].aboutTitle;
-        document.getElementById('about-intro').innerHTML = translations[lang].aboutIntro;
-        document.getElementById('about-text').textContent = translations[lang].aboutText;
-        document.getElementById('link-tg').textContent = translations[lang].linkTg;
-        document.getElementById('link-mail').textContent = translations[lang].linkMail;
-        document.getElementById('link-old').textContent = translations[lang].linkOld;
-        document.getElementById('btn-projects').textContent = translations[lang].btnProjects;
-        document.getElementById('p1').textContent = translations[lang].p1;
-        document.getElementById('p2').textContent = translations[lang].p2;
-        document.getElementById('p3').textContent = translations[lang].p3;
-        document.getElementById('p4').textContent = translations[lang].p4;
-        document.getElementById('music-note').textContent = translations[lang].musicNote;
-        
-        document.documentElement.lang = lang;
+    function setlanguage(lang) {
+        document.getelementbyid('hero-subtitle').textcontent = translations[lang].herosubtitle;
+        document.getelementbyid('btn-about').textcontent = translations[lang].btnabout;
+        document.getelementbyid('nav-downloader').textcontent = translations[lang].downloader;
+        document.documentelement.lang = lang;
     }
 
-    function scrollToAbout() {
-        const about = document.getElementById('about');
-        about.style.display = 'block';
-        about.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function toggleProjects() {
-        const list = document.getElementById('projectsList');
-        if (list.style.maxHeight) {
-            list.style.maxHeight = null;
-        } else {
-            list.style.maxHeight = list.scrollHeight + 'px';
-        }
+    function scrolltoabout() {
+        alert('переход к секции');
     }
 </script>
 
