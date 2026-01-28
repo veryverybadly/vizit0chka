@@ -24,6 +24,31 @@
             scroll-behavior: smooth;
         }
 
+        /* LANG SWITCHER */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: rgba(42, 42, 42, 0.8);
+            border: 1px solid #b6ff00;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn:hover {
+            background: #b6ff00;
+            color: black;
+        }
+
         /* HERO */
         .hero {
             height: 100vh;
@@ -225,48 +250,53 @@
 </head>
 <body>
 
+<div class="lang-switcher">
+    <button class="lang-btn" onclick="setLanguage('ru')">RU</button>
+    <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+</div>
+
 <section class="hero" id="home">
-    <h1>Hello World</h1>
-    <p>Добро пожаловать на мой сайт</p>
-    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()">About Me</button>
+    <h1 id="hero-title">Hello World</h1>
+    <p id="hero-subtitle">Добро пожаловать на мой сайт</p>
+    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()" id="btn-about">About Me</button>
 </section>
 
 <section class="section" id="about">
-    <h2>Обо мне</h2>
+    <h2 id="about-title">Обо мне</h2>
 
-    <p>Привет, меня зовут <span class="highlight">Бадли</span>.</p>
-    <p>Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.</p>
+    <p id="about-intro">Привет, меня зовут <span class="highlight">Бадли</span>.</p>
+    <p id="about-text">Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.</p>
 
     <div class="contact-group">
-        <a href="https://t.me/butt11x" target="_blank" class="btn">
+        <a href="https://t.me/butt11x" target="_blank" class="btn" id="link-tg">
             Написать в Telegram
         </a>
         
-        <a href="mailto:badlya_bad@xyecoc.com" class="btn">
+        <a href="mailto:badlya_bad@xyecoc.com" class="btn" id="link-mail">
             Написать по почте (мб отвечу)
         </a>
 
-        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn old-site-link">
+        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn old-site-link" id="link-old">
             Зайти на старый сайт
         </a>
     </div>
     
     <div class="projects">
-        <button class="projects-toggle" onclick="toggleProjects()">
+        <button class="projects-toggle" onclick="toggleProjects()" id="btn-projects">
             Мои проекты ▼
         </button>
 
         <div class="projects-list" id="projectsList">
-            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" id="p1">
                 Сайт-переходник на мои соцсети (разработка приостановлена)
             </a>
 
-            <div>Сайт майнкрафт сервера</div>
+            <div id="p2">Сайт майнкрафт сервера</div>
 
-            <a href="https://luckyworldweb.neocities.org/" target="_blank">
+            <a href="https://luckyworldweb.neocities.org/" target="_blank" id="p3">
                 Сайт ворк ин прогрес (Пример работы)
             </a>
-            <a href="https://github.com/veryverybadly/SampRpNamesGenerator" target="_blank">
+            <a href="https://github.com/veryverybadly/SampRpNamesGenerator" target="_blank" id="p4">
                 Samp RP Names Generator (мой первый проект на пайтоне)
             </a>
         </div>
@@ -279,7 +309,7 @@
         </iframe>
     </div>
 
-    <p class="disclaimer">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
+    <p class="disclaimer" id="music-note">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
 
     <div class="footer-gif">
         <div class="gif-wrapper">
@@ -296,6 +326,60 @@
 </section>
 
 <script>
+    const translations = {
+        ru: {
+            heroSubtitle: "Добро пожаловать на мой сайт",
+            btnAbout: "About Me",
+            aboutTitle: "Обо мне",
+            aboutIntro: 'Привет, меня зовут <span class="highlight">Бадли</span>.',
+            aboutText: "Я увлекаюсь фронтенд разработкой и дизайном. Связаться со мной можно по кнопкам ниже.",
+            linkTg: "Написать в Telegram",
+            linkMail: "Написать по почте (мб отвечу)",
+            linkOld: "Зайти на старый сайт",
+            btnProjects: "Мои проекты ▼",
+            p1: "Сайт-переходник на мои соцсети (разработка приостановлена)",
+            p2: "Сайт майнкрафт сервера",
+            p3: "Сайт ворк ин прогрес (Пример работы)",
+            p4: "Samp RP Names Generator (мой первый проект на пайтоне)",
+            musicNote: "(яндекс мьюзик может не открываться через впн, отключите его 👌)"
+        },
+        en: {
+            heroSubtitle: "Welcome to my website",
+            btnAbout: "About Me",
+            aboutTitle: "About Me",
+            aboutIntro: 'Hi, my name is <span class="highlight">Badly</span>.',
+            aboutText: "I'm into frontend development and design. You can contact me via the links below.",
+            linkTg: "Message on Telegram",
+            linkMail: "Send an Email (might reply)",
+            linkOld: "Visit old website",
+            btnProjects: "My Projects ▼",
+            p1: "Link-tree site for my socials (development paused)",
+            p2: "Minecraft server website",
+            p3: "Work in progress site (Work sample)",
+            p4: "Samp RP Names Generator (my first Python project)",
+            musicNote: "(yandex music may not work with VPN, please disable it 👌)"
+        }
+    };
+
+    function setLanguage(lang) {
+        document.getElementById('hero-subtitle').textContent = translations[lang].heroSubtitle;
+        document.getElementById('btn-about').textContent = translations[lang].btnAbout;
+        document.getElementById('about-title').textContent = translations[lang].aboutTitle;
+        document.getElementById('about-intro').innerHTML = translations[lang].aboutIntro;
+        document.getElementById('about-text').textContent = translations[lang].aboutText;
+        document.getElementById('link-tg').textContent = translations[lang].linkTg;
+        document.getElementById('link-mail').textContent = translations[lang].linkMail;
+        document.getElementById('link-old').textContent = translations[lang].linkOld;
+        document.getElementById('btn-projects').textContent = translations[lang].btnProjects;
+        document.getElementById('p1').textContent = translations[lang].p1;
+        document.getElementById('p2').textContent = translations[lang].p2;
+        document.getElementById('p3').textContent = translations[lang].p3;
+        document.getElementById('p4').textContent = translations[lang].p4;
+        document.getElementById('music-note').textContent = translations[lang].musicNote;
+        
+        document.documentElement.lang = lang;
+    }
+
     function scrollToAbout() {
         const about = document.getElementById('about');
         about.style.display = 'block';
@@ -314,4 +398,3 @@
 
 </body>
 </html>
-
