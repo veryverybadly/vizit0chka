@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hello world</title>
 
@@ -22,14 +22,6 @@
 
         html {
             scroll-behavior: smooth;
-        }
-
-        .fade {
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .fade-out {
-            opacity: 0;
         }
 
         .top-nav {
@@ -135,7 +127,7 @@
             padding: 4rem 2rem;
             max-width: 800px;
             margin: 0 auto;
-            display: none; /* скрыто до нажатия кнопки */
+            display: none;
         }
 
         .section h2 {
@@ -143,6 +135,119 @@
             margin-bottom: 1.5rem;
             color: #b6ff00;
             text-align: center;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            color: #b6ff00;
+            font-weight: bold;
+        }
+
+        .contact-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 2.5rem 0;
+        }
+
+        .projects {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .projects-toggle {
+            background-color: #2a2a2a;
+            color: white;
+            border: 2px solid #b6ff00;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .projects-list {
+            max-height: 0;
+            overflow: hidden;
+            margin-top: 1rem;
+            transition: max-height 0.4s ease;
+            text-align: left;
+        }
+
+        .projects-list a, .projects-list div {
+            display: block;
+            padding: 12px;
+            border-bottom: 1px solid #2a2a2a;
+            color: #b6ff00;
+            text-decoration: none;
+        }
+
+        .music-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .disclaimer {
+            color: #aaa;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .footer-gif {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .gif-wrapper {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .gif-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .animated {
+            display: none;
+        }
+
+        .gif-wrapper:hover .static {
+            display: none;
+        }
+
+        .gif-wrapper:hover .animated {
+            display: block;
+        }
+
+        .footer-link {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .footer-link a {
+            color: #b6ff00;
+            text-decoration: underline;
+        }
+
+        .footer-emoji {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            font-size: 1.5rem;
         }
     </style>
 </head>
@@ -152,22 +257,56 @@
     <div class="nav-links">
         <a href="ymcd.html" class="nav-btn" id="nav-downloader">yandex music cover downloader</a>
     </div>
-    
     <div class="lang-switcher">
-        <button class="lang-btn" onclick="changeLanguage('ru')">ru</button>
-        <button class="lang-btn" onclick="changeLanguage('en')">en</button>
+        <button class="lang-btn" onclick="changelanguage('ru')">ru</button>
+        <button class="lang-btn" onclick="changelanguage('en')">en</button>
     </div>
 </div>
 
-<section class="hero fade" id="home">
-    <h1 id="hero-title">hello world</h1>
+<section class="hero" id="home">
+    <h1>hello world</h1>
     <p id="hero-subtitle">добро пожаловать на мой сайт</p>
-    <button class="btn" style="min-width: auto;" onclick="scrollToAbout()" id="btn-about">about me</button>
+    <button class="btn" style="min-width: auto;" onclick="scrolltoabout()" id="btn-about">about me</button>
 </section>
 
 <section class="section" id="about">
     <h2 id="about-title">обо мне</h2>
-    <p>здесь будет контент секции, как в оригинале.</p>
+    <p id="about-intro">привет, меня зовут <span class="highlight">бадли</span>.</p>
+    <p id="about-text">я увлекаюсь фронтенд разработкой и дизайном. связаться со мной можно по кнопкам ниже.</p>
+
+    <div class="contact-group">
+        <a href="https://t.me/butt11x" target="_blank" class="btn" id="link-tg">написать в telegram</a>
+        <a href="mailto:badlya_bad@xyecoc.com" class="btn" id="link-mail">написать по почте (мб отвечу)</a>
+        <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="btn" id="link-old">зайти на старый сайт</a>
+    </div>
+    
+    <div class="projects">
+        <button class="projects-toggle" onclick="toggleprojects()" id="btn-projects">мои проекты ▼</button>
+        <div class="projects-list" id="projectslist">
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" id="p1">сайт-переходник на мои соцсети (разработка приостановлена)</a>
+            <div id="p2">сайт майнкрафт сервера</div>
+            <a href="https://luckyworldweb.neocities.org/" target="_blank" id="p3">сайт ворк ин прогрес (пример работы)</a>
+            <a href="https://github.com/veryverybadly/samprpnamesgenerator" target="_blank" id="p4">samp rp names generator (мой первый проект на пайтоне)</a>
+        </div>
+    </div>
+
+    <div class="music-container">
+        <iframe frameborder="0" allow="clipboard-write" style="border:none;width:614px;height:556px;" src="https://music.yandex.ru/iframe/playlist/sashachaburasha/1004"></iframe>
+    </div>
+
+    <p class="disclaimer" id="music-note">(яндекс мьюзик может не открываться через впн, отключите его 👌)</p>
+
+    <div class="footer-gif">
+        <div class="gif-wrapper">
+            <img class="static" src="static-frame.png" alt="static">
+            <img class="animated" src="https://i.postimg.cc/hxckqfts/maxwell-(1).gif" alt="animated">
+        </div>
+    </div>
+
+    <div class="footer-link">
+        <a href="https://t.me/nohelloru/6" target="_blank">t.me/nohelloru</a>
+    </div>
+    <div class="footer-emoji">😊</div>
 </section>
 
 <script>
@@ -176,42 +315,66 @@
             herosubtitle: "добро пожаловать на мой сайт",
             btnabout: "about me",
             downloader: "yandex music cover downloader",
-            abouttitle: "обо мне"
+            abouttitle: "обо мне",
+            aboutintro: 'привет, меня зовут <span class="highlight">бадли</span>.',
+            abouttext: "я увлекаюсь фронтенд разработкой и дизайном. связаться со мной можно по кнопкам ниже.",
+            linktg: "написать в telegram",
+            linkmail: "написать по почте (мб отвечу)",
+            linkold: "зайти на старый сайт",
+            btnprojects: "мои проекты ▼",
+            p1: "сайт-переходник на мои соцсети (разработка приостановлена)",
+            p2: "сайт майнкрафт сервера",
+            p3: "сайт ворк ин прогрес (пример работы)",
+            p4: "samp rp names generator (мой первый проект на пайтоне)",
+            musicnote: "(яндекс мьюзик может не открываться через впн, отключите его 👌)"
         },
         en: {
             herosubtitle: "welcome to my website",
             btnabout: "about me",
             downloader: "yandex music cover downloader",
-            abouttitle: "about me"
+            abouttitle: "about me",
+            aboutintro: 'hi, my name is <span class="highlight">badly</span>.',
+            abouttext: "i'm into frontend development and design. you can contact me via the links below.",
+            linktg: "write in telegram",
+            linkmail: "write by mail (maybe i'll answer)",
+            linkold: "go to old site",
+            btnprojects: "my projects ▼",
+            p1: "social media landing page (development suspended)",
+            p2: "minecraft server site",
+            p3: "work in progress site (work example)",
+            p4: "samp rp names generator (my first python project)",
+            musicnote: "(yandex music may not work with vpn, please disable it 👌)"
         }
     };
 
-    function changeLanguage(lang) {
-        const home = document.getElementById('home');
-        const downloaderBtn = document.getElementById('nav-downloader');
-        
-        home.classList.add('fade-out');
-        downloaderBtn.style.opacity = '0';
-
-        setTimeout(() => {
-            setLanguage(lang);
-            home.classList.remove('fade-out');
-            downloaderBtn.style.opacity = '1';
-        }, 300);
-    }
-
-    function setLanguage(lang) {
-        document.getElementById('hero-subtitle').textContent = translations[lang].herosubtitle;
-        document.getElementById('btn-about').textContent = translations[lang].btnabout;
-        document.getElementById('nav-downloader').textContent = translations[lang].downloader;
-        document.getElementById('about-title').textContent = translations[lang].abouttitle;
-        document.documentElement.lang = lang;
-    }
-
-    function scrollToAbout() {
-        const about = document.getElementById('about');
+    function scrolltoabout() {
+        const about = document.getelementbyid('about');
         about.style.display = 'block';
-        about.scrollIntoView({ behavior: 'smooth' });
+        about.scrollintoview({ behavior: 'smooth' });
+    }
+
+    function toggleprojects() {
+        const list = document.getelementbyid('projectslist');
+        list.style.maxheight = list.style.maxheight ? null : list.scrollheight + 'px';
+    }
+
+    function changelanguage(lang) {
+        document.getelementbyid('hero-subtitle').textcontent = translations[lang].herosubtitle;
+        document.getelementbyid('btn-about').textcontent = translations[lang].btnabout;
+        document.getelementbyid('nav-downloader').textcontent = translations[lang].downloader;
+        document.getelementbyid('about-title').textcontent = translations[lang].abouttitle;
+        document.getelementbyid('about-intro').innerhtml = translations[lang].aboutintro;
+        document.getelementbyid('about-text').textcontent = translations[lang].abouttext;
+        document.getelementbyid('link-tg').textcontent = translations[lang].linktg;
+        document.getelementbyid('link-mail').textcontent = translations[lang].linkmail;
+        document.getelementbyid('link-old').textcontent = translations[lang].linkold;
+        document.getelementbyid('btn-projects').textcontent = translations[lang].btnprojects;
+        document.getelementbyid('p1').textcontent = translations[lang].p1;
+        document.getelementbyid('p2').textcontent = translations[lang].p2;
+        document.getelementbyid('p3').textcontent = translations[lang].p3;
+        document.getelementbyid('p4').textcontent = translations[lang].p4;
+        document.getelementbyid('music-note').textcontent = translations[lang].musicnote;
+        document.documentelement.lang = lang;
     }
 </script>
 
