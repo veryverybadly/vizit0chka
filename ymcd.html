@@ -112,10 +112,10 @@
         }
 
         #track-btn {
-            display: none;
             background: #222;
             color: #fff;
             border: 1px solid #333;
+            margin-top: 10px;
         }
 
         .back {
@@ -164,27 +164,25 @@
         if (!q) return;
 
         try {
-            const itunesReq = fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=1`);
-            const jamendoReq = fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
-            
-            const [itunesRes, jamendoRes] = await Promise.all([itunesReq, jamendoReq]);
-            const itunesData = await itunesRes.json();
-            const jamendoData = await jamendoRes.json();
+            // поиск через saavn (более полная база)
+            const response = await fetch(`https://saavn.me/search/songs?query=${encodeURIComponent(q)}&limit=1`);
+            const data = await response.json();
 
-            if (itunesData.results.length > 0) {
-                const track = itunesData.results[0];
-                const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
-                img.src = highResUrl;
-                artLink.href = highResUrl;
+            if (data.status === 'SUCCESS' && data.data.results.length > 0) {
+                const track = data.data.results[0];
+                
+                // берем лучшее качество обложки
+                const highResCover = track.image[track.image.length - 1].link;
+                img.src = highResCover;
+                artLink.href = highResCover;
+                
+                // берем лучшее качество звука (320kbps если есть)
+                currentTrackUrl = track.downloadUrl[track.downloadUrl.length - 1].link;
+                
                 res.style.display = 'block';
-            }
-
-            if (jamendoData.results.length > 0) {
-                currentTrackUrl = jamendoData.results[0].audio;
                 trackBtn.style.display = 'block';
             } else {
-                trackBtn.style.display = 'none';
-                if (itunesData.results.length === 0) alert('nothing found');
+                alert('nothing found');
             }
         } catch (e) {
             alert('error fetching data');
