@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>restricted | moonland</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .vhs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #15002b 0%, #000 100%);
+            z-index: -1;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Static_noise.png');
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .rating-box {
+            background: #fff;
+            border: 2px solid #8b2cf5;
+            display: flex;
+            flex-direction: row;
+            max-width: 650px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 40px rgba(139, 44, 245, 0.15);
+        }
+
+        .rating-left {
+            background: #fff;
+            color: #000;
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 5px solid #000;
+        }
+
+        .rating-left span {
+            font-size: 9rem;
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -5px;
+        }
+
+        .rating-right {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            color: #000;
+        }
+
+        .rating-header {
+            border-bottom: 5px solid #000;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .rating-header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #5d00cc;
+        }
+
+        .content-area {
+            padding: 25px;
+            background: #fff;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            border: 3px solid #000;
+            transition: all 0.15s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn:hover {
+            background: #8b2cf5;
+            color: #fff;
+            border-color: #8b2cf5;
+            transform: translateX(10px);
+        }
+
+        .btn span:last-child {
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .rating-footer {
+            border-top: 5px solid #000;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.3;
+            letter-spacing: 0.5px;
+        }
+
+        /* декоративная полоса сверху */
+        .top-stripe {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            right: 20px;
+            height: 4px;
+            background: #8b2cf5;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="vhs-bg"></div>
+    <div class="noise"></div>
+
+    <div class="rating-box">
+        <div class="top-stripe"></div>
+        
+        <div class="rating-left">
+            <span>M</span>
+        </div>
+        
+        <div class="rating-right">
+            <div class="rating-header">
+                <h1>moonland</h1>
+                <span style="font-size: 0.7rem; font-weight: 900; color: #8b2cf5;">OFFICIAL CHATS</span>
+            </div>
+            
+            <div class="content-area">
+                <div class="main-links">
+                    <a href="https://t.me/moonlandre" target="_blank" class="btn">
+                        <span>telegram community</span>
+                        <span>актив / зеркало</span>
+                    </a>
+                    <a href="https://discord.gg/s3NrYyYjnG" target="_blank" class="btn">
+                        <span>discord server</span>
+                        <span>основной</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="rating-footer">
+                this community is intended for mature users.<br>
+                enter at your own risk.
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
