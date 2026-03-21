@@ -17,7 +17,7 @@
         body, html {
             width: 100%;
             height: 100%;
-            background: #fff;
+            background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -32,7 +32,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #ddd;
+            background: #050505;
             z-index: -1;
         }
 
@@ -43,24 +43,26 @@
             width: 100%;
             height: 100%;
             background: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Static_noise.png');
-            opacity: 0.05;
+            opacity: 0.08;
             pointer-events: none;
+            z-index: 10;
         }
 
         .rating-box {
             background: #fff;
-            border: 4px solid #000;
+            border: 2px solid #fff;
             display: flex;
             flex-direction: row;
-            max-width: 600px;
+            max-width: 650px;
             width: 100%;
             position: relative;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
 
         .rating-left {
-            background: #000;
-            color: #fff;
-            padding: 20px 30px;
+            background: #fff;
+            color: #000;
+            padding: 20px 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -68,49 +70,54 @@
         }
 
         .rating-left span {
-            font-size: 8rem;
+            font-size: 9rem;
             font-weight: 900;
-            line-height: 1;
+            line-height: 0.8;
+            letter-spacing: -5px;
         }
 
         .rating-right {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            background: #fff;
+            color: #000;
         }
 
         .rating-header {
             border-bottom: 4px solid #000;
-            padding: 10px 20px;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
         }
 
         .rating-header h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .links-grid {
-            padding: 15px 20px;
+            padding: 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
+            background: #fff;
         }
 
         .links-grid a {
             text-decoration: none;
             color: #000;
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 800;
             text-transform: uppercase;
-            border: 2px solid transparent;
-            padding: 4px 0;
-            transition: all 0.2s;
+            padding: 5px 8px;
+            border: 1px solid transparent;
+            transition: all 0.1s;
             cursor: pointer;
+            display: block;
         }
 
         .links-grid a:hover {
@@ -120,22 +127,30 @@
 
         .rating-footer {
             border-top: 4px solid #000;
-            padding: 10px 20px;
+            padding: 15px 20px;
             text-align: center;
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 800;
             text-transform: uppercase;
-            line-height: 1.4;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
         .clown-btn {
             position: absolute;
-            bottom: -40px;
+            bottom: -45px;
             right: 0;
             cursor: pointer;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             filter: grayscale(1);
+            opacity: 0.3;
+            transition: opacity 0.3s;
         }
+
+        .clown-btn:hover {
+            opacity: 1;
+        }
+
         #game-overlay {
             display: none;
             position: fixed;
@@ -152,7 +167,7 @@
         }
 
         canvas {
-            border: 4px solid #fff;
+            border: 2px solid #fff;
             background: #000;
         }
 
@@ -164,172 +179,7 @@
             font-weight: 900;
             border: 2px solid #fff;
             padding: 10px 20px;
-        }
-        #music-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 200;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .music-container {
-            background: #111;
-            border: 4px solid #fff;
-            width: 90%;
-            max-width: 700px;
-            padding: 20px;
-        }
-
-        .music-header {
-            border-bottom: 2px solid #fff;
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .music-header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-transform: uppercase;
-            font-weight: 900;
-            font-size: 1.2rem;
-        }
-
-        .music-stats {
             font-size: 0.8rem;
-            color: #aaa;
-        }
-        .search-container {
-            width: 100%;
-            position: relative;
-        }
-
-        .search-input {
-            width: 100%;
-            background: #222;
-            border: 2px solid #fff;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            padding: 10px 35px 10px 10px;
-            text-transform: uppercase;
-            outline: none;
-        }
-
-        .search-input:focus {
-            background: #000;
-        }
-
-        .search-input::placeholder {
-            color: #666;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-        }
-
-        .search-clear {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: none;
-        }
-
-        .search-clear:hover {
-            color: #ff4444;
-        }
-
-        .music-list {
-            list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            padding-right: 10px;
-        }
-
-        .music-list li {
-            padding: 8px 5px;
-            border-bottom: 1px solid #333;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-break: break-word;
-            line-height: 1.4;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .music-list li:hover {
-            background: #fff;
-            color: #000;
-            padding-left: 15px;
-        }
-
-        .music-list li::after {
-            content: "↗";
-            position: absolute;
-            right: 5px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .music-list li:hover::after {
-            opacity: 1;
-        }
-
-        .no-results {
-            color: #666;
-            text-align: center;
-            padding: 20px;
-            font-style: italic;
-            text-transform: uppercase;
-        }
-        .music-list::-webkit-scrollbar {
-            width: 5px;
-        }
-        .music-list::-webkit-scrollbar-track {
-            background: #333;
-        }
-        .music-list::-webkit-scrollbar-thumb {
-            background: #fff;
-        }
-
-        .music-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #333;
-            padding-top: 15px;
-        }
-
-        .music-footer .close-btn {
-            margin-top: 0;
-        }
-
-        .search-info {
-            font-size: 0.7rem;
-            color: #666;
-            margin-top: 5px;
-            text-align: center;
-            min-height: 20px;
         }
     </style>
 </head>
@@ -340,24 +190,23 @@
 
     <div class="rating-box">
         <div class="rating-left">
-            <span>A</span>
+            <span>R</span>
         </div>
         
         <div class="rating-right">
             <div class="rating-header">
-                <h1>александр</h1>
-                <span style="font-size: 0.7rem; font-weight: 900;">@VERYVERYBADLY</span>
+                <h1>restricted</h1>
+                <span style="font-size: 0.6rem; font-weight: 900;">@VERYVERYBADLY</span>
             </div>
             
             <div class="links-grid">
-                <a href="https://t.me/butt11x" target="_blank">telegram/butt11x</a>
-                <a href="https://t.me/swrqswrq" target="_blank">telegram/swrqswrq</a>
+                <a href="https://t.me/butt11x" target="_blank">t.me/butt11x</a>
+                <a href="https://t.me/swrqswrq" target="_blank">t.me/swrqswrq</a>
                 <a href="mailto:badlya_bad@xyecoc.com">email/badlya_bad</a>
                 <a href="https://goo.su/Sb7F2uw" target="_blank">github/badly</a>
                 <a href="ymcd.html">project/ymcd</a>
                 <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">oldsite/baadly</a>
                 <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities/lucky</a>
-                <a onclick="toggleMusic()">main/music</a>
             </div>
 
             <div class="rating-footer">
@@ -367,31 +216,11 @@
 
         <div class="clown-btn" onclick="toggleGame()">🤡</div>
     </div>
+
     <div id="game-overlay">
-        <div id="score" style="font-size: 2rem; margin-bottom: 10px;">0</div>
+        <div id="score" style="font-size: 2rem; margin-bottom: 10px; font-weight: 900;">0</div>
         <canvas id="birdGame" width="320" height="400"></canvas>
         <div class="close-btn" onclick="toggleGame()">выход</div>
-    </div>
-    <div id="music-overlay">
-        <div class="music-container">
-            <div class="music-header">
-                <div class="music-header-top">
-                    <span>SOUNDCLOUD LIBRARY</span>
-                    <span class="music-stats" id="track-count">71 трек</span>
-                </div>
-                <div class="search-container">
-                    <input type="text" class="search-input" id="search-input" placeholder="🔍 бесконечный поиск..." autocomplete="off">
-                    <span class="search-clear" id="search-clear" onclick="clearSearch()">✕</span>
-                </div>
-            </div>
-            <ul class="music-list" id="track-list">
-            </ul>
-            <div class="music-footer">
-                <span style="font-size: 0.7rem; color: #666;">🎵 бесконечный поиск по библиотеке</span>
-                <div class="close-btn" onclick="toggleMusic()">закрыть</div>
-            </div>
-            <div class="search-info" id="search-status"></div>
-        </div>
     </div>
 
     <script>
@@ -406,9 +235,6 @@
 
         function toggleGame() {
             const overlay = document.getElementById('game-overlay');
-            if (document.getElementById('music-overlay').style.display === 'flex') {
-                toggleMusic();
-            }
             gameRunning = !gameRunning;
             overlay.style.display = gameRunning ? 'flex' : 'none';
             if(gameRunning) {
@@ -474,165 +300,6 @@
         
         canvas.onclick = () => { 
             if(gameRunning) bird.v = -5; 
-        };
-        let allTracks = [];
-        const tracks = [
-            "silentdrzz - PIXY – Legacy",
-            "madk1d - последним летом",
-            "madk1d - Барыга",
-            "Aarne - CHRISTIAN POELL",
-            "VILLIAN - Случайно Наступил На Шприц",
-            "FORTUNA 812 - Простужен",
-            "madk1d - дырки в штанах",
-            "#вечныйкод - PARIS +паранойя",
-            "9mice - Anora",
-            "kidswaga - Цензура",
-            "tewiq - murder",
-            "dope17 - hennessy +3umph",
-            "Слава КПСС - Исаакий Флоу",
-            "NEWLIGHTCHILD - RIDER",
-            "AMIRICLUB - Показать им свет",
-            "Экзотик - ватсапп",
-            "unki - Репер ничо не может (feat. DooMee, MAYOT, Slatt Savage, luvdakash)",
-            "GLORY O'VISION - Not for Me",
-            "mumble - feel alive",
-            "lightprey - мудаком",
-            "королевский XVII - sv moscow",
-            "uglystephan - Школа не нужна",
-            "BOOKER - Пора завязывать",
-            "xxxmanera - Mood Down Paper Up",
-            "RLX - kmoe-wide eyes (feat. dltzk & juno)",
-            "2hollis - trauma",
-            "Джон Гарик - Престиж",
-            "Москва - Владивосток (feat. Heronwater)",
-            "madk1d - 8 миля",
-            "[ caesfleur ] - It Was A Good Day (Ice Cube)",
-            "otuka - never enough (2023)",
-            "madk1d - MARTINE ROSE",
-            "VVELVET - Ment Club // prod. by ICEAGE (speed up)",
-            "mumble - perkoset",
-            "kouru - на небесах",
-            "Baby Melo - ГАББА БАНДА (feat. Lida)",
-            "omelazz - молчи – kyNZai",
-            "илюха реп - нержавейка",
-            "Слава КПСС х BOOKER - Трюк на крыше небоскрёба",
-            "PLUSIX - Разлука",
-            "songleakerhiphop - DRAKE-TOOSIE SLIDE",
-            "Джон Гарик - Сиять",
-            "Baggo & Big Baby Tape — Got Realer",
-            "GONE.Fludd - OVERHEAVEN",
-            "OG Buda - Мода Летит Пиздец",
-            "@ilymeedy - samp freestyle",
-            "тгк:gdee13 - Интерпол",
-            "boibin - 1920s Ken Carson (Jennifer's Body)",
-            "tewiq - попал",
-            "osamason - Pop",
-            "BabyTron - Grab Yo Skates",
-            "PLUSIX - аромат цветов (все площадки)",
-            "формула - PROJECT F",
-            "BOOKER - ДЖАНК",
-            "фобия - JUST DAMN 2.0",
-            "Lil Moysi - Headliner",
-            "Слава КПСС - No, Thanks",
-            "STICKYFLOW - Плохому танцору",
-            "пазнякс - гавайская пицца",
-            "BOOKER - Время колокольчиков",
-            "STED.D - Ты Понял?",
-            "Noize MC - Вселенная бесконечна?",
-            "pyrokinesis - Я краснею при тебе как..."
-        ];
-        allTracks = tracks.map((track, index) => ({
-            original: track,
-            display: `${(index + 1).toString().padStart(2, '0')}. ${track}`,
-            searchable: track.toLowerCase(),
-            artist: track.split('-')[0]?.trim() || '',
-            title: track.split('-')[1]?.trim() || track
-        }));
-
-        function toggleMusic() {
-            const overlay = document.getElementById('music-overlay');
-            
-            if (document.getElementById('game-overlay').style.display === 'flex') {
-                toggleGame();
-            }
-            
-            if (overlay.style.display === 'flex') {
-                overlay.style.display = 'none';
-            } else {
-                overlay.style.display = 'flex';
-                setTimeout(() => {
-                    document.getElementById('search-input').focus();
-                }, 100);
-                filterTracks('');
-            }
-        }
-        function filterTracks(query) {
-            const trackListElement = document.getElementById('track-list');
-            const searchClear = document.getElementById('search-clear');
-            const trackCountElement = document.getElementById('track-count');
-            searchClear.style.display = query ? 'block' : 'none';
-            let filteredTracks;
-            if (!query) {
-                filteredTracks = allTracks;
-            } else {
-                const searchTerms = query.toLowerCase().split(' ').filter(term => term);
-                filteredTracks = allTracks.filter(track => {
-                    return searchTerms.every(term => 
-                        track.searchable.includes(term) ||
-                        track.artist.toLowerCase().includes(term) ||
-                        track.title.toLowerCase().includes(term)
-                    );
-                });
-            }
-            trackListElement.innerHTML = '';
-            
-            if (filteredTracks.length === 0) {
-                const li = document.createElement('li');
-                li.className = 'no-results';
-                li.textContent = '🎵 ничего не найдено';
-                li.onclick = null;
-                trackListElement.appendChild(li);
-            } else {
-                filteredTracks.forEach(track => {
-                    const li = document.createElement('li');
-                    li.textContent = track.display;
-                    li.onclick = () => {
-                        const searchQuery = encodeURIComponent(track.original);
-                        window.open(`https://www.google.com/search?q=${searchQuery}`, '_blank');
-                    };
-                    
-                    trackListElement.appendChild(li);
-                });
-            }
-            trackCountElement.textContent = `${filteredTracks.length} из ${allTracks.length} треков`;
-            const statusElement = document.getElementById('search-status');
-            if (query) {
-                statusElement.textContent = `🔍 найдено: ${filteredTracks.length}`;
-            } else {
-                statusElement.textContent = '';
-            }
-        }
-        function clearSearch() {
-            const searchInput = document.getElementById('search-input');
-            searchInput.value = '';
-            filterTracks('');
-            searchInput.focus();
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('search-input');
-            
-            searchInput.addEventListener('input', function(e) {
-                filterTracks(e.target.value);
-            });
-            
-            searchInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    clearSearch();
-                }
-            });
-        });
-        window.onload = function() {
-            filterTracks('');
         };
     </script>
 </body>
