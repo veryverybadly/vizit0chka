@@ -1,8 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 8rem;
+            font-weight: 300;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+
+        .glass-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 300px;
+            top: 10%;
+            left: -10%;
+            animation: move 20s infinite alternate;
+        }
+
+        .blob-2 {
+            width: 500px;
+            height: 400px;
+            bottom: -10%;
+            right: -5%;
+            animation: move 25s infinite alternate-reverse;
+        }
+
+        @keyframes move {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(100px, 50px) rotate(30deg); }
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            transition: 0.3s;
+            margin-top: 30px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        a:hover {
+            border-bottom-color: #fff;
+        }
+    </style>
 </head>
-бро чувак соси
+<body>
+
+    <div class="glass-wrapper">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <h1>404</h1>
+        <p>страница не найдена</p>
+        <a href="/">вернуться домой</a>
+    </div>
+
 </body>
 </html>
