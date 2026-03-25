@@ -1,7 +1,14 @@
-// Конфигурация пути
-const BASE_PATH = '/vizitOchka/tsots/';
+// Определяем базовый путь автоматически
+const getBasePath = () => {
+    const path = window.location.pathname;
+    if (path.includes('/vizitOchka/tsots/')) {
+        return '/vizitOchka/tsots/';
+    }
+    // Если сервис в корне
+    return '/';
+};
 
-// Ключ для хранения в localStorage
+const BASE_PATH = getBasePath();
 const STORAGE_KEY = 'tsotsi_links';
 
 // Загрузка существующих ссылок
@@ -44,11 +51,9 @@ function shortenUrl() {
     const errorDiv = document.getElementById('error');
     const resultDiv = document.getElementById('result');
 
-    // Скрываем предыдущие результаты
     errorDiv.classList.remove('show');
     resultDiv.classList.remove('show');
 
-    // Валидация URL
     if (!longUrl) {
         showError('Пожалуйста, введите ссылку');
         return;
@@ -61,7 +66,6 @@ function shortenUrl() {
 
     let shortCode;
 
-    // Обработка кастомного кода
     if (customCode) {
         if (!isValidCustomCode(customCode)) {
             showError('Кастомный код должен содержать только латиницу, цифры, - и _, длиной 3-20 символов');
@@ -75,13 +79,11 @@ function shortenUrl() {
 
         shortCode = customCode;
     } else {
-        // Генерируем уникальный код
         do {
             shortCode = generateShortCode();
         } while (links[shortCode]);
     }
 
-    // Сохраняем ссылку
     links[shortCode] = {
         url: longUrl,
         created: new Date().toISOString(),
@@ -94,7 +96,6 @@ function shortenUrl() {
     document.getElementById('shortUrl').value = fullUrl;
     resultDiv.classList.add('show');
 
-    // Очищаем поля
     document.getElementById('longUrl').value = '';
     document.getElementById('customCode').value = '';
 }
@@ -122,49 +123,50 @@ function copyToClipboard() {
     });
 }
 
-// Обработка перехода по короткой ссылке
+// Основная логика редиректа
 function handleRedirect() {
-    // Получаем путь после BASE_PATH
     const fullPath = window.location.pathname;
+    let shortCode = '';
     
-    // Проверяем, начинается ли путь с BASE_PATH
-    if (fullPath.startsWith(BASE_PATH)) {
-        const shortCode = fullPath.substring(BASE_PATH.length);
-        
-        // Если это корневая страница или admin
-        if (shortCode === '' || shortCode === 'index.html') {
-            return;
-        }
-        
-        // Если это админ-панель
-        if (shortCode === 'admin') {
-            showAdminPanel();
-            return;
-        }
-        
-        // Проверяем существование ссылки
-        if (links[shortCode]) {
-            // Увеличиваем счетчик кликов
-            links[shortCode].clicks++;
-            saveLinks();
-            
-            // Перенаправляем на оригинальный URL
-            window.location.href = links[shortCode].url;
-        } else if (shortCode && shortCode !== '') {
-            // Если ссылка не найдена, показываем страницу 404
-            document.body.innerHTML = `
-                <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-                    <h1 style="color: #667eea;">цоцы</h1>
+    // Определяем код из пути
+    if (fullPath.includes('/vizitOchka/tsots/')) {
+        shortCode = fullPath.replace('/vizitOchka/tsots/', '').replace(/\/$/, '');
+    } else if (fullPath !== '/' && !fullPath.includes('.')) {
+        shortCode = fullPath.substring(1);
+    }
+    
+    // Если это корень или index.html - ничего не делаем
+    if (shortCode === '' || shortCode === 'index.html') {
+        return;
+    }
+    
+    // Админ-панель
+    if (shortCode === 'admin') {
+        showAdminPanel();
+        return;
+    }
+    
+    // Проверяем существование ссылки
+    if (links[shortCode]) {
+        links[shortCode].clicks++;
+        saveLinks();
+        window.location.href = links[shortCode].url;
+    } else if (shortCode && shortCode !== '') {
+        // Показываем 404
+        document.body.innerHTML = `
+            <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+                <div style="background: white; border-radius: 20px; padding: 40px; max-width: 500px;">
+                    <h1 style="color: #667eea; font-size: 72px;">404</h1>
                     <h2>Ссылка не найдена 😕</h2>
                     <p>Короткая ссылка "${shortCode}" не существует или была удалена.</p>
-                    <a href="${BASE_PATH}" style="color: #667eea; text-decoration: none;">← Создать новую ссылку</a>
+                    <a href="${BASE_PATH}" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px;">Создать новую ссылку</a>
                 </div>
-            `;
-        }
+            </div>
+        `;
     }
 }
 
-// Админ-панель для просмотра статистики
+// Админ-панель
 function showAdminPanel() {
     const linksList = Object.entries(links);
     
@@ -185,86 +187,23 @@ function showAdminPanel() {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <base href="/">
             <title>цоцы - Админ панель</title>
             <style>
-                * {
-                    margin: 0;
-                    padding: 0;
-                    box-sizing: border-box;
-                }
-                body {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                    background: #f5f5f5;
-                    margin: 0;
-                    padding: 20px;
-                }
-                .container {
-                    max-width: 1200px;
-                    margin: 0 auto;
-                    background: white;
-                    border-radius: 10px;
-                    padding: 20px;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                }
-                h1 {
-                    color: #667eea;
-                    margin-bottom: 20px;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-                th, td {
-                    padding: 12px;
-                    text-align: left;
-                    border-bottom: 1px solid #e0e0e0;
-                }
-                th {
-                    background: #f8f9fa;
-                    font-weight: bold;
-                    color: #333;
-                }
-                tr:hover {
-                    background: #f8f9fa;
-                }
-                .badge {
-                    background: #28a745;
-                    color: white;
-                    padding: 3px 8px;
-                    border-radius: 5px;
-                    font-size: 12px;
-                }
-                .back-link {
-                    display: inline-block;
-                    margin-top: 20px;
-                    color: #667eea;
-                    text-decoration: none;
-                }
-                .short-link {
-                    color: #667eea;
-                    text-decoration: none;
-                }
-                .delete-btn {
-                    background: #dc3545;
-                    color: white;
-                    border: none;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    font-size: 12px;
-                }
-                .delete-btn:hover {
-                    background: #c82333;
-                }
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }
+                .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                h1 { color: #667eea; margin-bottom: 20px; }
+                table { width: 100%; border-collapse: collapse; }
+                th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+                th { background: #f8f9fa; font-weight: bold; }
+                tr:hover { background: #f8f9fa; }
+                .badge { background: #28a745; color: white; padding: 3px 8px; border-radius: 5px; font-size: 12px; }
+                .back-link { display: inline-block; margin-top: 20px; color: #667eea; text-decoration: none; }
+                .delete-btn { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+                .delete-btn:hover { background: #c82333; }
                 @media (max-width: 768px) {
-                    .container {
-                        padding: 10px;
-                    }
-                    th, td {
-                        padding: 8px;
-                        font-size: 12px;
-                    }
+                    .container { padding: 10px; }
+                    th, td { padding: 8px; font-size: 12px; }
                 }
             </style>
         </head>
@@ -273,13 +212,7 @@ function showAdminPanel() {
                 <h1>📊 цоцы - Статистика ссылок</h1>
                 <table>
                     <thead>
-                        <tr>
-                            <th>Короткий код</th>
-                            <th>Оригинальная ссылка</th>
-                            <th>Переходов</th>
-                            <th>Дата создания</th>
-                            <th>Действия</th>
-                        </tr>
+                        <tr><th>Короткий код</th><th>Оригинальная ссылка</th><th>Переходов</th><th>Дата создания</th><th>Действия</th></tr>
                     </thead>
                     <tbody>
     `;
@@ -320,11 +253,9 @@ function showAdminPanel() {
     document.close();
 }
 
-// Инициализация - запускаем после загрузки страницы
+// Запускаем обработку редиректа
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        handleRedirect();
-    });
+    document.addEventListener('DOMContentLoaded', handleRedirect);
 } else {
     handleRedirect();
 }
