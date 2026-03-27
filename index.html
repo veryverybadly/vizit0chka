@@ -7,7 +7,7 @@
     <title>vb</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,294 +15,88 @@
             box-sizing: border-box;
         }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-            padding: 20px;
-        }
-
-        .vhs-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        body {
             background: #050505;
-            z-index: -1;
+            color: #eee;
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+            line-height: 1.6;
         }
 
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Static_noise.png');
-            opacity: 0.08;
-            pointer-events: none;
-            z-index: 10;
+        .container {
+            max-width: 600px;
         }
 
-        .rating-box {
-            background: #fff;
-            border: 2px solid #fff;
-            display: flex;
-            flex-direction: row;
-            max-width: 650px;
-            width: 100%;
-            position: relative;
-            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        header {
+            margin-bottom: 40px;
         }
 
-        .rating-left {
-            background: #fff;
-            color: #000;
-            padding: 20px 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-right: 4px solid #000;
+        h1 {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: lowercase;
+            color: #666;
+            margin-bottom: 4px;
         }
 
-        .rating-left span {
-            font-size: 9rem;
-            font-weight: 900;
-            line-height: 0.8;
-            letter-spacing: -5px;
-        }
-
-        .rating-right {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            color: #000;
-        }
-
-        .rating-header {
-            border-bottom: 4px solid #000;
-            padding: 12px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .rating-header h1 {
-            font-size: 1.6rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .links-grid {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: #fff;
-        }
-
-        .links-grid a {
-            text-decoration: none;
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 5px 8px;
-            border: 1px solid transparent;
-            transition: all 0.1s;
-            cursor: pointer;
-            display: block;
-        }
-
-        .links-grid a:hover {
-            background: #000;
-            color: #fff;
-        }
-
-        .rating-footer {
-            border-top: 4px solid #000;
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            line-height: 1.2;
-            letter-spacing: 0.5px;
-        }
-
-        .clown-btn {
-            position: absolute;
-            bottom: -45px;
-            right: 0;
-            cursor: pointer;
-            font-size: 1.2rem;
-            filter: grayscale(1);
-            opacity: 0.3;
-            transition: opacity 0.3s;
-        }
-
-        .clown-btn:hover {
-            opacity: 1;
-        }
-
-        #game-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            z-index: 100;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-        }
-
-        canvas {
-            border: 2px solid #fff;
-            background: #000;
-        }
-
-        .close-btn {
-            margin-top: 20px;
-            color: #fff;
-            cursor: pointer;
-            text-transform: uppercase;
-            font-weight: 900;
-            border: 2px solid #fff;
-            padding: 10px 20px;
+        .nickname {
             font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #444;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #888;
+            font-size: 0.9rem;
+            width: fit-content;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        .footer-note {
+            margin-top: 60px;
+            font-size: 0.7rem;
+            color: #333;
+            max-width: 200px;
+            text-transform: lowercase;
         }
     </style>
 </head>
 <body>
 
-    <div class="vhs-bg"></div>
     <div class="noise"></div>
 
-    <div class="rating-box">
-        <div class="rating-left">
-            <span>R</span>
-        </div>
+    <div class="container">
+        <header>
+            <h1>restricted</h1>
+            <div class="nickname">@veryverybadly</div>
+        </header>
         
-        <div class="rating-right">
-            <div class="rating-header">
-                <h1>restricted</h1>
-                <span style="font-size: 0.6rem; font-weight: 900;">@VERYVERYBADLY</span>
-            </div>
-            
-            <div class="links-grid">
-                <a href="https://t.me/verybad_lyy" target="_blank">t.me/verybad_lyy</a>
-                <a href="https://t.me/badlyqb" target="_blank">t.me/badlyqb</a>
-                <a href="mailto:badlya_bad@xyecoc.com">email/badlya_bad</a>
-                <a href="https://goo.su/Sb7F2uw" target="_blank">github/badly</a>
-                <a href="ymcd">project/ymcd</a>
-                <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">oldsite/baadly</a>
-                <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities/lucky</a>
-                <a href="https://b4dly.is-a.dev/map" target="_blank">sitemap.html</a>
-            </div>
+        <nav>
+            <a href="https://t.me/verybad_lyy" target="_blank">t.me/verybad_lyy</a>
+            <a href="https://t.me/badlyqb" target="_blank">t.me/badlyqb</a>
+            <a href="mailto:badlya_bad@xyecoc.com">email/badlya_bad</a>
+            <a href="https://goo.su/Sb7F2uw" target="_blank">github/badly</a>
+            <a href="ymcd">project/ymcd</a>
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">oldsite/baadly</a>
+            <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities/lucky</a>
+            <a href="https://b4dly.is-a.dev/map" target="_blank">sitemap.xml</a>
+        </nav>
 
-            <div class="rating-footer">
-                under 17 requires accompanying<br>parent or adult guardian
-            </div>
+        <div class="footer-note">
+            under 17 requires accompanying parent or adult guardian
         </div>
-
-        <div class="clown-btn" onclick="toggleGame()">🤡</div>
     </div>
 
-    <div id="game-overlay">
-        <div id="score" style="font-size: 2rem; margin-bottom: 10px; font-weight: 900;">0</div>
-        <canvas id="birdGame" width="320" height="400"></canvas>
-        <div class="close-btn" onclick="toggleGame()">выход</div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('birdGame');
-        const ctx = canvas.getContext('2d');
-        let gameRunning = false;
-        
-        let bird = { x: 50, y: 200, v: 0, r: 8 };
-        let pipes = [];
-        let score = 0;
-        let frame = 0;
-
-        function toggleGame() {
-            const overlay = document.getElementById('game-overlay');
-            gameRunning = !gameRunning;
-            overlay.style.display = gameRunning ? 'flex' : 'none';
-            if(gameRunning) {
-                resetGame();
-                render();
-            }
-        }
-
-        function resetGame() {
-            bird.y = 200; bird.v = 0;
-            pipes = []; score = 0; frame = 0;
-            document.getElementById('score').innerText = score;
-        }
-
-        function render() {
-            if(!gameRunning) return;
-            
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            bird.v += 0.25;
-            bird.y += bird.v;
-            
-            ctx.fillStyle = '#fff';
-            ctx.beginPath();
-            ctx.arc(bird.x, bird.y, bird.r, 0, Math.PI*2);
-            ctx.fill();
-
-            if(frame % 90 === 0) {
-                let h = Math.random() * 200 + 50;
-                pipes.push({x: canvas.width, h: h, passed: false});
-            }
-
-            pipes.forEach((p, i) => {
-                p.x -= 2;
-                ctx.fillRect(p.x, 0, 40, p.h);
-                ctx.fillRect(p.x, p.h + 100, 40, canvas.height);
-
-                if(p.x < bird.x && !p.passed) {
-                    score++;
-                    p.passed = true;
-                    document.getElementById('score').innerText = score;
-                }
-
-                if(bird.y < 0 || bird.y > canvas.height || 
-                  (bird.x + bird.r > p.x && bird.x - bird.r < p.x + 40 && 
-                  (bird.y - bird.r < p.h || bird.y + bird.r > p.h + 100))) {
-                    resetGame();
-                }
-            });
-
-            pipes = pipes.filter(p => p.x > -40);
-            frame++;
-            requestAnimationFrame(render);
-        }
-
-        window.onkeydown = (e) => { 
-            if(e.code === 'Space' && gameRunning) {
-                e.preventDefault();
-                bird.v = -5;
-            } 
-        };
-        
-        canvas.onclick = () => { 
-            if(gameRunning) bird.v = -5; 
-        };
-    </script>
 </body>
 </html>
