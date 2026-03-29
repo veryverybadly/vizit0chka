@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>vb</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,163 +15,86 @@
         }
 
         body {
-            background: #000;
-            color: #eee;
+            background: #0a0a0a;
+            color: #bcbcbc;
             font-family: 'Spectral', serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            line-height: 1.6;
-            overflow: hidden;
-            position: relative;
         }
 
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
             width: 100%;
-            height: 100%;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Static_noise.png');
-            opacity: 0.05;
-            pointer-events: none;
-            z-index: 1;
+            max-width: 300px;
+            text-align: left;
+            padding: 20px;
         }
 
-        .glass-underlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            pointer-events: none;
-        }
-
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .video-background video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transform: scale(0.8);
-            filter: brightness(0.8);
-        }
-
-        ::selection {
-            background: #9000ff;
-            color: #fff;
-        }
-
-        .glass-card {
-            width: 320px;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 0 26px 13px rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-            z-index: 10;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-        }
-
-        .glass-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1px;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent, rgba(255, 255, 255, 0.2));
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 20px;
+            filter: grayscale(1) brightness(1.5);
+            opacity: 0.8;
         }
 
         header {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .nickname {
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            color: #9000ff;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: #fff;
             font-weight: 700;
             font-style: italic;
+            text-transform: lowercase;
         }
 
         nav {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1rem;
+            color: #666;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
             width: fit-content;
-            transition: all 0.3s ease;
         }
 
         a:hover {
-            color: #9000ff;
-            text-shadow: 0 0 10px rgba(144, 0, 255, 0.5);
-            transform: translateX(5px);
+            color: #fff;
+        }
+
+        .divider {
+            height: 1px;
+            width: 20px;
+            background: #333;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="noise"></div>
-    <div class="glass-underlay"></div>
-
-    <div class="video-background">
-        <video autoplay muted loop playsinline>
-            <source src="background.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="glass-card">
+    <div class="container">
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/gh-pages/svg/1f637.svg" alt="logo" class="logo">
+        
         <header>
             <div class="nickname">@veryverybadly</div>
         </header>
-        
+
         <nav>
-            <a href="/tg" target="_blank">/tg</a>
-            <a href="mailto:badlya_bad@xyecoc.com">email/badlya_bad</a>
-            <a href="https://goo.su/Sb7F2uw" target="_blank">github/badly</a>
-            <a href="ymcd">project/ymcd</a>
-            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">oldsite/baadly</a>
-            <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities/lucky</a>
+            <a href="/tg" target="_blank">tg</a>
+            <a href="mailto:badlya_bad@xyecoc.com">email</a>
+            <a href="https://goo.su/Sb7F2uw" target="_blank">github</a>
+            <div class="divider"></div>
+            <a href="ymcd">ymcd</a>
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">baadly-site</a>
+            <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities</a>
         </nav>
     </div>
 
