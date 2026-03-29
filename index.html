@@ -16,7 +16,7 @@
         }
 
         body {
-            background: #050505;
+            background: #000;
             color: #eee;
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
@@ -27,24 +27,41 @@
             overflow: hidden;
         }
 
+        /* видео на заднем плане */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* растягивает видео без искажений пропорций */
+        }
+
         ::selection {
             background: #9000ff;
             color: #fff;
         }
-        
+
         .glass-card {
             width: 320px;
             padding: 40px;
-            background: rgba(255, 255, 255, 0.11);
+            background: rgba(255, 255, 255, 0.07); /* чуть уменьшил прозрачность для лучшего вида видео */
             backdrop-filter: blur(50px);
             -webkit-backdrop-filter: blur(50px);
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
                 inset 0 -1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 0 26px 13px rgba(255, 255, 255, 0.1);
+                inset 0 0 26px 13px rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
             z-index: 10;
@@ -57,7 +74,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
         }
 
         .glass-card::after {
@@ -67,7 +84,7 @@
             left: 0;
             width: 1px;
             height: 100%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent, rgba(255, 255, 255, 0.3));
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent, rgba(255, 255, 255, 0.2));
         }
 
         header {
@@ -89,7 +106,7 @@
 
         a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
             width: fit-content;
             transition: all 0.3s ease;
@@ -108,13 +125,19 @@
             width: 100%;
             height: 100%;
             background: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Static_noise.png');
-            opacity: 0.05;
+            opacity: 0.04;
             pointer-events: none;
-            z-index: 1;
+            z-index: 5; /* шум теперь поверх видео, но под карточкой */
         }
     </style>
 </head>
 <body>
+
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="background.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div class="noise"></div>
 
