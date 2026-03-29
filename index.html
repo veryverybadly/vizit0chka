@@ -1,75 +1,135 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>contacts</title>
+    <title>vb</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            color: #eee;
+            font-family: 'Spectral', serif;
             min-height: 100vh;
-            background-color: #f5f7fa;
-            font-family: 'Roboto Flex', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
             overflow: hidden;
             position: relative;
         }
 
-        .bg-shapes {
-            position: absolute;
+        .noise {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(98, 0, 238, 0.08) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(3, 218, 198, 0.1) 0%, transparent 25%);
+            background: url('https://upload.wikimedia.org/wikipedia/commons/5/5a/Static_noise.png');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .bg-shapes::before {
+        .glass-underlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            pointer-events: none;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform: scale(0.8);
+            filter: brightness(0.8);
+        }
+
+        ::selection {
+            background: #9000ff;
+            color: #fff;
+        }
+
+        .glass-card {
+            width: 320px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 0 26px 13px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .glass-card::before {
             content: '';
             position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.02);
-            top: -50px;
-            right: -50px;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
         }
 
-        .card {
-            width: 240px;
-            height: 360px;
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 
-                0 4px 6px rgba(0, 0, 0, 0.02),
-                0 10px 20px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            padding: 24px;
-            box-sizing: border-box;
-            text-align: center;
-            justify-content: center;
-            border: 1px solid #edf0f5;
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent, rgba(255, 255, 255, 0.2));
         }
 
-        p {
-            font-size: 14px;
-            font-weight: 400;
-            color: #444;
-            line-height: 1.5;
-            margin-bottom: 30px;
+        header {
+            margin-bottom: 25px;
         }
 
-        .links-container {
+        .nickname {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: #9000ff;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        nav {
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -77,34 +137,45 @@
 
         a {
             text-decoration: none;
-            color: #6200ee; 
-            font-weight: 600;
-            font-size: 14px;
-            padding: 14px;
-            border-radius: 12px;
-            background: #f8f9ff; 
-            border: 1px solid #eee;
-            transition: all 0.2s ease;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            width: fit-content;
+            transition: all 0.3s ease;
         }
 
         a:hover {
-            background: #6200ee;
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(98, 0, 238, 0.2);
+            color: #9000ff;
+            text-shadow: 0 0 10px rgba(144, 0, 255, 0.5);
+            transform: translateX(5px);
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-shapes"></div>
+    <div class="noise"></div>
+    <div class="glass-underlay"></div>
 
-    <div class="card">
-        <p>мне постоянно сносят твинки в тг, поэтому вот вам все мои аккаунты в тг на данный момент</p>
-        <div class="links-container">
-            <a href="https://t.me/mrsasya_q" target="_blank">t.me/mrsasya_q</a>
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="background.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="glass-card">
+        <header>
+            <div class="nickname">@veryverybadly</div>
+        </header>
+        
+        <nav>
+            <a href="https://t.me/verybad_lyy" target="_blank">t.me/verybad_lyy</a>
             <a href="https://t.me/badlyqb" target="_blank">t.me/badlyqb</a>
-        </div>
+            <a href="mailto:badlya_bad@xyecoc.com">email/badlya_bad</a>
+            <a href="https://goo.su/Sb7F2uw" target="_blank">github/badly</a>
+            <a href="ymcd">project/ymcd</a>
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">oldsite/baadly</a>
+            <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities/lucky</a>
+            <a href="https://b4dly.is-a.dev/sitemap.xml" target="_blank">sitemap.xml</a>
+        </nav>
     </div>
 
 </body>
