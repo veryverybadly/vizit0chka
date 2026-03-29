@@ -6,7 +6,7 @@
     <title>vb</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -17,7 +17,7 @@
         body {
             background: #0a0a0a;
             color: #bcbcbc;
-            font-family: 'Spectral', serif;
+            font-family: 'Roboto', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -32,36 +32,40 @@
         }
 
         .logo {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             margin-bottom: 20px;
-            filter: grayscale(1) brightness(1.5);
-            opacity: 0.8;
+            display: block;
         }
 
         header {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .nickname {
-            font-size: 0.9rem;
-            letter-spacing: 0.05em;
+            font-size: 1rem;
             color: #fff;
             font-weight: 700;
-            font-style: italic;
-            text-transform: lowercase;
+        }
+
+        .about {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 8px;
+            line-height: 1.4;
         }
 
         nav {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
+            margin-top: 25px;
         }
 
         a {
             text-decoration: none;
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             transition: color 0.2s ease;
             width: fit-content;
         }
@@ -72,9 +76,9 @@
 
         .divider {
             height: 1px;
-            width: 20px;
-            background: #333;
-            margin: 20px 0;
+            width: 100%;
+            background: #222;
+            margin: 15px 0;
         }
     </style>
 </head>
@@ -85,15 +89,17 @@
         
         <header>
             <div class="nickname">@veryverybadly</div>
+            <p class="about">эээ... ну... я крутой...</p>
         </header>
 
+        <div class="divider"></div>
+
         <nav>
-            <a href="/tg" target="_blank">tg</a>
+            <a href="/tg" target="_blank">telegram</a>
             <a href="mailto:badlya_bad@xyecoc.com">email</a>
             <a href="https://goo.su/Sb7F2uw" target="_blank">github</a>
-            <div class="divider"></div>
-            <a href="ymcd">ymcd</a>
-            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">baadly-site</a>
+            <a href="ymcd">ymcd project</a>
+            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">old site</a>
             <a href="https://luckyworldweb.neocities.org/" target="_blank">neocities</a>
         </nav>
     </div>
