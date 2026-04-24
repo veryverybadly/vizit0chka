@@ -5,91 +5,344 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ymcd — artwork & music</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0a0a0a; color: #fff; font-family: -apple-system, system-ui, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
-        
-        .logo-container { position: fixed; top: 20px; left: 20px; z-index: 10; }
-        .logo-container img { height: 40px; display: block; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        .help-btn { position: fixed; top: 20px; right: 20px; width: 30px; height: 30px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #555; cursor: pointer; transition: 0.2s; z-index: 10; font-weight: bold; }
-        .help-btn:hover { border-color: #fff; color: #fff; }
+        body {
+            background: #1A1C19;
+            color: #E2E3DD;
+            font-family: 'Google Sans', -apple-system, system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 20px; max-width: 440px; width: 100%; text-align: left; border: 1px solid #222; max-height: 90vh; overflow-y: auto; }
-        
-        .card { width: 100%; max-width: 400px; padding: 30px; text-align: center; }
-        h1 { font-size: 32px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px; }
-        p { color: #555; font-size: 14px; margin-bottom: 30px; }
-        
-        .input-group { display: flex; flex-direction: column; gap: 12px; }
-        input { width: 100%; background: #111; border: 1px solid #222; padding: 16px; border-radius: 12px; color: #fff; font-size: 16px; outline: none; transition: 0.2s; }
-        input:focus { border-color: #fff; }
-        
-        .primary-btn { width: 100%; background: #fff; color: #000; border: none; padding: 16px; border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; }
-        .secondary-btn { width: 100%; background: #111; color: #fff; border: 1px solid #222; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 10px; transition: 0.2s; }
-        .primary-btn:hover, .secondary-btn:hover { opacity: 0.8; }
-        
-        #result { margin-top: 30px; display: none; }
-        canvas { width: 100%; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); margin-bottom: 20px; display: block; }
-        
-        .links-container { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-        .dl { color: #888; text-decoration: none; font-size: 14px; transition: 0.2s; cursor: pointer; }
-        .dl:hover { color: #fff; }
-        
-        #track-btn { background: #222; color: #fff; border: 1px solid #333; margin-top: 10px; display: none; }
-        .notice { margin-top: 40px; font-size: 11px; color: #333; line-height: 1.4; }
-        
-        .instruction-gif { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid #222; }
+        /* Material surfaces */
+        .card {
+            background: #212420;
+            border-radius: 48px;
+            padding: 32px;
+            width: 100%;
+            max-width: 560px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+        .logo-container img {
+    height: 40px;
+    display: block;
+    filter: brightness(0) saturate(100%) invert(78%) sepia(27%) saturate(513%) hue-rotate(52deg) brightness(92%) contrast(87%);
+    transition: filter 0.2s ease;
+}
+
+.logo-container img:hover {
+    filter: brightness(0) saturate(100%) invert(90%) sepia(30%) saturate(800%) hue-rotate(50deg) brightness(100%) contrast(95%);
+}
+        .help-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: #2D302C;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #C2C8BC;
+            cursor: pointer;
+            transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+            font-weight: 500;
+            font-size: 20px;
+            z-index: 10;
+        }
+        .help-btn:hover {
+            background: #3D423C;
+            color: #FFFFFF;
+        }
+
+        /* Modal Material */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: #212420;
+            padding: 32px;
+            border-radius: 48px;
+            max-width: 440px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .modal-content h2 {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            color: #E2E3DD;
+        }
+        .modal-content ul {
+            margin-left: 20px;
+            color: #C2C8BC;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .modal-content li {
+            margin-bottom: 10px;
+        }
+
+        .instruction-gif {
+            width: 100%;
+            border-radius: 28px;
+            margin-top: 16px;
+            border: 1px solid #3D423C;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: #E2E3DD;
+        }
+        .subtitle {
+            color: #96D391;
+            font-size: 14px;
+            margin-bottom: 32px;
+            font-weight: 500;
+        }
+        p {
+            color: #C2C8BC;
+            font-size: 14px;
+            margin-bottom: 28px;
+            line-height: 1.4;
+        }
+
+        /* Inputs */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        input {
+            background: #2D302C;
+            border: 1px solid #3D423C;
+            padding: 16px 20px;
+            border-radius: 40px;
+            color: #E2E3DD;
+            font-size: 16px;
+            font-family: 'Google Sans', sans-serif;
+            outline: none;
+            transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+        }
+        input:focus {
+            border-color: #96D391;
+            background: #353933;
+        }
+        input::placeholder {
+            color: #8A8F87;
+        }
+
+        /* Buttons Material */
+        .primary-btn {
+            background: #96D391;
+            color: #00390A;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            font-family: 'Google Sans', sans-serif;
+            cursor: pointer;
+            transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .primary-btn:hover {
+            background: #B1EFAB;
+            transform: scale(0.98);
+        }
+        .secondary-btn {
+            background: #2D302C;
+            color: #C2C8BC;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            font-family: 'Google Sans', sans-serif;
+            cursor: pointer;
+            transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .secondary-btn:hover {
+            background: #3D423C;
+            color: #FFFFFF;
+        }
+        .secondary-btn:active, .primary-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Result block */
+        #result {
+            margin-top: 32px;
+            display: none;
+        }
+        canvas {
+            width: 100%;
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            margin-bottom: 24px;
+            display: block;
+        }
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: stretch;
+        }
+        .dl {
+            background: #2D302C;
+            color: #C2C8BC;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .dl:hover {
+            background: #3D423C;
+            color: #FFFFFF;
+        }
+        #track-btn {
+            display: none;
+        }
+        .notice {
+            margin-top: 32px;
+            font-size: 11px;
+            color: #6B6F68;
+            text-align: center;
+            line-height: 1.4;
+            padding-top: 16px;
+            border-top: 1px solid #2D302C;
+        }
+
+        .flex-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .flex-btns .secondary-btn {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
 
 <div class="logo-container"><img src="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png" alt="logo"></div>
-<div class="help-btn" onclick="toggleModal('helpModal', true)">?</div>
+<div class="help-btn" onclick="toggleModal('helpModal', true)">
+    <span class="material-symbols-outlined" style="font-size: 22px;">help</span>
+</div>
 
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <h2>как пользоваться</h2>
-        <ul style="margin-left:20px; color:#888; font-size:14px;">
-            <li style="margin-bottom:10px">введите имя артиста и название трека.</li>
-            <li style="margin-bottom:10px">нажмите «find content» или клавишу enter.</li>
+        <ul>
+            <li>введите имя артиста и название трека.</li>
+            <li>нажмите «find content» или клавишу enter.</li>
             <li>скачайте обложку или сгенерированную карточку.</li>
         </ul>
-        <img src="https://i.postimg.cc/4y9W0wyk/qa-1.gif" class="instruction-gif">
-        <button class="primary-btn" style="margin-top:20px" onclick="toggleModal('helpModal', false)">понятно</button>
+        <img src="https://i.postimg.cc/4y9W0wyk/qa-1.gif" class="instruction-gif" alt="howto">
+        <button class="primary-btn" style="margin-top:24px; width:100%" onclick="toggleModal('helpModal', false)">понятно</button>
     </div>
 </div>
 
 <div id="builderModal" class="modal">
     <div class="modal-content">
         <h2 style="margin-bottom:20px">конструктор карточек</h2>
-        <div class="input-group">
-            <input type="file" id="customFile" accept="image/*" style="padding:10px">
+        <div class="input-group" style="margin-bottom:0">
+            <input type="file" id="customFile" accept="image/*" style="padding:12px 16px">
             <input type="text" id="customTitle" placeholder="заголовок (название)">
             <input type="text" id="customArtist" placeholder="подзаголовок (автор)">
             <button class="primary-btn" onclick="buildCustomCard()">сгенерировать</button>
-            <button class="secondary-btn" style="border:none" onclick="toggleModal('builderModal', false)">отмена</button>
+            <button class="secondary-btn" style="margin-top:8px" onclick="toggleModal('builderModal', false)">отмена</button>
         </div>
     </div>
 </div>
 
 <div class="card">
     <h1>ymcd</h1>
-    <p>введите название трека и автора</p>
+    <div class="subtitle">artwork & music</div>
 
     <div class="input-group">
         <input type="text" id="query" placeholder="например: linkin park numb" spellcheck="false">
-        <button id="search-btn" class="primary-btn" onclick="search()">find content</button>
-        <button class="secondary-btn" onclick="toggleModal('builderModal', true)">конструктор карточек</button>
+        <button id="search-btn" class="primary-btn" onclick="search()">
+            <span class="material-symbols-outlined">search</span>
+            find content
+        </button>
+        <div class="flex-btns">
+            <button class="secondary-btn" onclick="toggleModal('builderModal', true)">
+                <span class="material-symbols-outlined" style="font-size: 18px;">palette</span>
+                конструктор
+            </button>
+        </div>
     </div>
 
     <div id="result">
         <canvas id="cardCanvas" width="1000" height="1200"></canvas>
         <div class="links-container">
-            <a id="artwork-only" class="dl" href="#" target="_blank">download artwork only</a>
-            <span class="dl" onclick="downloadCard()">download track card (png)</span>
-            <button id="track-btn" class="primary-btn" onclick="downloadMp3()">download mp3</button>
+            <a id="artwork-only" class="dl" href="#" target="_blank">
+                <span class="material-symbols-outlined" style="font-size: 18px;">image</span>
+                download artwork only
+            </a>
+            <span class="dl" onclick="downloadCard()">
+                <span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                download track card (png)
+            </span>
+            <button id="track-btn" class="primary-btn" onclick="downloadMp3()">
+                <span class="material-symbols-outlined">music_note</span>
+                download mp3
+            </button>
         </div>
     </div>
 
@@ -111,7 +364,8 @@
         const btn = document.getElementById('search-btn');
 
         if (!q) return;
-        btn.innerText = 'searching...';
+        btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px; animation: spin 1s linear infinite;">progress_activity</span> searching...';
+        btn.disabled = true;
         trackBtn.style.display = 'none';
 
         try {
@@ -122,7 +376,7 @@
                 const track = itunesData.results[0];
                 const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
                 artLink.href = highResUrl;
-                artLink.style.display = 'block';
+                artLink.style.display = 'flex';
                 await drawCard(highResUrl, track.trackName, track.artistName);
                 res.style.display = 'block';
 
@@ -130,10 +384,15 @@
                 const jamendoData = await jamendoRes.json();
                 if (jamendoData.results?.length > 0) {
                     currentTrackUrl = jamendoData.results[0].audio;
-                    trackBtn.style.display = 'block';
+                    trackBtn.style.display = 'flex';
+                } else {
+                    currentTrackUrl = '';
                 }
             } else { alert('nothing found'); }
-        } catch (e) { alert('error'); } finally { btn.innerText = 'find content'; }
+        } catch (e) { alert('error'); } finally { 
+            btn.innerHTML = '<span class="material-symbols-outlined">search</span> find content';
+            btn.disabled = false;
+        }
     }
 
     function buildCustomCard() {
@@ -169,9 +428,9 @@
                 const grad = ctx.createLinearGradient(0, 700, 0, 1000);
                 grad.addColorStop(0, 'rgba(18,18,18,0)'); grad.addColorStop(1, '#121212');
                 ctx.fillStyle = grad; ctx.fillRect(0, 700, 1000, 300);
-                ctx.fillStyle = '#fff'; ctx.font = '900 60px system-ui';
+                ctx.fillStyle = '#ffffff'; ctx.font = '600 56px "Google Sans", system-ui';
                 ctx.fillText(title.toLowerCase(), 50, 1080);
-                ctx.fillStyle = '#555'; ctx.font = '500 40px system-ui';
+                ctx.fillStyle = '#96D391'; ctx.font = '500 38px "Google Sans", system-ui';
                 ctx.fillText(artist.toLowerCase(), 50, 1140);
                 resolve();
             };
@@ -191,5 +450,23 @@
     document.getElementById('query').addEventListener('keypress', (e) => { if (e.key === 'Enter') search(); });
 </script>
 
+<style>
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    button, .dl {
+        cursor: pointer;
+    }
+    .flex-btns .secondary-btn {
+        justify-content: center;
+    }
+    #artwork-only {
+        display: none;
+    }
+</style>
 </body>
 </html>
