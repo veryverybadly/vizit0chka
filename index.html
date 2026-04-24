@@ -3,118 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vb</title>
+    <title>veryverybadly</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
     <style>
+        :root {
+            --md-sys-color-primary: #a8c9a6;
+            --md-sys-color-on-primary: #2a3b28;
+            --md-sys-color-primary-container: #c8dec6;
+            --md-sys-color-on-primary-container: #1a2e18;
+            --md-sys-color-surface: #f5f3ef;
+            --md-sys-color-surface-container: #ffffff;
+            --md-sys-color-on-surface: #3a3c38;
+            --md-sys-color-surface-variant: #e8e6e2;
+            --md-sys-color-on-surface-variant: #6b6a65;
+            --duration: 300ms;
+            --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+        }
+
         * {
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            background: #0a0a0a;
-            color: #bcbcbc;
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            font-family: 'Google Sans', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            background-color: var(--md-sys-color-surface-container);
+            padding: 32px 25px;
+            border-radius: 56px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 480px;
+            max-width: 95vw;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
         }
 
         .container {
+            width: 400px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .avatar-wrapper {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 16px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #e0ded9;
+        }
+
+        .avatar-img {
             width: 100%;
-            max-width: 300px;
-            text-align: left;
-            padding: 20px;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
         }
 
-        .logo {
-            width: 42px;
-            height: 42px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        header {
-            margin-bottom: 25px;
+        h1 {
+            font-weight: 500;
+            font-size: 1.8rem;
+            margin: 0;
+            line-height: 1;
+            color: var(--md-sys-color-on-surface);
         }
 
         .nickname {
-            font-size: 1rem;
-            color: #fff;
-            font-weight: 700;
-        }
-
-        .about {
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 6px 0 4px 0;
             font-size: 0.9rem;
-            color: #888;
-            margin-top: 8px;
-            line-height: 1.4;
+            font-weight: 400;
         }
 
-        nav {
+        .bio {
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 0 0 24px 0;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        .links-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 25px;
+            margin-bottom: 8px;
         }
 
-        a {
+        .link-btn {
+            background-color: var(--md-sys-color-surface-variant);
+            color: var(--md-sys-color-on-surface-variant);
             text-decoration: none;
-            color: #666;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-            width: fit-content;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: 
+                background-color var(--duration) var(--easing-standard),
+                color var(--duration) var(--easing-standard),
+                border-radius 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            border-radius: 28px;
         }
 
-        a:hover {
-            color: #fff;
+        .link-btn .material-symbols-outlined {
+            font-size: 22px;
+            width: 26px;
+        }
+
+        .link-btn span:last-child {
+            flex: 1;
+            text-align: left;
+        }
+
+        .link-btn:hover {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+        }
+
+        .link-btn:active {
+            border-radius: 40px;
         }
 
         .divider {
             height: 1px;
             width: 100%;
-            background: #222;
-            margin: 15px 0;
+            background: rgba(0,0,0,0.08);
+            margin: 20px 0 16px 0;
         }
+
         .footer-text {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 0.7rem;
-    color: #444;
-    letter-spacing: 0.05em;
-}
+            text-align: center;
+            font-size: 0.65rem;
+            color: #aaa8a3;
+            letter-spacing: 0.05em;
+            margin-top: 20px;
+        }
+
+        .footer-text a {
+            color: #b0aea9;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-text a:hover {
+            color: var(--md-sys-color-primary);
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="https://raw.githubusercontent.com/twitter/twemoji/gh-pages/svg/1f637.svg" alt="logo" class="logo">
-        
-        <header>
-            <div class="nickname">@veryverybadly</div>
-            <p class="about">эээ... ну... я крутой...</p>
-        </header>
+    <div class="page-wrapper">
+        <div class="container">
+            <div class="avatar-wrapper">
+                <img src="https://raw.githubusercontent.com/twitter/twemoji/gh-pages/svg/1f637.svg" alt="logo" class="avatar-img">
+            </div>
 
-        <div class="divider"></div>
+            <h1>veryverybadly</h1>
+            <p class="nickname">@veryverybadly</p>
+            <p class="bio">эээ... ну... я крутой...</p>
 
-        <nav>
-            <a href="/tg" target="_blank">telegram</a>
-            <a href="mailto:badlya_bad@xyecoc.com">email</a>
-            <a href="https://goo.su/Sb7F2uw" target="_blank">github</a>
-            <a href="ymcd">ymcd project</a>
-            <a href="https://veryverybadly.github.io/baadly-site/" target="_blank">old site</a>
-            <a href="/ip" target="_blank">WATCH UR FCKNG IP</a>
-        </nav>
+            <div class="links-group">
+                <a href="/tg" target="_blank" class="link-btn">
+                    <span class="material-symbols-outlined">send</span>
+                    <span>Telegram</span>
+                </a>
+                <a href="mailto:badlya_bad@xyecoc.com" class="link-btn">
+                    <span class="material-symbols-outlined">mail</span>
+                    <span>Email</span>
+                </a>
+                <a href="https://goo.su/Sb7F2uw" target="_blank" class="link-btn">
+                    <span class="material-symbols-outlined">code</span>
+                    <span>GitHub</span>
+                </a>
+                <a href="ymcd" class="link-btn">
+                    <span class="material-symbols-outlined">folder_special</span>
+                    <span>ymcd project</span>
+                </a>
+                <a href="https://veryverybadly.github.io/baadly-site/" target="_blank" class="link-btn">
+                    <span class="material-symbols-outlined">history</span>
+                    <span>Old site</span>
+                </a>
+                <a href="/ip" target="_blank" class="link-btn">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <span>WATCH UR FCKNG IP</span>
+                </a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="footer-text">
+                <a href="https://github.com/twitter/twemoji" target="_blank">using twemoji</a>
+            </div>
+        </div>
     </div>
 
 </body>
-    <footer class="footer-text">
-    <a href="https://github.com/twitter/twemoji">im use twemoji in favicon and logo</a>
-</footer>
 </html>
