@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>ymcd — artwork & music</title>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/t4gMqRZM/ymcd-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +25,7 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
+            position: relative;
         }
 
         /* Material surfaces */
@@ -37,32 +38,41 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
+        /* Логотип с растянутой буквой M строго в левом верхнем углу */
+        .logo-container {
+            position: fixed;
+            top: 24px;
+            left: 24px;
+            z-index: 1000;
+        }
+        
         .m-logo {
-    width: 40px;
-    height: 40px;
-    background: #2D302C;
-    border-radius: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: 600;
-    color: #96D391;
-    transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
-    cursor: default;
-}
+            font-family: 'Google Sans', -apple-system, system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 36px;
+            letter-spacing: 4px;
+            color: #96D391;
+            background: transparent;
+            transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+            cursor: default;
+            display: inline-block;
+            transform: scaleX(1.15);
+            transform-origin: left center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
 
-.m-logo:hover {
-    background: #3D423C;
-    color: #B1EFAB;
-    transform: scale(0.98);
-}
+        .m-logo:hover {
+            color: #B1EFAB;
+            transform: scaleX(1.2);
+            letter-spacing: 5px;
+        }
+
         .help-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
+            top: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
             background: #2D302C;
             border-radius: 28px;
             display: flex;
@@ -72,12 +82,14 @@
             cursor: pointer;
             transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
             font-weight: 500;
-            font-size: 20px;
-            z-index: 10;
+            font-size: 22px;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .help-btn:hover {
             background: #3D423C;
             color: #FFFFFF;
+            transform: scale(0.96);
         }
 
         /* Modal Material */
@@ -89,7 +101,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.85);
-            z-index: 100;
+            z-index: 2000;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -279,12 +291,43 @@
         .flex-btns .secondary-btn {
             flex: 1;
         }
+        
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 560px) {
+            .logo-container {
+                top: 16px;
+                left: 16px;
+            }
+            .m-logo {
+                font-size: 30px;
+                letter-spacing: 3px;
+                transform: scaleX(1.1);
+            }
+            .help-btn {
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+            }
+            .card {
+                padding: 24px;
+            }
+            h1 {
+                font-size: 30px;
+            }
+        }
     </style>
 </head>
 <body>
 
+<!-- Логотип с растянутой буквой M строго слева вверху -->
 <div class="logo-container">
     <div class="m-logo">M</div>
+</div>
+
+<!-- Кнопка помощи справа вверху -->
+<div class="help-btn" onclick="toggleModal('helpModal', true)">
+    <span class="material-symbols-outlined" style="font-size: 22px;">help</span>
 </div>
 
 <div id="helpModal" class="modal">
@@ -356,44 +399,68 @@
     let currentTrackUrl = '';
 
     function toggleModal(id, show) {
-        document.getElementById(id).style.display = show ? 'flex' : 'none';
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.style.display = show ? 'flex' : 'none';
+        }
     }
 
     async function search() {
-        const q = document.getElementById('query').value;
+        const q = document.getElementById('query').value.trim();
         const res = document.getElementById('result');
         const artLink = document.getElementById('artwork-only');
         const trackBtn = document.getElementById('track-btn');
         const btn = document.getElementById('search-btn');
 
         if (!q) return;
+        
+        // Disable button and show loading state
+        const originalBtnHTML = btn.innerHTML;
         btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px; animation: spin 1s linear infinite;">progress_activity</span> searching...';
         btn.disabled = true;
         trackBtn.style.display = 'none';
+        artLink.style.display = 'none';
 
         try {
+            // First try iTunes API
             const itunesRes = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=song&limit=1`);
             const itunesData = await itunesRes.json();
 
-            if (itunesData.results.length > 0) {
+            if (itunesData.results && itunesData.results.length > 0) {
                 const track = itunesData.results[0];
-                const highResUrl = track.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
+                // Get high-res artwork (1000x1000)
+                let highResUrl = track.artworkUrl100;
+                if (highResUrl) {
+                    highResUrl = highResUrl.replace('100x100bb.jpg', '1000x1000bb.jpg');
+                }
                 artLink.href = highResUrl;
                 artLink.style.display = 'flex';
                 await drawCard(highResUrl, track.trackName, track.artistName);
                 res.style.display = 'block';
 
-                const jamendoRes = await fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
-                const jamendoData = await jamendoRes.json();
-                if (jamendoData.results?.length > 0) {
-                    currentTrackUrl = jamendoData.results[0].audio;
-                    trackBtn.style.display = 'flex';
-                } else {
+                // Try to get mp3 from Jamendo (optional)
+                try {
+                    const jamendoRes = await fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
+                    const jamendoData = await jamendoRes.json();
+                    if (jamendoData.results && jamendoData.results.length > 0) {
+                        currentTrackUrl = jamendoData.results[0].audio;
+                        trackBtn.style.display = 'flex';
+                    } else {
+                        currentTrackUrl = '';
+                    }
+                } catch (jamendoErr) {
+                    console.warn("Jamendo fetch failed", jamendoErr);
                     currentTrackUrl = '';
                 }
-            } else { alert('nothing found'); }
-        } catch (e) { alert('error'); } finally { 
-            btn.innerHTML = '<span class="material-symbols-outlined">search</span> find content';
+            } else {
+                alert('Nothing found. Try another query.');
+                res.style.display = 'none';
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Network error or service unavailable. Please try again later.');
+        } finally { 
+            btn.innerHTML = originalBtnHTML;
             btn.disabled = false;
         }
     }
@@ -403,17 +470,23 @@
         const title = document.getElementById('customTitle').value || 'untitled';
         const artist = document.getElementById('customArtist').value || 'unknown';
         
-        if (!file) return alert('select image');
+        if (!file) {
+            alert('Please select an image file first.');
+            return;
+        }
         
         const reader = new FileReader();
         reader.onload = async (e) => {
-            document.getElementById('artwork-only').style.display = 'none';
+            // Hide artwork-only link because it's a custom image
+            const artLink = document.getElementById('artwork-only');
+            artLink.style.display = 'none';
             document.getElementById('track-btn').style.display = 'none';
             await drawCard(e.target.result, title, artist);
             document.getElementById('result').style.display = 'block';
             toggleModal('builderModal', false);
             document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         };
+        reader.onerror = () => alert('Failed to read image file');
         reader.readAsDataURL(file);
     }
 
@@ -421,36 +494,81 @@
         const canvas = document.getElementById('cardCanvas');
         const ctx = canvas.getContext('2d');
         const img = new Image();
-        img.crossOrigin = "anonymous";
+        img.crossOrigin = "Anonymous";
         
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             img.onload = () => {
-                ctx.fillStyle = '#121212';
-                ctx.fillRect(0, 0, 1000, 1200);
-                ctx.drawImage(img, 0, 0, 1000, 1000);
-                const grad = ctx.createLinearGradient(0, 700, 0, 1000);
-                grad.addColorStop(0, 'rgba(18,18,18,0)'); grad.addColorStop(1, '#121212');
-                ctx.fillStyle = grad; ctx.fillRect(0, 700, 1000, 300);
-                ctx.fillStyle = '#ffffff'; ctx.font = '600 56px "Google Sans", system-ui';
-                ctx.fillText(title.toLowerCase(), 50, 1080);
-                ctx.fillStyle = '#96D391'; ctx.font = '500 38px "Google Sans", system-ui';
-                ctx.fillText(artist.toLowerCase(), 50, 1140);
-                resolve();
+                try {
+                    // Dark background
+                    ctx.fillStyle = '#121212';
+                    ctx.fillRect(0, 0, 1000, 1200);
+                    // Draw album artwork (square)
+                    ctx.drawImage(img, 0, 0, 1000, 1000);
+                    // Gradient overlay for better text readability
+                    const grad = ctx.createLinearGradient(0, 700, 0, 1000);
+                    grad.addColorStop(0, 'rgba(18,18,18,0.2)');
+                    grad.addColorStop(0.6, '#121212');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 700, 1000, 500);
+                    // Title text
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.font = '600 56px "Google Sans", system-ui, sans-serif';
+                    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                    ctx.shadowBlur = 8;
+                    const titleText = title.length > 35 ? title.substring(0, 32) + '...' : title;
+                    ctx.fillText(titleText.toLowerCase(), 50, 1080);
+                    // Artist text
+                    ctx.fillStyle = '#96D391';
+                    ctx.font = '500 38px "Google Sans", system-ui, sans-serif';
+                    const artistText = artist.length > 40 ? artist.substring(0, 37) + '...' : artist;
+                    ctx.fillText(artistText.toLowerCase(), 50, 1140);
+                    ctx.shadowColor = 'transparent';
+                    resolve();
+                } catch (err) {
+                    reject(err);
+                }
+            };
+            img.onerror = () => {
+                console.error("Image failed to load");
+                reject(new Error("Image loading failed"));
             };
             img.src = imgUrl;
         });
     }
 
     function downloadCard() {
-        const link = document.createElement('a');
-        link.download = 'track-card.png';
-        link.href = document.getElementById('cardCanvas').toDataURL('image/png');
-        link.click();
+        const canvas = document.getElementById('cardCanvas');
+        try {
+            const link = document.createElement('a');
+            link.download = 'ymcd-track-card.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        } catch (err) {
+            console.error("Download error", err);
+            alert("Could not generate image. Please try again.");
+        }
     }
 
-    function downloadMp3() { if (currentTrackUrl) window.open(currentTrackUrl, '_blank'); }
+    function downloadMp3() { 
+        if (currentTrackUrl) {
+            window.open(currentTrackUrl, '_blank');
+        } else {
+            alert("No preview available for this track.");
+        }
+    }
 
-    document.getElementById('query').addEventListener('keypress', (e) => { if (e.key === 'Enter') search(); });
+    // Enter key support
+    document.getElementById('query').addEventListener('keypress', (e) => { 
+        if (e.key === 'Enter') search(); 
+    });
+    
+    // Close modals on background click (optional)
+    window.onclick = function(event) {
+        const helpModal = document.getElementById('helpModal');
+        const builderModal = document.getElementById('builderModal');
+        if (event.target === helpModal) toggleModal('helpModal', false);
+        if (event.target === builderModal) toggleModal('builderModal', false);
+    };
 </script>
 
 <style>
@@ -463,12 +581,20 @@
     }
     button, .dl {
         cursor: pointer;
+        user-select: none;
     }
     .flex-btns .secondary-btn {
         justify-content: center;
     }
     #artwork-only {
         display: none;
+    }
+    /* Дополнительная плавность */
+    .card, .modal-content, .primary-btn, .secondary-btn, .dl, input {
+        transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+    }
+    canvas {
+        background: #121212;
     }
 </style>
 </body>
