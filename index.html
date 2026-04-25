@@ -220,6 +220,47 @@
             </div>
         </div>
     </div>
+<!-- Music Player -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <button id="musicToggleBtn" style="
+        background-color: var(--md-sys-color-surface-container);
+        border: none;
+        border-radius: 40px;
+        padding: 12px 18px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: 'Google Sans', sans-serif;
+        color: var(--md-sys-color-on-surface);
+        transition: all 0.2s ease;
+    ">
+        <span class="material-symbols-outlined" id="musicIcon">music_note</span>
+        <span id="musicText" style="font-size: 0.8rem;">Play music</span>
+    </button>
+</div>
 
+<script>
+    const audio = new Audio('/music/index.mp3');
+    audio.loop = true;
+    let isPlaying = false;
+    const btn = document.getElementById('musicToggleBtn');
+    const icon = document.getElementById('musicIcon');
+    const text = document.getElementById('musicText');
+
+    btn.addEventListener('click', () => {
+        if (isPlaying) {
+            audio.pause();
+            icon.textContent = 'music_note';
+            text.textContent = 'Play music';
+        } else {
+            audio.play().catch(e => console.log('Audio play failed:', e));
+            icon.textContent = 'music_off';
+            text.textContent = 'Pause';
+        }
+        isPlaying = !isPlaying;
+    });
+</script>
 </body>
 </html>
