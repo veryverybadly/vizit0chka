@@ -438,33 +438,17 @@
                 await drawCard(highResUrl, track.trackName, track.artistName);
                 res.style.display = 'block';
 
-                // Try to get mp3 from Jamendo (optional)
-                try {
-                    const jamendoRes = await fetch(`https://api.jamendo.com/v3.0/tracks/?client_id=56d30cce&format=json&limit=1&search=${encodeURIComponent(q)}`);
-                    const jamendoData = await jamendoRes.json();
-                    if (jamendoData.results && jamendoData.results.length > 0) {
-                        currentTrackUrl = jamendoData.results[0].audio;
-                        trackBtn.style.display = 'flex';
-                    } else {
-                        currentTrackUrl = '';
-                    }
-                } catch (jamendoErr) {
-                    console.warn("Jamendo fetch failed", jamendoErr);
-                    currentTrackUrl = '';
-                }
-            } else {
-                alert('Nothing found. Try another query.');
-                res.style.display = 'none';
-            }
-        } catch (e) {
-            console.error(e);
-            alert('Network error or service unavailable. Please try again later.');
-        } finally { 
-            btn.innerHTML = originalBtnHTML;
-            btn.disabled = false;
-        }
+                async function getDemoAudio(query) {
+    
+    try {
+        
+        const fallbackRes = await fetch(`https://api.allorigins.win/raw?url=https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3`);
+        
+        return 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+    } catch(e) {
+        return null;
     }
-
+}
     function buildCustomCard() {
         const file = document.getElementById('customFile').files[0];
         const title = document.getElementById('customTitle').value || 'untitled';
