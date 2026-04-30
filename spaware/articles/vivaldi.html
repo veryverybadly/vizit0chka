@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="application/xhtml+xml;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Vivaldi — Spyware Watchdog</title>
+    <link rel="stylesheet" href="../style.css"/>
+  </head>
+  <body>
+    <div class="case">
+      <div class="nav"><a href="index.html">&larr; Catalog</a></div>
+      <div class="main">
+        <img src="../images/vivaldi_logo.png" alt="vivaldi logo"/>
+        <h1>Vivaldi</h1>
+        <p>Vivaldi is a feature-full, customizable web browser made by some of Opera's old developers (since they were dissatisfied with the direction Opera was heading).  Just like modern Opera, it is based on Chromium.</p>
+        <p>Version tested: 5.2.2623.48</p>
+        <h2>Spyware Level: <span class="orange">High</span></h2>
+        <p>Vivaldi makes about 119 requests on startup, and continues to make unsolicited connections after. Anti-privacy <a href="../articles/bing.html">Bing</a> is the default search engine.</p>
+        <img class="screenshot" src="../images/vivaldi_spyware2.png"/>
+        <p>Even if you disable everything under "Google Services" and "Google Extensions" under "Privacy" in settings, it will still make automatic connections to Google.  Also makes connections after first start up to <code>mirmir.vivaldi.com</code> and <code>downloads.vivaldi.com</code>.</p>
+        <h3>Vivaldi's web pages are Cloudflared</h3>
+        <p>You will be blocked if using Tor, and be connected to <code>hcaptcha.cloudflare.org</code>.  You can disable this by simply changing the homepage.</p>
+        <img class="screenshot" src="../images/vivaldi_spyware3.png"/>
+        <h3>Vivaldi Assigns you a unique ID</h3>
+        <p>From the Privacy Policy: <i>"When you install Vivaldi browser (“Vivaldi”), each installation profile is assigned a unique user ID that is stored on your computer. Vivaldi will send a message using HTTPS directly to our servers located in Iceland every 24 hours containing this ID, version, cpu architecture, screen resolution and time since last message. We anonymize the IP address of Vivaldi users by removing the last octet of the IP address from your Vivaldi client then we store the resolved approximate location after using a local geoip lookup. The purpose of this collection is to determine the total number of active users and their geographical distribution".</i><sup><a href="s1">[1]</a></sup></p>
+        <h3>Cannot be built from source code</h3>
+        <p>"However, it is only our Chromium work that is found on https://vivaldi.com/source. If you were to build it and run it, nothing will display as the HTML/CSS/JS UI is missing. This UI is only available as part of our end user packages, which is covered by the EULA (in which we also bundle with a compiled version of our modified Chromium)."<sup><a href="#s2">[2]</a></sup></p>
+      </div>
+      <hr/>
+      <div class="footer">
+        <div class="sources">
+          <h4>Sources:</h4>
+          <ol>
+            <li id="s1"><a href="https://vivaldi.com/privacy/browser/">Vivaldi Browser privacy policy</a> <a href="http://web.archive.org/web/20220516054340/https://vivaldi.com/privacy/browser/">[web.archive.org]</a></li>
+            <li id="s2"><a href="https://www.reddit.com/r/vivaldibrowser/comments/62adz5/the_vivaldi_source_code_license_and_the_eula/dfn7ltm/">The Vivaldi source code license and the EULA appear to conflict with each other...</a> <a href="https://web.archive.org/web/20180410043927/https://www.reddit.com/r/vivaldibrowser/comments/62adz5/the_vivaldi_source_code_license_and_the_eula/dfn7ltm/">[web.archive.org]</a> <a href="http://archive.li/ZoRUx">[archive.li]</a></li>
+          </ol>
+        </div>
+        <hr/>
+        <b>This article was created on 11/25/2017</b>
+        <br/>
+        <b>This article was last edited on 5/31/2022</b>
+        <p>If you want to edit this article, or contribute your own article(s), visit us at the git repo on <a href="https://codeberg.org/shadow/SpywareWatchdog">Codeberg</a>.</p>
+        <p>All contributions must be licensed under the CC0 license to be accepted.</p>
+        <a href="../LICENSE.txt"><img class="icon" src="../images/cc0.png" alt="CC0 License"/></a>
+      </div>
+    </div>
+  </body>
+</html>
