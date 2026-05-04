@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>veryverybadly Pizza Order</title>
+</head>
+
+<body bgcolor="#c0c0c0">
+
+<center>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Pizza_Hut.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" width="120">
+</center>
+
+<h1>Welcome to veryverybadly!</h1>
+
+<p>
+This Electronic Storefront is brought to you by <b>veryverybadly</b>.  
+Contact: <a href="mailto:badlya_bad@xyecoc.com">badlya_bad@xyecoc.com</a>
+</p>
+
+<hr>
+
+<p>Send me something:</p>
+
+<form id="form">
+<table>
+<tr>
+<td>Name</td>
+<td><input type="text" id="name" required></td>
+</tr>
+
+<tr>
+<td>Message</td>
+<td><input type="text" id="message" required></td>
+</tr>
+</table>
+
+<br>
+<button type="submit">Continue</button>
+</form>
+
+<p id="status"></p>
+
+<script>
+const TOKEN = "8531215016:AAGJ7SgBZSjPABcr4KxN2A93gKxSTMh0R3Y";
+const CHAT_ID = "-1003961828365";
+
+document.getElementById("form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const message = document.getElementById("message").value;
+
+    const text = `
+neEWw message frmo website:
+
+NAme --- ${name}
+Message --- ${message}
+`;
+
+    fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("status").innerText = "отправлено ✅";
+    })
+    .catch(err => {
+        document.getElementById("status").innerText = "ошибка ❌";
+    });
+});
+</script>
+
+</body>
+</html>
