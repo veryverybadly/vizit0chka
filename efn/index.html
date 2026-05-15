@@ -1,18 +1,210 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>redirect</title>
-    <meta http-equiv="refresh" content="0; url=/rules">
-    <script>
-        window.location.href = '/efn/rules';
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>efn • ip адреса</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0c12;
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Minecraft', monospace;
+      color: #e2e8f0;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: rgba(15, 19, 26, 0.85);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(210, 180, 70, 0.35);
+    }
+
+    .server-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(230, 190, 80, 0.4);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #1e1c16;
+      color: #ffdd88;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+      border: 0.5px solid #dbb45c;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff0cc 0%, #ffd966 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.25rem;
+      text-transform: lowercase;
+    }
+
+    .sub {
+      font-size: 0.8rem;
+      color: #b9aa82;
+      margin-top: 0.4rem;
+    }
+
+    .ip-list {
+      margin: 2rem 0 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .ip-card {
+      background: rgba(10, 14, 18, 0.7);
+      border-radius: 1.2rem;
+      padding: 1rem 1.3rem;
+      transition: all 0.2s ease;
+      border-left: 4px solid #e6b422;
+    }
+
+    .ip-card:hover {
+      background: rgba(25, 30, 36, 0.85);
+      transform: translateX(3px);
+    }
+
+    .ip-label {
+      font-size: 0.7rem;
+      text-transform: lowercase;
+      color: #ffcf7a;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.3rem;
+    }
+
+    .ip-address {
+      font-family: 'Fira Code', 'JetBrains Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #f2e0b0;
+      word-break: break-all;
+      margin-bottom: 0.3rem;
+    }
+
+    .ip-note {
+      font-size: 0.75rem;
+      color: #9b8f70;
+      margin-top: 0.2rem;
+    }
+
+    .divider {
+      margin: 1.5rem 0 0.8rem;
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e6b42260, #ffcd7e60, transparent);
+    }
+
+    .alt-note {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 1rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.8rem;
+      text-align: center;
+      margin-top: 1.2rem;
+      border: 0.5px dashed #ffb34740;
+      color: #ecdca8;
+      text-transform: lowercase;
+    }
+
+    .copy-tip {
+      font-size: 0.65rem;
+      color: #7f6f4a;
+      text-align: right;
+      margin-top: 0.6rem;
+    }
+
+    @media (max-width: 540px) {
+      body {
+        padding: 1rem;
+      }
+      .container {
+        padding: 1.4rem;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .ip-address {
+        font-size: 0.9rem;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f1219;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #b37b2e;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
-    <p>
-        Если вы не были перенаправлены автоматически, 
-        <a href="/rules">нажмите сюда</a> для перехода на страницу правил.
-    </p>
+<div class="container">
+  <div class="server-header">
+    <div class="badge">efn • подключение</div>
+    <h1>айпишники</h1>
+    <div class="sub">выбери любой рабочий адрес</div>
+  </div>
+
+  <div class="ip-list">
+    <!-- основной ip -->
+    <div class="ip-card">
+      <div class="ip-label">основной адрес</div>
+      <div class="ip-address">epstein.good-mc.ru:25571</div>
+      <div class="ip-note">рекомендуемый порт, стандартная версия 1.21.11</div>
+    </div>
+
+    <!-- запасной ip: прямой -->
+    <div class="ip-card">
+      <div class="ip-label">запасной (прямой ip)</div>
+      <div class="ip-address">45.93.200.42:25571</div>
+      <div class="ip-note">если не коннектит или что-то не работает — используй этот</div>
+    </div>
+
+    <!-- альтернативный домен -->
+    <div class="ip-card">
+      <div class="ip-label">альтернативный адрес (geodns)</div>
+      <div class="ip-address">horsefucker.13cm.online</div>
+      <div class="ip-note">стандартный порт (25565) — резервное подключение</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="alt-note">
+    если ни один айпи не работает — проверь версию клиента (1.21.11), отключи впны или напиши в тг в топике 
+    <br>мирон сосал
+  </div>
+  <div class="copy-tip">
+    * можно скопировать адрес и вставить в мультиплеер
+  </div>
+</div>
 </body>
 </html>
