@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>efn • статус сервера</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #2c2f33;  /* ровный серый фон */
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* минималистичный контейнер — только для iframe */
+    .wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* iframe стили (дополнительно, чтобы ровно встал по центру) */
+    .namemc-frame {
+      display: block;
+      margin: 0 auto;
+      border: none;
+      background: transparent;
+      max-width: 100%;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    /* лёгкий адаптив: если экран уже 728px, iframe не вылезает */
+    @media (max-width: 760px) {
+      .namemc-frame {
+        width: 100%;
+        height: auto;
+        min-height: 90px;
+      }
+    }
+
+    /* можно добавить небольшую подпись — по желанию, но не отвлекает */
+    .info {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      color: #b9bbbe;
+      font-family: monospace;
+    }
+
+    a {
+      color: #dcddde;
+      text-decoration: none;
+      border-bottom: 1px dotted #5f5f6b;
+    }
+
+    a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+<div style="width: 100%; text-align: center;">
+  <div style="display: flex; justify-content: center; width: 100%;">
+    <iframe 
+      class="namemc-frame"
+      style="width:728px; height:90px; max-width:100%; border:none; display:block; margin:0 auto; background:transparent; border-radius: 10px;" 
+      src="https://ru.namemc.com/server/45.93.200.42:25571/embed" 
+      width="728" 
+      height="90"
+      title="minecraft server status"
+      loading="lazy">
+    </iframe>
+  </div>
+  <div class="info">
+    <span>данные обновляются автоматически</span>
+  </div>
+</div>
+</body>
+</html>
