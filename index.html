@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>vb✅✅✅</title>
+    <title>veryverybadly</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
@@ -261,6 +261,159 @@
         body.light .divider-neo {
             background: linear-gradient(90deg, transparent, rgba(76, 120, 73, 0.4), transparent);
         }
+        .lastfm-container {
+            margin: 8px 0 20px;
+            border-radius: 48px;
+            transition: all 0.2s;
+        }
+
+        .lastfm-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            border-radius: 60px;
+            backdrop-filter: blur(6px);
+            transition: all 0.2s ease;
+        }
+
+        body.dark .lastfm-card {
+            background: rgba(25, 30, 38, 0.75);
+            border: 1px solid rgba(168, 201, 166, 0.25);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        body.light .lastfm-card {
+            background: rgba(235, 242, 235, 0.8);
+            border: 1px solid rgba(76, 120, 73, 0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .lastfm-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        body.dark .lastfm-icon {
+            color: #b0ddab;
+        }
+
+        body.light .lastfm-icon {
+            color: #4c8a48;
+        }
+
+        .lastfm-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            overflow: hidden;
+        }
+
+        .lastfm-status {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            opacity: 0.75;
+        }
+
+        body.dark .lastfm-status {
+            color: #b3d9ae;
+        }
+
+        body.light .lastfm-status {
+            color: #557a51;
+        }
+
+        .lastfm-track-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        body.dark .lastfm-track-name {
+            color: #f0f3ef;
+        }
+
+        body.light .lastfm-track-name {
+            color: #1e331b;
+        }
+
+        .lastfm-artist {
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        body.dark .lastfm-artist {
+            color: #b5c1cf;
+        }
+
+        body.light .lastfm-artist {
+            color: #5c7259;
+        }
+
+        .lastfm-link {
+            text-decoration: none;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+
+        body.dark .lastfm-link {
+            background: rgba(168, 201, 166, 0.2);
+            color: #c0e2bc;
+        }
+
+        body.light .lastfm-link {
+            background: rgba(76, 120, 73, 0.15);
+            color: #3b7436;
+        }
+
+        .lastfm-link:hover {
+            transform: scale(1.05);
+        }
+
+        body.dark .lastfm-link:hover {
+            background: #a8c9a6;
+            color: #0f1e0e;
+        }
+
+        body.light .lastfm-link:hover {
+            background: #5b9a55;
+            color: #ffffff;
+        }
+
+        .lastfm-link .material-symbols-outlined {
+            font-size: 18px;
+        }
+
+        .lastfm-error {
+            font-size: 0.75rem;
+            padding: 10px 16px;
+            text-align: center;
+            border-radius: 60px;
+        }
+
+        body.dark .lastfm-error {
+            color: #b9a89a;
+            background: rgba(0,0,0,0.3);
+        }
+
+        body.light .lastfm-error {
+            color: #886e56;
+            background: rgba(0,0,0,0.03);
+        }
 
         .footer-light {
             text-align: center;
@@ -430,6 +583,15 @@
                 left: 18px;
                 padding: 8px 14px;
             }
+            .lastfm-card {
+                padding: 10px 14px;
+            }
+            .lastfm-track-name {
+                font-size: 0.8rem;
+            }
+            .lastfm-artist {
+                font-size: 0.7rem;
+            }
         }
 
         body::before {
@@ -495,10 +657,11 @@
             <span>WATCH UR FCKNG IP</span>
         </a>
     </div>
+    <div id="lastfmBlock" class="lastfm-container"></div>
 
     <div class="divider-neo"></div>
     <div class="footer-light">
-        <a href="https://twitter.github.io/twemoji/" target="_blank">using twemoji</a> — theme adaptive
+        <a href="https://twitter.github.io/twemoji/" target="_blank">using twemoji</a> — theme adaptive — 🎵 last.fm now playing
     </div>
 </div>
 
@@ -566,7 +729,6 @@
             textSpan.textContent = 'Pause';
         }
     });
-
     const themeBtn = document.getElementById('themeToggleBtn');
     const themeIcon = themeBtn.querySelector('.material-symbols-outlined');
     const themeLabel = document.getElementById('themeText');
@@ -602,6 +764,86 @@
         } else {
             setTheme('dark');
         }
+    });
+    const LASTFM_USERNAME = 'smuzzey';
+    const LASTFM_API_KEY = '2bddd57c8e78028ca84fcd9da6182f4e';
+    
+    const lastfmContainer = document.getElementById('lastfmBlock');
+    
+    async function fetchLastFmTrack() {
+        if (!lastfmContainer) return;
+        lastfmContainer.innerHTML = `
+            <div class="lastfm-card">
+                <span class="material-symbols-outlined lastfm-icon">graphic_eq</span>
+                <div class="lastfm-info">
+                    <div class="lastfm-status">LOADING...</div>
+                    <div class="lastfm-track-name">получаю трек с Last.fm</div>
+                    <div class="lastfm-artist">—</div>
+                </div>
+                <div class="lastfm-link" style="opacity:0.4">
+                    <span class="material-symbols-outlined">open_in_new</span>
+                </div>
+            </div>
+        `;
+        
+        try {
+            const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USERNAME}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
+            const response = await fetch(url);
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            if (data && data.recenttracks && data.recenttracks.track && data.recenttracks.track.length > 0) {
+                const track = data.recenttracks.track[0];
+                const artistName = track.artist ? (track.artist['#text'] || track.artist) : 'Unknown Artist';
+                const trackName = track.name || 'Untitled';
+                const trackUrl = track.url || '#';
+                const nowPlayingAttr = track['@attr'];
+                const isNowPlaying = (nowPlayingAttr && nowPlayingAttr.nowplaying === 'true');
+                let statusText = isNowPlaying ? 'СЕЙЧАС ИГРАЕТ ♫' : 'ПОСЛЕДНИЙ ПРОСЛУШАННЫЙ ТРЕК';
+                let statusIcon = isNowPlaying ? 'headphones' : 'history';
+                lastfmContainer.innerHTML = `
+                    <div class="lastfm-card">
+                        <span class="material-symbols-outlined lastfm-icon">${statusIcon}</span>
+                        <div class="lastfm-info">
+                            <div class="lastfm-status">${statusText}</div>
+                            <div class="lastfm-track-name">${escapeHtml(trackName)}</div>
+                            <div class="lastfm-artist">${escapeHtml(artistName)}</div>
+                        </div>
+                        <a href="${trackUrl}" target="_blank" rel="noopener noreferrer" class="lastfm-link" title="Открыть на Last.fm">
+                            <span class="material-symbols-outlined">open_in_new</span>
+                        </a>
+                    </div>
+                `;
+            } else {
+                throw new Error('No tracks found');
+            }
+        } catch (error) {
+            console.warn('Last.fm API error:', error);
+            lastfmContainer.innerHTML = `
+                <div class="lastfm-card lastfm-error" style="justify-content:center; gap:8px;">
+                    <span class="material-symbols-outlined" style="font-size:20px;">cloud_off</span>
+                    <span>не удалось загрузить трек с Last.fm</span>
+                </div>
+            `;
+        }
+    }
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+    fetchLastFmTrack();
+    setInterval(() => {
+        fetchLastFmTrack();
+    }, 35000);
+    window.addEventListener('focus', () => {
+        fetchLastFmTrack();
     });
 </script>
 </body>
