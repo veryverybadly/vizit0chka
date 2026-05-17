@@ -100,7 +100,7 @@
         body.light .avatar-img {
             background: #e2e6ea;
             filter: grayscale(15%);
-        ф
+        }
 
         .avatar-neo:hover .avatar-img {
             filter: grayscale(0%) brightness(1.02);
@@ -684,32 +684,39 @@
     const iconSpan = document.getElementById('musicIcon');
     const textSpan = document.getElementById('musicText');
     
+    function updateMusicUI(playing) {
+        if (playing) {
+            iconSpan.textContent = 'music_off';
+            textSpan.textContent = 'Pause';
+        } else {
+            iconSpan.textContent = 'music_note';
+            textSpan.textContent = 'Play music';
+        }
+    }
+    
     function toggleMusic() {
         if (isPlaying) {
             audio.pause();
-            iconSpan.textContent = 'music_note';
-            textSpan.textContent = 'Play music';
+            updateMusicUI(false);
         } else {
-            audio.play().catch(e => {
-                console.log('Audio play error:', e);
-                textSpan.textContent = 'Tap again';
-                setTimeout(() => {
-                    if (!isPlaying) textSpan.textContent = 'Play music';
-                }, 1000);
-            });
-            if (!audio.paused) {
-                iconSpan.textContent = 'music_off';
-                textSpan.textContent = 'Pause';
-            } else {
-                if (audio.paused) return;
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    updateMusicUI(true);
+                }).catch(e => {
+                    console.log('Audio play error:', e);
+                    textSpan.textContent = 'Tap again';
+                    setTimeout(() => {
+                        if (!isPlaying) textSpan.textContent = 'Play music';
+                    }, 1000);
+                });
             }
         }
         isPlaying = !isPlaying;
         if (!isPlaying && !audio.paused) {
             audio.pause();
             isPlaying = false;
-            iconSpan.textContent = 'music_note';
-            textSpan.textContent = 'Play music';
+            updateMusicUI(false);
         }
     }
     
@@ -718,17 +725,17 @@
     audio.addEventListener('pause', () => {
         if (isPlaying && audio.paused) {
             isPlaying = false;
-            iconSpan.textContent = 'music_note';
-            textSpan.textContent = 'Play music';
+            updateMusicUI(false);
         }
     });
+    
     audio.addEventListener('play', () => {
         if (!isPlaying) {
             isPlaying = true;
-            iconSpan.textContent = 'music_off';
-            textSpan.textContent = 'Pause';
+            updateMusicUI(true);
         }
     });
+    
     const themeBtn = document.getElementById('themeToggleBtn');
     const themeIcon = themeBtn.querySelector('.material-symbols-outlined');
     const themeLabel = document.getElementById('themeText');
@@ -765,10 +772,20 @@
             setTheme('dark');
         }
     });
+    
     const LASTFM_USERNAME = 'smuzzey';
     const LASTFM_API_KEY = '2bddd57c8e78028ca84fcd9da6182f4e';
-    
     const lastfmContainer = document.getElementById('lastfmBlock');
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
     
     async function fetchLastFmTrack() {
         if (!lastfmContainer) return;
@@ -789,7 +806,6 @@
         try {
             const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USERNAME}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
             const response = await fetch(url);
-            
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             if (data && data.recenttracks && data.recenttracks.track && data.recenttracks.track.length > 0) {
@@ -799,17 +815,17 @@
                 const trackUrl = track.url || '#';
                 const nowPlayingAttr = track['@attr'];
                 const isNowPlaying = (nowPlayingAttr && nowPlayingAttr.nowplaying === 'true');
-                let statusText = isNowPlaying ? 'СЕЙЧАС ИГРАЕТ ♫' : 'ПОСЛЕДНИЙ ПРОСЛУШАННЫЙ ТРЕК';
-                let statusIcon = isNowPlaying ? 'headphones' : 'history';
+                const statusText = isNowPlaying ? 'СЕЙЧАС ИГРАЕТ ♫' : 'ПОСЛЕДНИЙ ПРОСЛУШАННЫЙ ТРЕК';
+                const statusIcon = isNowPlaying ? 'headphones' : 'history';
                 lastfmContainer.innerHTML = `
                     <div class="lastfm-card">
                         <span class="material-symbols-outlined lastfm-icon">${statusIcon}</span>
                         <div class="lastfm-info">
-                            <div class="lastfm-status">${statusText}</div>
+                            <div class="lastfm-status">${escapeHtml(statusText)}</div>
                             <div class="lastfm-track-name">${escapeHtml(trackName)}</div>
                             <div class="lastfm-artist">${escapeHtml(artistName)}</div>
                         </div>
-                        <a href="${trackUrl}" target="_blank" rel="noopener noreferrer" class="lastfm-link" title="Открыть на Last.fm">
+                        <a href="${escapeHtml(trackUrl)}" target="_blank" rel="noopener noreferrer" class="lastfm-link" title="Открыть на Last.fm">
                             <span class="material-symbols-outlined">open_in_new</span>
                         </a>
                     </div>
@@ -827,17 +843,7 @@
             `;
         }
     }
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
-        });
-    }
+    
     fetchLastFmTrack();
     setInterval(() => {
         fetchLastFmTrack();
