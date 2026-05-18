@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ВЦ Гача Кликер v1.3</title>
+    <title>ВЦ Гача Кликер v1.4</title>
     <style>
-        /* Базовые стили для отображения */
         html, body {
             margin: 0;
             padding: 0;
@@ -29,10 +28,10 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-color: #f0f2f5; /* Запасной фон, если картинка не загрузится */
+            background-color: #f0f2f5;
         }
 
-        /* Полупрозрачный слой поверх фона, чтобы карточки не пропадали */
+        /* Полупрозрачный слой поверх фона */
         body::before {
             content: "";
             position: fixed;
@@ -46,7 +45,7 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             margin-bottom: 20px;
             gap: 10px;
             position: relative;
@@ -68,11 +67,11 @@
         .reset-btn { background: #ff4757; }
         .reset-btn:hover { background: #ff2e44; }
 
-        /* Игровая сетка */
+        /* Игровая сетка (теперь трехколоночная для ПК) */
         .game-layout {
             display: flex;
-            gap: 25px;
-            max-width: 900px;
+            gap: 20px;
+            max-width: 1100px;
             width: 100%;
             flex-wrap: wrap;
             justify-content: center;
@@ -82,13 +81,12 @@
 
         /* Основные блоки-карточки */
         .card {
-            background: rgba(255, 255, 255, 0.95) !important;
-            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             box-sizing: border-box;
             backdrop-filter: blur(5px);
-            display: block !important; /* Принудительное отображение */
         }
 
         .main-panel {
@@ -97,9 +95,9 @@
             text-align: center;
         }
 
-        .shop-panel {
-            flex: 0.8;
-            min-width: 300px;
+        .shop-panel, .leaderboard-panel {
+            flex: 0.9;
+            min-width: 290px;
         }
 
         h1, h2, h3 {
@@ -121,6 +119,23 @@
         .stat-box strong {
             color: #ff4757;
         }
+
+        /* Кнопка отправки счета в Лидерборд */
+        .submit-score-btn {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            width: 100%;
+            transition: 0.2s;
+        }
+        .submit-score-btn:hover { background: #26af5f; }
 
         /* Большая кнопка клика */
         .click-btn {
@@ -144,7 +159,6 @@
         .click-btn:hover { background-color: #ff6b81; }
         .click-btn:active { transform: scale(0.96); }
 
-        /* Контейнер выпавшего подарка */
         .box-container {
             margin-top: 20px;
             display: none;
@@ -154,7 +168,7 @@
 
         .secret-image {
             max-width: 100%;
-            max-height: 200px;
+            max-height: 180px;
             border-radius: 10px;
             margin-top: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -172,23 +186,12 @@
             border: 1px solid #e2e8f0;
         }
 
-        .shop-info {
-            text-align: left;
-        }
-
-        .shop-info div {
-            font-weight: bold;
-            font-size: 15px;
-            color: #2d3748;
-        }
-
-        .shop-info span {
-            font-size: 12px;
-            color: #718096;
-        }
+        .shop-info { text-align: left; }
+        .shop-info div { font-weight: bold; font-size: 15px; color: #2d3748; }
+        .shop-info span { font-size: 12px; color: #718096; }
 
         .buy-btn {
-            background: #2ed573;
+            background: #ffa502;
             color: white;
             border: none;
             padding: 10px 14px;
@@ -199,13 +202,32 @@
             transition: 0.2s;
             min-width: 80px;
         }
+        .buy-btn:hover { background: #ff7f50; }
+        .buy-btn:disabled { background: #ced6e0; cursor: not-allowed; color: #747d8c; }
 
-        .buy-btn:hover { background: #26af5f; }
-        .buy-btn:disabled {
-            background: #ced6e0;
-            cursor: not-allowed;
-            color: #747d8c;
+        /* Таблица лидеров */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
         }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .leaderboard-table th {
+            background: #f1f2f6;
+            color: #2f3542;
+            font-weight: bold;
+        }
+
+        .leaderboard-table tr:nth-child(2) td { font-weight: bold; color: #ffa502; } /* 1 место золото */
+        .leaderboard-table tr:nth-child(3) td { color: #a4b0be; } /* 2 место серебро */
+        .leaderboard-table tr:nth-child(4) td { color: #ff7f50; } /* 3 место бронза */
 
         /* Модалка обновлений */
         .modal {
@@ -235,27 +257,39 @@
             font-size: 20px; cursor: pointer; color: #aaa;
         }
         .close-modal:hover { color: #333; }
-
-        .changelog-list {
-            text-align: left;
-            padding-left: 20px;
-            line-height: 1.6;
-        }
+        .changelog-list { text-align: left; padding-left: 20px; line-height: 1.6; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.3)</button>
+        <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.4)</button>
         <button class="reset-btn" onclick="resetGame()">🗑️ Сбросить прогресс</button>
     </div>
 
     <div class="game-layout">
         
+        <div class="card leaderboard-panel">
+            <h2>🏆 Топ Челиков</h2>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th style="width: 15%">#</th>
+                        <th style="width: 50%">Никнейм</th>
+                        <th style="width: 35%">Баланс</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    </tbody>
+            </table>
+        </div>
+
         <div class="card main-panel">
             <h1>ВЦ Гача Кликер</h1>
             
             <div class="stat-box">Баланс: <strong id="balance-text">0</strong> 🪙</div>
+            <button class="submit-score-btn" onclick="submitToLeaderboard()">Зафиксировать рекорд в Топ 🏆</button>
+            
             <div class="stat-box">До открытия ящика: <strong id="counter-text">60</strong> кликов</div>
             
             <button class="click-btn" id="click-me-btn">КЛИК!</button>
@@ -304,10 +338,10 @@
             <button class="close-modal" onclick="toggleModal(false)">✕</button>
             <h2>📋 История обновлений</h2>
             <hr>
-            <h3>Версия 1.3 (Текущая)</h3>
+            <h3>Версия 1.4 (Текущая)</h3>
             <ul class="changelog-list">
-                <li><strong>Аудиоэффекты:</strong> Интегрирован сочный звук при нажатии на главную кнопку.</li>
-                <li><strong>Наслоение звуков:</strong> Реализована многоканальная система проигрывания. Если кликать очень быстро, звуки будут накладываться друг на друга.</li>
+                <li><strong>Лидерборд друзей:</strong> Добавлена локальная таблица рекордов. Фиксируйте свои лучшие результаты прямо на устройстве.</li>
+                <li><strong>Оптимизация сетки:</strong> Сайт перестроен под трёхколоночную структуру для удобного обзора магазина, кликера и топа одновременно.</li>
             </ul>
         </div>
     </div>
@@ -326,7 +360,9 @@
         let costPassive = 150;
         let costDiscount = 300;
 
-        // Поиск элементов в DOM
+        let leaderboard = [];
+
+        // DOM элементы
         const clickBtn = document.getElementById('click-me-btn');
         const balanceText = document.getElementById('balance-text');
         const counterText = document.getElementById('counter-text');
@@ -335,21 +371,19 @@
         const btnBuyClick = document.getElementById('buy-click');
         const btnBuyPassive = document.getElementById('buy-passive');
         const btnBuyDiscount = document.getElementById('buy-discount');
+        const leaderboardBody = document.getElementById('leaderboard-body');
 
         const clickSoundUrl = 'https://badly.s-ul.eu/hydqh41u.mp3';
 
-        // Воспроизведение аудио с наслоением
         function playClickSound() {
             try {
                 const sound = new Audio(clickSoundUrl);
                 sound.volume = 0.6;
-                sound.play().catch(e => console.log("Аудио заблокировано до первой активности"));
-            } catch (err) {
-                console.log("Ошибка аудио:", err);
-            }
+                sound.play().catch(() => {});
+            } catch (err) {}
         }
 
-        // Сохранение в LocalStorage
+        // Сохранение и загрузка данных игры
         function saveGame() {
             const gameData = {
                 coins: coins,
@@ -359,14 +393,14 @@
                 boxDiscount: boxDiscount,
                 costClick: costClick,
                 costPassive: costPassive,
-                costDiscount: costDiscount
+                costDiscount: costDiscount,
+                leaderboard: leaderboard
             };
-            localStorage.setItem('vcGachaClickerSave', JSON.stringify(gameData));
+            localStorage.setItem('vcGachaClickerSave_v14', JSON.stringify(gameData));
         }
 
-        // Загрузка
         function loadGame() {
-            const savedData = localStorage.getItem('vcGachaClickerSave');
+            const savedData = localStorage.getItem('vcGachaClickerSave_v14');
             if (savedData) {
                 const data = JSON.parse(savedData);
                 coins = data.coins ?? 0;
@@ -377,14 +411,62 @@
                 costClick = data.costClick ?? 50;
                 costPassive = data.costPassive ?? 150;
                 costDiscount = data.costDiscount ?? 300;
+                leaderboard = data.leaderboard ?? [];
             }
         }
 
         function resetGame() {
-            if (confirm("Вы уверены, что хотите полностью сбросить прогресс?")) {
-                localStorage.removeItem('vcGachaClickerSave');
+            if (confirm("Вы уверены, что хотите полностью сбросить прогресс и ЛИДЕРБОРД?")) {
+                localStorage.removeItem('vcGachaClickerSave_v14');
                 location.reload();
             }
+        }
+
+        // Логика добавления рекорда в Лидерборд
+        function submitToLeaderboard() {
+            const username = prompt("Введите ваш никнейм для таблицы лидеров:");
+            if (!username || username.trim() === "") return;
+
+            // Добавляем запись
+            leaderboard.push({
+                name: username.trim(),
+                score: coins
+            });
+
+            // Сортируем по убыванию очков
+            leaderboard.sort((a, b) => b.score - a.score);
+
+            // Оставляем только ТОП-10
+            if (leaderboard.length > 10) {
+                leaderboard = leaderboard.slice(0, 10);
+            }
+
+            saveGame();
+            renderLeaderboard();
+        }
+
+        // Прорисовка лидерборда
+        function renderLeaderboard() {
+            leaderboardBody.innerHTML = "";
+            
+            if (leaderboard.length === 0) {
+                leaderboardBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#aaa;">Тут пока пусто...</td></tr>`;
+                return;
+            }
+
+            leaderboard.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${escapeHTML(item.name)}</td>
+                    <td>${item.score.toLocaleString()} 🪙</td>
+                `;
+                leaderboardBody.appendChild(row);
+            });
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
         }
 
         // Главный клик
@@ -413,7 +495,7 @@
             saveGame();
         });
 
-        // Покупки
+        // Покупки улучшений
         function buyUpgrade(type) {
             if (type === 'click' && coins >= costClick) {
                 coins -= costClick;
@@ -439,7 +521,6 @@
             saveGame();
         }
 
-        // Рендер интерфейса
         function updateUI() {
             balanceText.textContent = coins.toLocaleString();
 
@@ -473,7 +554,7 @@
             }
         }
 
-        // Таймер пассивного дохода
+        // Пассивный доход
         setInterval(() => {
             if (passiveIncome > 0) {
                 coins += passiveIncome;
@@ -486,9 +567,10 @@
             document.getElementById('changelog-modal').style.display = show ? 'flex' : 'none';
         }
 
-        // Старт
+        // Старт игры
         loadGame();
         updateUI();
+        renderLeaderboard();
     </script>
 </body>
 </html>
