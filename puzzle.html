@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таинственный ящик с картинкой</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .counter {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .click-btn {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        .click-btn:hover {
+            background-color: #ff6b81;
+        }
+
+        .click-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Стили для ящика */
+        .box-container {
+            margin-top: 30px;
+            display: none; /* Скрыт по умолчанию */
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Стиль для вашей картинки */
+        .secret-image {
+            max-width: 200px; /* Ограничим ширину, чтобы она не растянула сайт */
+            max-height: 200px; /* Ограничим высоту */
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Кликни 60 раз, чтобы открыть ящик!</h1>
+        <div class="counter" id="counter-text">Осталось кликов: <strong>60</strong></div>
+        <button class="click-btn" id="click-me-btn">КЛИК!</button>
+
+        <!-- Скрытый ящик -->
+        <div class="box-container" id="secret-box">
+            <h3>ящик открыт! А там...</h3>
+            
+            
+            <img class="secret-image" src="https://badly.s-ul.eu/V0RqkvMt.png" alt="у тебя не загрузилось">
+            
+            <p style="color: #ff4757; font-weight: bold; margin-top: 10px;">вц дай денег ✅✅✅✅✅✅✅</p>
+        </div>
+    </div>
+
+    <script>
+        let clicksLeft = 60;
+        const button = document.getElementById('click-me-btn');
+        const counterText = document.getElementById('counter-text');
+        const secretBox = document.getElementById('secret-box');
+
+        button.addEventListener('click', () => {
+            if (clicksLeft > 0) {
+                clicksLeft--;
+                
+                if (clicksLeft > 0) {
+                    counterText.innerHTML = `Осталось кликов: <strong>${clicksLeft}</strong>`;
+                } else {
+                    counterText.innerHTML = "<strong>Готово! 🎉</strong>";
+                    button.disabled = true;
+                    button.style.backgroundColor = "#ccc";
+                    button.style.boxShadow = "none";
+                    button.style.cursor = "default";
+                    
+                    secretBox.style.display = "block";
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
