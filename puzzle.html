@@ -3,19 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ВЦ VIBECODE CLICKER 0</title>
+    <title>ВЦ Гача Кликер v1.1</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            position: relative;
+            
+            /* Настройки фонового изображения */
+            background-image: url('ССЫЛКА_НА_ТВОЙ_ФОН'); /* ТУТ ССЫЛКА НА ФОН */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Полупрозрачный слой поверх фона, чтобы текст не сливался */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(240, 242, 245, 0.75); /* Белая пелена с прозрачностью 75% */
+            z-index: -1;
         }
 
         /* Кнопка Ченджлога сверху */
@@ -30,6 +46,7 @@
             font-size: 14px;
             margin-bottom: 15px;
             transition: 0.2s;
+            z-index: 2;
         }
         .changelog-trigger:hover { background: #57606f; }
 
@@ -40,14 +57,16 @@
             width: 100%;
             flex-wrap: wrap;
             justify-content: center;
+            z-index: 2;
         }
 
         .card {
-            background: white;
+            background: rgba(255, 255, 255, 0.92); /* Слегка прозрачные карточки */
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             box-sizing: border-box;
+            backdrop-filter: blur(5px); /* Легкое размытие под карточками */
         }
 
         /* Главная панель кликера */
@@ -204,7 +223,7 @@
 </head>
 <body>
 
-    <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.0)</button>
+    <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.1)</button>
 
     <div class="game-layout">
         
@@ -260,33 +279,27 @@
             <button class="close-modal" onclick="toggleModal(false)">✕</button>
             <h2>📋 История обновлений</h2>
             <hr>
-            <h3>Версия 1.0 (Текущая)</h3>
+            <h3>Версия 1.1 (Текущая)</h3>
             <ul class="changelog-list">
-                <li><strong>Бесконечная Гача:</strong> Теперь ящик можно открывать многократно! Каждое открытие обнуляет счетчик кликов.</li>
-                <li><strong>Внедрена Валюта:</strong> За каждый клик начисляется базовая монета, а за открытие ящика "ВЦ дай денег" — крупный куш в 1,000 монет.</li>
-                <li><strong>Открылся Магазин:</strong> Доступны апгрейды силы клика, пассивного дохода и снижения требований к открытию кейса.</li>
-                <li><strong>Редизайн интерфейса:</strong> Игровое поле разделено на две удобные зоны для ПК и смартфонов.</li>
+                <li><strong>Кастомный фон:</strong> Добавлена возможность растягивать любую картинку на задний план прямо через стили body.</li>
+                <li><strong>Улучшение читаемости:</strong> Наложен легкий тонирующий слой и размытие, чтобы элементы интерфейса не сливались со случайными картинками на фоне.</li>
             </ul>
         </div>
     </div>
 
     <script>
-        // Игровое состояние
         let coins = 0;
-        let baseRequiredClicks = 60; // Изначальное требование кликов
-        let currentClicksProgress = 0; // Накопленные клики в текущем цикле
+        let baseRequiredClicks = 60;
+        let currentClicksProgress = 0;
 
-        // Параметры улучшений
         let clickPower = 1;
         let passiveIncome = 0;
         let boxDiscount = 0;
 
-        // Цены улучшений
         let costClick = 50;
         let costPassive = 150;
         let costDiscount = 300;
 
-        // Элементы UI
         const clickBtn = document.getElementById('click-me-btn');
         const balanceText = document.getElementById('balance-text');
         const counterText = document.getElementById('counter-text');
@@ -296,37 +309,28 @@
         const btnBuyPassive = document.getElementById('buy-passive');
         const btnBuyDiscount = document.getElementById('buy-discount');
 
-        // Логика клика по главной кнопке
         clickBtn.addEventListener('click', () => {
-            // 1. Начисляем монеты за клик
             coins += clickPower;
-            
-            // 2. Двигаем прогресс к открытию ящика
             currentClicksProgress++;
             
-            let requiredNow = Math.max(1, baseRequiredClicks - boxDiscount); // Защита, чтобы не уйти меньше 1 клика
+            let requiredNow = Math.max(1, baseRequiredClicks - boxDiscount);
             let left = requiredNow - currentClicksProgress;
 
             if (left > 0) {
                 counterText.textContent = left;
-                // Скрываем старый выигрыш, если пользователь снова начал кликать
                 if(currentClicksProgress === 1) {
                     secretBox.style.display = "none";
                 }
             } else {
-                // УРА! Ящик открыт
-                coins += 1000; // Бонус за ящик!
-                currentClicksProgress = 0; // Сброс счетчика для следующего круга
+                coins += 1000;
+                currentClicksProgress = 0;
                 counterText.textContent = requiredNow;
-                
-                // Показываем ящик
                 secretBox.style.display = "block";
             }
 
             updateUI();
         });
 
-        // Функция покупки апгрейдов
         function buyUpgrade(type) {
             if (type === 'click' && coins >= costClick) {
                 coins -= costClick;
@@ -335,14 +339,14 @@
             } 
             else if (type === 'passive' && coins >= costPassive) {
                 coins -= costPassive;
-                passiveIncome += 2; // +2 монеты в секунду за уровень
+                passiveIncome += 2;
                 costPassive = Math.round(costPassive * 1.6);
             } 
             else if (type === 'discount' && coins >= costDiscount) {
                 let currentReq = baseRequiredClicks - boxDiscount;
-                if (currentReq > 5) { // Ограничение: нельзя сделать кликов меньше 5, чтобы оставался азарт
+                if (currentReq > 5) {
                     coins -= costDiscount;
-                    boxDiscount += 5; // Срезает 5 необходимых кликов
+                    boxDiscount += 5;
                     costDiscount = Math.round(costDiscount * 2);
                 } else {
                     alert("Ящик уже максимально легкий!");
@@ -351,11 +355,9 @@
             updateUI();
         }
 
-        // Обновление интерфейса и проверка доступности кнопок в магазине
         function updateUI() {
             balanceText.textContent = coins.toLocaleString();
 
-            // Тексты в магазине
             document.getElementById('click-power-desc').textContent = `Дает +${clickPower} монеток за клик`;
             document.getElementById('passive-desc').textContent = `+${passiveIncome} монеток/сек`;
             document.getElementById('discount-desc').textContent = `Нужно на ${boxDiscount} кликов меньше`;
@@ -371,14 +373,12 @@
                 btnBuyDiscount.textContent = `${costDiscount} 🪙`;
             }
 
-            // Включение/выключение кнопок покупки в зависимости от баланса
             btnBuyClick.disabled = coins < costClick;
             btnBuyPassive.disabled = coins < costPassive;
             if(currentReq > 5) {
                 btnBuyDiscount.disabled = coins < costDiscount;
             }
 
-            // Корректируем отображение счетчика на случай, если купили скидку прямо во время кликов
             let requiredNow = Math.max(1, baseRequiredClicks - boxDiscount);
             let left = requiredNow - currentClicksProgress;
             if (left <= 0) {
@@ -388,7 +388,6 @@
             }
         }
 
-        // Пассивный доход (работает каждую секунду)
         setInterval(() => {
             if (passiveIncome > 0) {
                 coins += passiveIncome;
@@ -396,13 +395,11 @@
             }
         }, 1000);
 
-        // Управление модальным окном (Ченджлог)
         function toggleModal(show) {
             const modal = document.getElementById('changelog-modal');
             modal.style.display = show ? 'flex' : 'none';
         }
 
-        // Стартовая инициализация кнопок
         updateUI();
     </script>
 </body>
