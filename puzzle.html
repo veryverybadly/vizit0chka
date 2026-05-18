@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ВЦ Гача Кликер v1.1</title>
+    <title>ВЦ Гача Кликер v1.2</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,25 +18,33 @@
             position: relative;
             
             /* Настройки фонового изображения */
-            background-image: url('https://badly.s-ul.eu/cvHriZEo.jpg'); /* ТУТ ССЫЛКА НА ФОН */
+            background-image: url('https://badly.s-ul.eu/cvHriZEo.jpg'); 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
 
-        /* Полупрозрачный слой поверх фона, чтобы текст не сливался */
+        /* Полупрозрачный слой поверх фона */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(240, 242, 245, 0.75); /* Белая пелена с прозрачностью 75% */
+            background: rgba(240, 242, 245, 0.75);
             z-index: -1;
         }
 
-        /* Кнопка Ченджлога сверху */
+        /* Верхняя панель с кнопками управления */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
         .changelog-trigger {
-            align-self: flex-end;
             background: #747d8c;
             color: white;
             border: none;
@@ -44,11 +52,23 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
-            margin-bottom: 15px;
             transition: 0.2s;
             z-index: 2;
         }
         .changelog-trigger:hover { background: #57606f; }
+
+        .reset-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+            z-index: 2;
+        }
+        .reset-btn:hover { background: #ff2e44; }
 
         .game-layout {
             display: flex;
@@ -61,22 +81,20 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.92); /* Слегка прозрачные карточки */
+            background: rgba(255, 255, 255, 0.92);
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             box-sizing: border-box;
-            backdrop-filter: blur(5px); /* Легкое размытие под карточками */
+            backdrop-filter: blur(5px);
         }
 
-        /* Главная панель кликера */
         .main-panel {
             flex: 1.2;
             min-width: 320px;
             text-align: center;
         }
 
-        /* Магазин */
         .shop-panel {
             flex: 0.8;
             min-width: 300px;
@@ -119,7 +137,6 @@
         .click-btn:hover { background-color: #ff6b81; }
         .click-btn:active { transform: scale(0.96); }
 
-        /* Скрытый ящик (Гача выигрыш) */
         .box-container {
             margin-top: 20px;
             display: none;
@@ -137,7 +154,6 @@
             animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Элементы магазина */
         .shop-item {
             display: flex;
             justify-content: space-between;
@@ -180,7 +196,6 @@
             cursor: not-allowed;
         }
 
-        /* Модальное окно Ченджлога */
         .modal {
             display: none;
             position: fixed;
@@ -216,14 +231,16 @@
             line-height: 1.6;
         }
 
-        /* Анимации */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes popUp { 0% { transform: scale(0); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
-    <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.1)</button>
+    <div class="top-bar">
+        <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.2)</button>
+        <button class="reset-btn" onclick="resetGame()">🗑️ Сбросить прогресс</button>
+    </div>
 
     <div class="game-layout">
         
@@ -279,15 +296,16 @@
             <button class="close-modal" onclick="toggleModal(false)">✕</button>
             <h2>📋 История обновлений</h2>
             <hr>
-            <h3>Версия 1.1 (Текущая)</h3>
+            <h3>Версия 1.2 (Текущая)</h3>
             <ul class="changelog-list">
-                <li><strong>Кастомный фон:</strong> Добавлена возможность растягивать любую картинку на задний план прямо через стили body.</li>
-                <li><strong>Улучшение читаемости:</strong> Наложен легкий тонирующий слой и размытие, чтобы элементы интерфейса не сливались со случайными картинками на фоне.</li>
+                <li><strong>Автосохранение данных:</strong> Добавлена интеграция с LocalStorage. Теперь баланс, улучшения и прогресс до ящика не сбрасываются при закрытии вкладки.</li>
+                <li><strong>Кнопка сброса:</strong> В левый верхний угол добавлена кнопка полной очистки сохранений, если захочется начать игру заново.</li>
             </ul>
         </div>
     </div>
 
     <script>
+        // Переменные состояния игры (по умолчанию)
         let coins = 0;
         let baseRequiredClicks = 60;
         let currentClicksProgress = 0;
@@ -300,6 +318,7 @@
         let costPassive = 150;
         let costDiscount = 300;
 
+        // Элементы UI
         const clickBtn = document.getElementById('click-me-btn');
         const balanceText = document.getElementById('balance-text');
         const counterText = document.getElementById('counter-text');
@@ -309,6 +328,46 @@
         const btnBuyPassive = document.getElementById('buy-passive');
         const btnBuyDiscount = document.getElementById('buy-discount');
 
+        // ФУНКЦИЯ СОХРАНЕНИЯ В LOCALSTORAGE
+        function saveGame() {
+            const gameData = {
+                coins: coins,
+                currentClicksProgress: currentClicksProgress,
+                clickPower: clickPower,
+                passiveIncome: passiveIncome,
+                boxDiscount: boxDiscount,
+                costClick: costClick,
+                costPassive: costPassive,
+                costDiscount: costDiscount
+            };
+            localStorage.setItem('vcGachaClickerSave', JSON.stringify(gameData));
+        }
+
+        // ФУНКЦИЯ ЗАГРУЗКИ ИЗ LOCALSTORAGE
+        function loadGame() {
+            const savedData = localStorage.getItem('vcGachaClickerSave');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                coins = data.coins ?? 0;
+                currentClicksProgress = data.currentClicksProgress ?? 0;
+                clickPower = data.clickPower ?? 1;
+                passiveIncome = data.passiveIncome ?? 0;
+                boxDiscount = data.boxDiscount ?? 0;
+                costClick = data.costClick ?? 50;
+                costPassive = data.costPassive ?? 150;
+                costDiscount = data.costDiscount ?? 300;
+            }
+        }
+
+        // ФУНКЦИЯ ОЧИСТКИ ПРОГРЕССА
+        function resetGame() {
+            if (confirm("Вы уверены, что хотите полностью сбросить весь игровой прогресс?")) {
+                localStorage.removeItem('vcGachaClickerSave');
+                location.reload(); // Перезагружаем страницу для возврата к дефолтным значениям
+            }
+        }
+
+        // Клик по главной кнопке
         clickBtn.addEventListener('click', () => {
             coins += clickPower;
             currentClicksProgress++;
@@ -329,8 +388,10 @@
             }
 
             updateUI();
+            saveGame(); // Сохраняем после клика
         });
 
+        // Покупка улучшений
         function buyUpgrade(type) {
             if (type === 'click' && coins >= costClick) {
                 coins -= costClick;
@@ -353,8 +414,10 @@
                 }
             }
             updateUI();
+            saveGame(); // Сохраняем после покупки
         }
 
+        // Обновление интерфейса
         function updateUI() {
             balanceText.textContent = coins.toLocaleString();
 
@@ -388,10 +451,12 @@
             }
         }
 
+        // Пассивный доход (ежесекундное сохранение)
         setInterval(() => {
             if (passiveIncome > 0) {
                 coins += passiveIncome;
                 updateUI();
+                saveGame(); // Автосохранение каждую секунду при пассивном доходе
             }
         }, 1000);
 
@@ -400,6 +465,8 @@
             modal.style.display = show ? 'flex' : 'none';
         }
 
+        // Запуск игры: сначала загружаем сейвы, потом рендерим интерфейс
+        loadGame();
         updateUI();
     </script>
 </body>
