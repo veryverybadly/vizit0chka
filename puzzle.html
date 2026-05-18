@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ВЦ Гача Кликер v1.3</title>
     <style>
+        /* Базовые стили для отображения */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
             padding: 20px;
             box-sizing: border-box;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -23,15 +29,16 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            background-color: #f0f2f5; /* Запасной фон, если картинка не загрузится */
         }
 
-        /* Полупрозрачный слой поверх фона */
+        /* Полупрозрачный слой поверх фона, чтобы карточки не пропадали */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(240, 242, 245, 0.75);
-            z-index: -1;
+            background: rgba(240, 242, 245, 0.8);
+            z-index: 1;
         }
 
         /* Верхняя панель с кнопками управления */
@@ -40,36 +47,28 @@
             justify-content: space-between;
             width: 100%;
             max-width: 900px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             gap: 10px;
-        }
-
-        .changelog-trigger {
-            background: #747d8c;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.2s;
+            position: relative;
             z-index: 2;
         }
+
+        .changelog-trigger, .reset-btn {
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .changelog-trigger { background: #747d8c; }
         .changelog-trigger:hover { background: #57606f; }
-
-        .reset-btn {
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.2s;
-            z-index: 2;
-        }
+        .reset-btn { background: #ff4757; }
         .reset-btn:hover { background: #ff2e44; }
 
+        /* Игровая сетка */
         .game-layout {
             display: flex;
             gap: 25px;
@@ -77,21 +76,24 @@
             width: 100%;
             flex-wrap: wrap;
             justify-content: center;
+            position: relative;
             z-index: 2;
         }
 
+        /* Основные блоки-карточки */
         .card {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95) !important;
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             box-sizing: border-box;
             backdrop-filter: blur(5px);
+            display: block !important; /* Принудительное отображение */
         }
 
         .main-panel {
             flex: 1.2;
-            min-width: 320px;
+            min-width: 310px;
             text-align: center;
         }
 
@@ -107,41 +109,45 @@
 
         .stat-box {
             background: #f8f9fa;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-size: 18px;
             color: #444;
             border-left: 5px solid #ff4757;
+            text-align: center;
         }
 
         .stat-box strong {
             color: #ff4757;
         }
 
+        /* Большая кнопка клика */
         .click-btn {
             background-color: #ff4757;
             color: white;
             border: none;
             padding: 20px;
             width: 100%;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
             transition: transform 0.05s, background-color 0.2s;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
             margin-bottom: 20px;
-            user-select: none; /* Предотвращает выделение текста кнопки при быстром тапе */
+            outline: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .click-btn:hover { background-color: #ff6b81; }
         .click-btn:active { transform: scale(0.96); }
 
+        /* Контейнер выпавшего подарка */
         .box-container {
             margin-top: 20px;
             display: none;
-            animation: fadeIn 0.5s ease-out;
             border-top: 2px dashed #ddd;
             padding-top: 20px;
         }
@@ -152,9 +158,9 @@
             border-radius: 10px;
             margin-top: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* Товары в магазине */
         .shop-item {
             display: flex;
             justify-content: space-between;
@@ -173,30 +179,35 @@
         .shop-info div {
             font-weight: bold;
             font-size: 15px;
+            color: #2d3748;
         }
 
         .shop-info span {
             font-size: 12px;
-            color: #777;
+            color: #718096;
         }
 
         .buy-btn {
             background: #2ed573;
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 14px;
             transition: 0.2s;
+            min-width: 80px;
         }
 
         .buy-btn:hover { background: #26af5f; }
         .buy-btn:disabled {
             background: #ced6e0;
             cursor: not-allowed;
+            color: #747d8c;
         }
 
+        /* Модалка обновлений */
         .modal {
             display: none;
             position: fixed;
@@ -223,8 +234,261 @@
             background: none; border: none;
             font-size: 20px; cursor: pointer; color: #aaa;
         }
-
         .close-modal:hover { color: #333; }
 
         .changelog-list {
-            text-align: left
+            text-align: left;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="changelog-trigger" onclick="toggleModal(true)">📋 Ченджлог (v1.3)</button>
+        <button class="reset-btn" onclick="resetGame()">🗑️ Сбросить прогресс</button>
+    </div>
+
+    <div class="game-layout">
+        
+        <div class="card main-panel">
+            <h1>ВЦ Гача Кликер</h1>
+            
+            <div class="stat-box">Баланс: <strong id="balance-text">0</strong> 🪙</div>
+            <div class="stat-box">До открытия ящика: <strong id="counter-text">60</strong> кликов</div>
+            
+            <button class="click-btn" id="click-me-btn">КЛИК!</button>
+
+            <div class="box-container" id="secret-box">
+                <h3 style="color: #2ed573;">🎉 Ящик успешно открыт!</h3>
+                <img class="secret-image" src="https://badly.s-ul.eu/V0RqkvMt.png" alt="у тебя не загрузилось">
+                <p style="color: #ff4757; font-weight: bold; margin-top: 10px; font-size: 18px;">
+                    вц дай денег ✅ (+1,000 монеток!)
+                </p>
+            </div>
+        </div>
+
+        <div class="card shop-panel">
+            <h2>🛒 Магазин ВЦ</h2>
+            
+            <div class="shop-item">
+                <div class="shop-info">
+                    <div>Сила Клика</div>
+                    <span id="click-power-desc">Дает +1 монету за клик</span>
+                </div>
+                <button class="buy-btn" id="buy-click" onclick="buyUpgrade('click')">50 🪙</button>
+            </div>
+
+            <div class="shop-item">
+                <div class="shop-info">
+                    <div>Автокликер</div>
+                    <span id="passive-desc">+0 монеток/сек</span>
+                </div>
+                <button class="buy-btn" id="buy-passive" onclick="buyUpgrade('passive')">150 🪙</button>
+            </div>
+
+            <div class="shop-item">
+                <div class="shop-info">
+                    <div>Легкий Ящик</div>
+                    <span id="discount-desc">Нужно на 0 кликов меньше</span>
+                </div>
+                <button class="buy-btn" id="buy-discount" onclick="buyUpgrade('discount')">300 🪙</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal" id="changelog-modal" onclick="if(event.target === this) toggleModal(false)">
+        <div class="modal-content">
+            <button class="close-modal" onclick="toggleModal(false)">✕</button>
+            <h2>📋 История обновлений</h2>
+            <hr>
+            <h3>Версия 1.3 (Текущая)</h3>
+            <ul class="changelog-list">
+                <li><strong>Аудиоэффекты:</strong> Интегрирован сочный звук при нажатии на главную кнопку.</li>
+                <li><strong>Наслоение звуков:</strong> Реализована многоканальная система проигрывания. Если кликать очень быстро, звуки будут накладываться друг на друга.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Игровые переменные
+        let coins = 0;
+        let baseRequiredClicks = 60;
+        let currentClicksProgress = 0;
+
+        let clickPower = 1;
+        let passiveIncome = 0;
+        let boxDiscount = 0;
+
+        let costClick = 50;
+        let costPassive = 150;
+        let costDiscount = 300;
+
+        // Поиск элементов в DOM
+        const clickBtn = document.getElementById('click-me-btn');
+        const balanceText = document.getElementById('balance-text');
+        const counterText = document.getElementById('counter-text');
+        const secretBox = document.getElementById('secret-box');
+
+        const btnBuyClick = document.getElementById('buy-click');
+        const btnBuyPassive = document.getElementById('buy-passive');
+        const btnBuyDiscount = document.getElementById('buy-discount');
+
+        const clickSoundUrl = 'https://badly.s-ul.eu/hydqh41u.mp3';
+
+        // Воспроизведение аудио с наслоением
+        function playClickSound() {
+            try {
+                const sound = new Audio(clickSoundUrl);
+                sound.volume = 0.6;
+                sound.play().catch(e => console.log("Аудио заблокировано до первой активности"));
+            } catch (err) {
+                console.log("Ошибка аудио:", err);
+            }
+        }
+
+        // Сохранение в LocalStorage
+        function saveGame() {
+            const gameData = {
+                coins: coins,
+                currentClicksProgress: currentClicksProgress,
+                clickPower: clickPower,
+                passiveIncome: passiveIncome,
+                boxDiscount: boxDiscount,
+                costClick: costClick,
+                costPassive: costPassive,
+                costDiscount: costDiscount
+            };
+            localStorage.setItem('vcGachaClickerSave', JSON.stringify(gameData));
+        }
+
+        // Загрузка
+        function loadGame() {
+            const savedData = localStorage.getItem('vcGachaClickerSave');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                coins = data.coins ?? 0;
+                currentClicksProgress = data.currentClicksProgress ?? 0;
+                clickPower = data.clickPower ?? 1;
+                passiveIncome = data.passiveIncome ?? 0;
+                boxDiscount = data.boxDiscount ?? 0;
+                costClick = data.costClick ?? 50;
+                costPassive = data.costPassive ?? 150;
+                costDiscount = data.costDiscount ?? 300;
+            }
+        }
+
+        function resetGame() {
+            if (confirm("Вы уверены, что хотите полностью сбросить прогресс?")) {
+                localStorage.removeItem('vcGachaClickerSave');
+                location.reload();
+            }
+        }
+
+        // Главный клик
+        clickBtn.addEventListener('click', () => {
+            playClickSound();
+
+            coins += clickPower;
+            currentClicksProgress++;
+            
+            let requiredNow = Math.max(1, baseRequiredClicks - boxDiscount);
+            let left = requiredNow - currentClicksProgress;
+
+            if (left > 0) {
+                counterText.textContent = left;
+                if(currentClicksProgress === 1) {
+                    secretBox.style.display = "none";
+                }
+            } else {
+                coins += 1000;
+                currentClicksProgress = 0;
+                counterText.textContent = requiredNow;
+                secretBox.style.display = "block";
+            }
+
+            updateUI();
+            saveGame();
+        });
+
+        // Покупки
+        function buyUpgrade(type) {
+            if (type === 'click' && coins >= costClick) {
+                coins -= costClick;
+                clickPower += 1;
+                costClick = Math.round(costClick * 1.5);
+            } 
+            else if (type === 'passive' && coins >= costPassive) {
+                coins -= costPassive;
+                passiveIncome += 2;
+                costPassive = Math.round(costPassive * 1.6);
+            } 
+            else if (type === 'discount' && coins >= costDiscount) {
+                let currentReq = baseRequiredClicks - boxDiscount;
+                if (currentReq > 5) {
+                    coins -= costDiscount;
+                    boxDiscount += 5;
+                    costDiscount = Math.round(costDiscount * 2);
+                } else {
+                    alert("Ящик уже максимально легкий!");
+                }
+            }
+            updateUI();
+            saveGame();
+        }
+
+        // Рендер интерфейса
+        function updateUI() {
+            balanceText.textContent = coins.toLocaleString();
+
+            document.getElementById('click-power-desc').textContent = `Дает +${clickPower} монеток за клик`;
+            document.getElementById('passive-desc').textContent = `+${passiveIncome} монеток/сек`;
+            document.getElementById('discount-desc').textContent = `Нужно на ${boxDiscount} кликов меньше`;
+
+            btnBuyClick.textContent = `${costClick} 🪙`;
+            btnBuyPassive.textContent = `${costPassive} 🪙`;
+            
+            let currentReq = baseRequiredClicks - boxDiscount;
+            if(currentReq <= 5) {
+                btnBuyDiscount.textContent = `МАКС`;
+                btnBuyDiscount.disabled = true;
+            } else {
+                btnBuyDiscount.textContent = `${costDiscount} 🪙`;
+            }
+
+            btnBuyClick.disabled = coins < costClick;
+            btnBuyPassive.disabled = coins < costPassive;
+            if(currentReq > 5) {
+                btnBuyDiscount.disabled = coins < costDiscount;
+            }
+
+            let requiredNow = Math.max(1, baseRequiredClicks - boxDiscount);
+            let left = requiredNow - currentClicksProgress;
+            if (left <= 0) {
+                counterText.textContent = "0";
+            } else {
+                counterText.textContent = left;
+            }
+        }
+
+        // Таймер пассивного дохода
+        setInterval(() => {
+            if (passiveIncome > 0) {
+                coins += passiveIncome;
+                updateUI();
+                saveGame();
+            }
+        }, 1000);
+
+        function toggleModal(show) {
+            document.getElementById('changelog-modal').style.display = show ? 'flex' : 'none';
+        }
+
+        // Старт
+        loadGame();
+        updateUI();
+    </script>
+</body>
+</html>
