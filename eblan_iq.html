@@ -1,276 +1,594 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IQ Тест для Кости Треугольника</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>⚠️ ТЕСТ НА IQ — АБСОЛЮТНЫЙ РОФЛ ⚠️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* чтоб не выделялось, чисто для стиля */
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0a0f1a, #03060c);
+            font-family: 'Segoe UI', 'Courier New', 'Fira Code', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: background 0.2s;
+        }
 
-body{
-    font-family:Arial,sans-serif;
-    background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
-    color:white;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-}
+        /* основной контейнер теста (НОРМАЛЬНЫЙ режим) */
+        .test-container {
+            max-width: 750px;
+            width: 100%;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 40, 40, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.2);
+            padding: 30px 28px 40px;
+            transition: all 0.3s ease;
+        }
 
-.container{
-    width:700px;
-    max-width:95%;
-    background:#202020;
-    border-radius:20px;
-    padding:30px;
-    box-shadow:0 0 40px rgba(255,255,255,.08);
-    animation:appear .8s ease;
-}
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            color: #ff3366;
+            text-shadow: 0 0 8px rgba(255, 51, 102, 0.8);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 800;
+            word-break: keep-all;
+        }
 
-@keyframes appear{
-    from{
-        opacity:0;
-        transform:translateY(30px) scale(.9);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0) scale(1);
-    }
-}
+        .sub {
+            text-align: center;
+            color: #aa88ff;
+            font-size: 0.85rem;
+            margin-bottom: 35px;
+            border-bottom: 1px dashed #ff5e6e;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 8px;
+            opacity: 0.8;
+        }
 
-h1{
-    text-align:center;
-    margin-bottom:25px;
-    animation:float 3s infinite ease-in-out;
-}
+        /* вопросы */
+        .quiz-question {
+            background: #0e121fcc;
+            border-left: 6px solid #ff4d4d;
+            border-radius: 28px;
+            padding: 18px 22px;
+            margin-bottom: 28px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-@keyframes float{
-    50%{
-        transform:translateY(-5px);
-    }
-}
+        .quiz-question:hover {
+            transform: translateX(5px);
+            box-shadow: 0 0 12px rgba(255, 80, 80, 0.3);
+        }
 
-.question{
-    margin-bottom:20px;
-    padding:15px;
-    background:#2a2a2a;
-    border-radius:12px;
-    transition:.3s;
-}
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #f0e6d0;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
 
-.question:hover{
-    transform:scale(1.02);
-}
+        .question-mark {
+            background: #ff3b3b;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 900;
+            color: black;
+        }
 
-label{
-    display:block;
-    margin-top:8px;
-}
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-left: 10px;
+        }
 
-button{
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:12px;
-    background:#4caf50;
-    color:white;
-    font-size:18px;
-    cursor:pointer;
-    transition:.3s;
-}
+        .option {
+            background: #1f2538;
+            border-radius: 60px;
+            padding: 8px 22px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #4a4f6e;
+            font-weight: 500;
+            color: #cdd9ff;
+            font-size: 0.95rem;
+        }
 
-button:hover{
-    transform:scale(1.03);
-}
+        .option.selected {
+            background: #ff3a4d;
+            color: white;
+            border-color: #ffb3b3;
+            box-shadow: 0 0 12px #ff3a4d;
+            text-shadow: 0 0 2px black;
+        }
 
-.flash{
-    position:fixed;
-    inset:0;
-    background:red;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:90px;
-    font-weight:bold;
-    z-index:9999;
-    animation:flash .25s infinite;
-}
+        .option:hover:not(.selected) {
+            background: #2e3750;
+            border-color: #ff8866;
+            transform: scale(1.02);
+        }
 
-@keyframes flash{
-    0%{
-        background:red;
-        color:white;
-    }
-    50%{
-        background:white;
-        color:red;
-    }
-    100%{
-        background:red;
-        color:white;
-    }
-}
+        /* кнопка результата */
+        .result-btn {
+            display: block;
+            width: 280px;
+            margin: 35px auto 15px;
+            background: linear-gradient(95deg, #ff2a2a, #b00020);
+            border: none;
+            padding: 16px 0;
+            font-size: 1.6rem;
+            font-weight: bold;
+            font-family: monospace;
+            color: #fff2c0;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 3px;
+            box-shadow: 0 0 12px red;
+            text-transform: uppercase;
+        }
 
-.result{
-    display:none;
-    text-align:center;
-    animation:zoom .7s ease;
-}
+        .result-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(95deg, #ff4242, #d00030);
+            box-shadow: 0 0 24px #ff5e5e;
+        }
 
-@keyframes zoom{
-    from{
-        transform:scale(.3) rotate(-10deg);
-        opacity:0;
-    }
-    to{
-        transform:scale(1) rotate(0);
-        opacity:1;
-    }
-}
+        /* fullscreen-экран паники (изначально скрыт) */
+        .panic-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #8b0000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.01s;
+            /* фон будет меняться через js и анимацию */
+            backdrop-filter: blur(2px);
+            overflow: hidden;
+        }
 
-.iq{
-    font-size:100px;
-    color:red;
-    animation:shake .3s infinite;
-}
+        .panic-active {
+            visibility: visible;
+            opacity: 1;
+            transition: none;
+        }
 
-@keyframes shake{
-    0%{transform:translateX(-5px);}
-    50%{transform:translateX(5px);}
-    100%{transform:translateX(-5px);}
-}
+        /* гигантский 0 IQ с тряской, увеличением/уменьшением и свечением */
+        .zero-iq {
+            font-size: 12vw;
+            font-weight: 900;
+            font-family: 'Impact', 'Courier New', monospace;
+            color: #ffcc00;
+            text-shadow: 0 0 20px #ff3300, 0 0 40px #ff0000, 0 0 80px #aa0000;
+            animation: shakeZoomGlow 0.25s infinite alternate;
+            text-align: center;
+            letter-spacing: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 20px 40px;
+            border-radius: 80px;
+            backdrop-filter: blur(16px);
+            white-space: nowrap;
+        }
 
-.skull{
-    font-size:80px;
-    animation:spin 2s linear infinite;
-}
+        @keyframes shakeZoomGlow {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+                text-shadow: 0 0 10px red;
+                opacity: 1;
+            }
+            25% {
+                transform: translate(-6px, 4px) scale(1.1);
+                text-shadow: 0 0 30px #ff6600, 0 0 50px crimson;
+            }
+            50% {
+                transform: translate(6px, -3px) scale(0.95);
+                text-shadow: 0 0 50px #ffaa00, 0 0 20px red;
+            }
+            75% {
+                transform: translate(-4px, -5px) scale(1.07);
+                text-shadow: 0 0 45px #ff4444;
+            }
+            100% {
+                transform: translate(4px, 2px) scale(1.02);
+                text-shadow: 0 0 25px #ff8800;
+            }
+        }
 
-@keyframes spin{
-    from{
-        transform:rotate(0);
-    }
-    to{
-        transform:rotate(360deg);
-    }
-}
+        /* нижняя крупная надпись "ВСТАВЬТЕ ТЕКСТ" */
+        .placeholder-text {
+            margin-top: 40px;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ff9999;
+            text-transform: uppercase;
+            font-family: monospace;
+            background: black;
+            padding: 15px 35px;
+            border-radius: 50px;
+            letter-spacing: 6px;
+            text-shadow: 0 0 8px red;
+            border: 2px solid #ff4c4c;
+            animation: textPulse 0.8s infinite alternate;
+        }
 
-.small{
-    color:#aaa;
-    margin-top:15px;
-}
-</style>
+        @keyframes textPulse {
+            0% { text-shadow: 0 0 2px red; opacity: 0.9; transform: scale(0.98);}
+            100% { text-shadow: 0 0 20px #ff6666; opacity: 1; transform: scale(1.02);}
+        }
+
+        /* случайные дрифт-сообщения об ошибках */
+        .error-msg {
+            position: absolute;
+            font-weight: bold;
+            font-size: 1.1rem;
+            background: black;
+            color: #ff2a2a;
+            padding: 8px 18px;
+            border-radius: 60px;
+            white-space: nowrap;
+            font-family: monospace;
+            border-left: 5px solid red;
+            box-shadow: 0 0 15px rgba(255,0,0,0.9);
+            z-index: 10001;
+            pointer-events: none;
+            animation: floatFade 1.2s forwards ease-out;
+        }
+
+        @keyframes floatFade {
+            0% {
+                opacity: 1;
+                transform: translateY(0px) scale(0.9);
+            }
+            70% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-90px) scale(1.3);
+                filter: blur(6px);
+            }
+        }
+
+        /* мигание фона через класс */
+        .flash-red-bg {
+            background: #aa0000 !important;
+        }
+
+        /* контроль полного экрана */
+        .fullscreen-mode {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10000;
+        }
+
+        /* дополнительные эффекты тряски экрана */
+        .screen-shake {
+            animation: globalShake 0.08s infinite !important;
+        }
+
+        @keyframes globalShake {
+            0% { transform: translate(0, 0);}
+            25% { transform: translate(5px, -3px);}
+            50% { transform: translate(-4px, 5px);}
+            75% { transform: translate(3px, 2px);}
+            100% { transform: translate(0, 0);}
+        }
+
+        /* запрет прокрутки при панике */
+        body.no-scroll {
+            overflow: hidden;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container" id="test">
+<div class="test-container" id="quizContainer">
+    <h1>⚡ РОФЛ-ТЕСТ НА IQ ⚡</h1>
+    <div style="text-align: center;"><span class="sub">【 ответь как угодно — спойлер: 0 IQ 】</span></div>
 
-<h1>🧠 Официальный IQ-тест для Кости Треугольника</h1>
+    <div id="questionsArea">
+        <!-- вопросы будут добавлены через js -->
+    </div>
 
-<div class="question">
-<p>Сколько будет 2 + 2?</p>
-<label><input type="radio"> 4</label>
-<label><input type="radio"> 5</label>
+    <button class="result-btn" id="checkResultBtn">УЗНАТЬ РЕЗУЛЬТАТ</button>
+    <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color:#774444;">⚠️ СИСТЕМА ГОТОВА К СБОЮ ⚠️</div>
 </div>
 
-<div class="question">
-<p>Какого цвета небо?</p>
-<label><input type="radio"> Синее</label>
-<label><input type="radio"> Красное</label>
-</div>
-
-<div class="question">
-<p>Сколько ног у человека?</p>
-<label><input type="radio"> 2</label>
-<label><input type="radio"> 17</label>
-</div>
-
-<div class="question">
-<p>Продолжи ряд: 1 2 3 4 ...</p>
-<label><input type="radio"> 5</label>
-<label><input type="radio"> Картошка</label>
-</div>
-
-<button onclick="startCheck()">
-🚀 Проверить IQ
-</button>
-
+<!-- панель паники полный экран -->
+<div id="panicScreen" class="panic-overlay">
+    <div class="zero-iq" id="zeroIqText">0 IQ</div>
+    <div class="placeholder-text" id="placeholderBottom">ВСТАВЬТЕ ТЕКСТ</div>
 </div>
 
 <script>
-function startCheck(){
+    // ---------- 8 смешных вопросов (ответы роли не играют) ----------
+    const questions = [
+        {
+            text: "Сколько будет 2 + 2 * 2?",
+            options: ["6", "8", "4", "Я сомневаюсь"]
+        },
+        {
+            text: "Какой цвет у интеллекта?",
+            options: ["Красный", "Чёрный", "Фиолетовый", "Прозрачный нейросетевой"]
+        },
+        {
+            text: "Если у тебя 10 пальцев, сколько пальцев на левой ноге?",
+            options: ["10", "5", "0 (ноги же)", "Ни одного — я умный"]
+        },
+        {
+            text: "Что тяжелее: килограмм мозгов или килограмм гирь?",
+            options: ["Килограмм мозгов", "Килограмм гирь", "Одинаково", "Мозги легче из-за пустоты"]
+        },
+        {
+            text: "Какая клавиша спасёт мир?",
+            options: ["Ctrl+Alt+Del", "Пробел", "F1 (помощь)", "Кнопка 'Выкл'"]
+        },
+        {
+            text: "Почему программисты путают Хэллоуин и Рождество?",
+            options: ["Oct 31 = Dec 25", "Потому что 0x25", "У них сбой", "Из-за бага в календаре"]
+        },
+        {
+            text: "Что такое 'критическая нехватка IQ'?",
+            options: ["Это про вас", "Синдром пустого черепа", "Ошибка 0x00000IQ", "Все варианты верны"]
+        },
+        {
+            text: "Выберите самую умную цифру",
+            options: ["0 (ноль — корень всего)", "42", "∞", "π (пи)"]
+        }
+    ];
 
-const flash=document.createElement("div");
-flash.className="flash";
-flash.innerHTML="❌ НЕПРАВИЛЬНО ❌";
+    let selectedAnswers = new Array(questions.length).fill(null); // фиксируем выбранные ответы (индексы)
 
-document.body.appendChild(flash);
+    // Рендер вопросов
+    function renderQuestions() {
+        const container = document.getElementById('questionsArea');
+        container.innerHTML = '';
+        questions.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'quiz-question';
+            qDiv.innerHTML = `
+                <div class="question-text">
+                    <span class="question-mark">?</span>
+                    <span>${q.text}</span>
+                </div>
+                <div class="options" data-qidx="${idx}"></div>
+            `;
+            const optionsDiv = qDiv.querySelector('.options');
+            q.options.forEach((opt, optIdx) => {
+                const optSpan = document.createElement('span');
+                optSpan.className = 'option';
+                optSpan.innerText = opt;
+                optSpan.setAttribute('data-optidx', optIdx);
+                optSpan.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // сброс выбора в этой группе
+                    const siblings = optionsDiv.querySelectorAll('.option');
+                    siblings.forEach(sib => sib.classList.remove('selected'));
+                    optSpan.classList.add('selected');
+                    selectedAnswers[idx] = optIdx;
+                });
+                // если уже выбран ранее (редко но для сохранения)
+                if (selectedAnswers[idx] === optIdx) {
+                    optSpan.classList.add('selected');
+                }
+                optionsDiv.appendChild(optSpan);
+            });
+            container.appendChild(qDiv);
+        });
+    }
 
-let sounds = [
-"Ошибка!",
-"Неверно!",
-"Провал!",
-"Минус IQ!",
-"Попробуйте стать умнее!"
-];
-
-let i=0;
-
-let interval=setInterval(()=>{
-flash.innerHTML="❌ " + sounds[i%sounds.length] + " ❌";
-i++;
-},250);
-
-setTimeout(()=>{
-
-clearInterval(interval);
-
-document.body.innerHTML=`
-<div class="container result" style="display:block">
-
-<div class="skull">💀</div>
-
-<h1>Результаты проверки</h1>
-
-<p>Вопрос 1 — ❌</p>
-<p>Вопрос 2 — ❌</p>
-<p>Вопрос 3 — ❌</p>
-<p>Вопрос 4 — ❌</p>
-
-<br>
-
-<h2>Итоговый IQ:</h2>
-
-<div class="iq">0</div>
-
-<h2>Поздравляем!</h2>
-
-<p>
-Костя треугольник удали весь свой блоат софт командой /kickme
-</p>
-
-<p>
-Он реально тупой ✅✅✅
-</p>
-
-<p class="small">
-бляяя я хз че тут написать
-</p>
-
-</div>
-`;
-
-},5000);
-}
+    // Запуск панического режима (fullscreen + мигание + случайные сообщения + тряска)
+    function startIqPanic() {
+        const panicDiv = document.getElementById('panicScreen');
+        const bodyEl = document.body;
+        const quizContainer = document.getElementById('quizContainer');
+        
+        // Сохраняем текущий полный экран (используем requestFullscreen, если доступно, но не обязательно)
+        // но сделаем сам див полноэкранным через фикс позиционирование, мы уже задали .panic-overlay fixed,
+        // но добавим класс fullscreen-mode для надёжности
+        panicDiv.classList.add('panic-active');
+        // блокируем прокрутку body
+        bodyEl.classList.add('no-scroll');
+        // скрываем контейнер с тестом чисто визуально? нет, лучше чтоб тест был под оверлеем? оверлей поверх всего, так что нормально
+        
+        // Эффект мигания фона разными оттенками красного (меняем фон оверлея динамически)
+        let bgInterval = setInterval(() => {
+            const redShades = ['#8b0000', '#b3001e', '#d1002b', '#ff1a3c', '#a6001a', '#e60026', '#cc0033', '#ff4d4d'];
+            const randomRed = redShades[Math.floor(Math.random() * redShades.length)];
+            panicDiv.style.backgroundColor = randomRed;
+            // также добавляем контрастный box-shadow для истерики
+            panicDiv.style.boxShadow = `inset 0 0 80px ${randomRed}`;
+        }, 80);
+        
+        // Тряска экрана для оверлея (добавим класс к panicDiv)
+        panicDiv.classList.add('screen-shake');
+        
+        // Случайные надписи (появление каждые 250-500 мс)
+        const errorMessages = [
+            "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", 
+            "КОСТЫЛЬ КОСТЫЛЬ КОСТЫЛЬ КОСТЫЛЬ", "ОКОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", "МОЗГ ОТСУТСТВУЕТ",
+            "ЗАПРОС ПРОВАЛЕН", "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅
+        ];
+        
+        let errorInterval = setInterval(() => {
+            // создаём плавающее сообщение в случайном месте экрана
+            const msg = document.createElement('div');
+            msg.className = 'error-msg';
+            const randomMsg = errorMessages[Math.floor(Math.random() * errorMessages.length)];
+            msg.innerText = randomMsg;
+            // случайная позиция в пределах окна
+            const leftPos = Math.random() * (window.innerWidth - 200);
+            const topPos = Math.random() * (window.innerHeight - 80);
+            msg.style.position = 'fixed';
+            msg.style.left = leftPos + 'px';
+            msg.style.top = topPos + 'px';
+            msg.style.zIndex = 10002;
+            document.body.appendChild(msg);
+            // удаляем через 1.2 секунды
+            setTimeout(() => {
+                if(msg && msg.remove) msg.remove();
+            }, 1200);
+        }, 280);
+        
+        // Дополнительное мигание всего документа? добавим смену цвета body на красный на короткие миги
+        let extraFlash = setInterval(() => {
+            if (Math.random() > 0.6) {
+                document.body.style.backgroundColor = '#aa2a2a';
+                setTimeout(() => { document.body.style.backgroundColor = ''; }, 100);
+            }
+        }, 200);
+        
+        // АНИМАЦИЯ 0 IQ — трясется и пульсирует уже есть благодаря классу .zero-iq + анимации, но добавим дополнительное бешенство через js
+        const zeroElement = document.getElementById('zeroIqText');
+        let crazyScale = 0;
+        const scaleInterval = setInterval(() => {
+            if (!zeroElement) return;
+            // дополнительная дикая пульсация, чтобы усилить
+            const randomScale = 0.9 + Math.random() * 0.5;
+            zeroElement.style.transform = `scale(${randomScale}) rotate(${Math.sin(Date.now() * 0.02) * 5}deg)`;
+            setTimeout(() => {
+                if(zeroElement) zeroElement.style.transform = '';
+            }, 80);
+        }, 80);
+        
+        // важная деталь: текст "ВСТАВЬТЕ ТЕКСТ" тоже пульсирует и меняет цвет?
+        const bottomText = document.getElementById('placeholderBottom');
+        let colorFlash = setInterval(() => {
+            if(bottomText) {
+                bottomText.style.color = `#${Math.floor(Math.random() * 0xffffff).toString(16).padStart(6,'0')}`;
+                setTimeout(() => { if(bottomText) bottomText.style.color = '#ff9999'; }, 150);
+            }
+        }, 300);
+        
+        // Через 3-5 секунд завершаем панику, оставляем экран с 0 IQ и текстом внизу, прекращаем мигающие интервалы и убираем эффекты, но оставляем панель видимой!
+        const panicDuration = 3500 + Math.random() * 1500; // от 3.5 до 5 секунд
+        setTimeout(() => {
+            // останавливаем все интервалы паники
+            clearInterval(bgInterval);
+            clearInterval(errorInterval);
+            clearInterval(extraFlash);
+            clearInterval(scaleInterval);
+            clearInterval(colorFlash);
+            // убираем тряску экрана
+            panicDiv.classList.remove('screen-shake');
+            // фиксируем фон на последний стабильный темно-алый
+            panicDiv.style.backgroundColor = '#7a0000';
+            panicDiv.style.boxShadow = 'none';
+            // удаляем все оставшиеся плавающие сообщения (на всякий)
+            const floatingErrors = document.querySelectorAll('.error-msg');
+            floatingErrors.forEach(el => el.remove());
+            // НО экран остается с надписью 0 IQ и "ВСТАВЬТЕ ТЕКСТ" - как финал
+            // При этом оставляем полноэкранный режим, не убираем панель
+            // Дополнительно: текст 0 IQ продолжит свою анимацию (она остаётся), но чтобы он не убегал слишком сильно, оставим эффект менее диким?
+            // но можно оставить как есть, так как анимация будет вечно трястись и светиться, что соответствует заданию "после окончания анимации оставить экран с надписью 0 IQ"
+            // Поскольку надпись 0 IQ останется навсегда, анимация тряски/свечения остаётся активной? Да, она через CSS продолжит бесконечно трястись и увеличиваться/уменьшаться
+            // Дополнительно: убираем у zeroElement лишний инлайн-трансформ, который мешал
+            if(zeroElement) zeroElement.style.transform = '';
+            // оставляем body без скролла и убираем дополнительные фоновые мигания
+            document.body.style.backgroundColor = '';
+            // сообщим, что паника завершена, но контейнер с тестом больше не показываем? по условию "оставить экран с надписью 0 IQ", а тест скрыт под оверлеем
+            // Сделаем так, чтобы контейнер с тестом был скрыт (чтоб не мешал) но это не обязательно, поверх него же оверлей
+            // но можно скрыть для эстетики:
+            if(quizContainer) quizContainer.style.opacity = '0';
+            // также дадим пользователю ощущение полного краха
+        }, panicDuration);
+    }
+    
+    // Обработка кнопки "Узнать результат"
+    function onCheckResult() {
+        // проверка не идет, если уже активен паник-скрин
+        const panicDiv = document.getElementById('panicScreen');
+        if(panicDiv.classList.contains('panic-active')) return;
+        
+        // Неважно, какие ответы выбраны — всё равно 0 IQ.
+        // Но мы можем проверить, есть ли хоть какие-то ответы (для шутки) но это не важно.
+        // Запускаем фальшивую проверку через мгновение
+        const btn = document.getElementById('checkResultBtn');
+        btn.innerText = "⚠️ АНАЛИЗ МОЗГА... ⚠️";
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        
+        // Имитируем задержку подготовки к панике (создаем эффект проверки)
+        setTimeout(() => {
+            // перед началом полноэкранной паники убедимся что кнопка восстановится не сразу
+            startIqPanic();
+            // через 0.1с возвращаем кнопку обратно, но т.к. оверлей висит, кнопку не видно
+            btn.disabled = false;
+            btn.innerText = "УЗНАТЬ РЕЗУЛЬТАТ";
+            btn.style.opacity = '1';
+        }, 200);
+    }
+    
+    // Инициализация теста + дополнительная подлянка: добавляем случайный визуальный глитч при старте (для рофла)
+    function init() {
+        renderQuestions();
+        const resultBtn = document.getElementById('checkResultBtn');
+        resultBtn.addEventListener('click', onCheckResult);
+        
+        // небольшой глитч в консоли? не обязательно.
+        // Добавим эффект "тревоги" по наведению на кнопку?
+        resultBtn.addEventListener('mouseenter', () => {
+            if(!resultBtn.disabled) {
+                resultBtn.style.transform = 'scale(1.02)';
+                resultBtn.style.boxShadow = '0 0 24px #ff3a4d';
+            }
+        });
+        resultBtn.addEventListener('mouseleave', () => {
+            resultBtn.style.transform = '';
+            resultBtn.style.boxShadow = '';
+        });
+        
+        // для атмосферы - мерцание границы контейнера
+        setInterval(() => {
+            const container = document.querySelector('.test-container');
+            if(container && !document.getElementById('panicScreen').classList.contains('panic-active')) {
+                const hue = Math.random() * 10 + 330;
+                container.style.borderColor = `hsl(${hue}, 80%, 55%)`;
+                setTimeout(() => {
+                    if(container) container.style.borderColor = 'rgba(255, 40, 40, 0.4)';
+                }, 300);
+            }
+        }, 800);
+    }
+    
+    init();
+    
+    // дополнительная защита: при появлении панели запрещаем прокрутку, и полноэкранность
+    // также добавим эффект принудительного полного окна через CSS (и так fixed)
+    // добавим случайные мигания фона body при панике - уже есть
 </script>
-
 </body>
 </html>
-```
