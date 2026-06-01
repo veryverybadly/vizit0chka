@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>⚠️ ТЕСТ НА IQ — АБСОЛЮТНЫЙ РОФЛ ⚠️</title>
+    <title>чатжбт</title>
     <style>
         * {
             margin: 0;
@@ -173,7 +173,6 @@
             visibility: hidden;
             opacity: 0;
             transition: visibility 0s, opacity 0.01s;
-            /* фон будет меняться через js и анимацию */
             backdrop-filter: blur(2px);
             overflow: hidden;
         }
@@ -316,15 +315,15 @@
 <body>
 
 <div class="test-container" id="quizContainer">
-    <h1>⚡ РОФЛ-ТЕСТ НА IQ ⚡</h1>
-    <div style="text-align: center;"><span class="sub">【 ответь как угодно — спойлер: 0 IQ 】</span></div>
+    <h1>тест на ик для кости трианголика</h1>
+    <div style="text-align: center;"><span class="sub">эммммм ну тип ок </span></div>
 
     <div id="questionsArea">
         <!-- вопросы будут добавлены через js -->
     </div>
 
     <button class="result-btn" id="checkResultBtn">УЗНАТЬ РЕЗУЛЬТАТ</button>
-    <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color:#774444;">⚠️ СИСТЕМА ГОТОВА К СБОЮ ⚠️</div>
+    <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color:#774444;">НЕ КОСТЕ НЕ ПРОХОДИТЬБ</div>
 </div>
 
 <!-- панель паники полный экран -->
@@ -370,7 +369,7 @@
         }
     ];
 
-    let selectedAnswers = new Array(questions.length).fill(null); // фиксируем выбранные ответы (индексы)
+    let selectedAnswers = new Array(questions.length).fill(null);
 
     // Рендер вопросов
     function renderQuestions() {
@@ -394,13 +393,11 @@
                 optSpan.setAttribute('data-optidx', optIdx);
                 optSpan.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    // сброс выбора в этой группе
                     const siblings = optionsDiv.querySelectorAll('.option');
                     siblings.forEach(sib => sib.classList.remove('selected'));
                     optSpan.classList.add('selected');
                     selectedAnswers[idx] = optIdx;
                 });
-                // если уже выбран ранее (редко но для сохранения)
                 if (selectedAnswers[idx] === optIdx) {
                     optSpan.classList.add('selected');
                 }
@@ -416,40 +413,32 @@
         const bodyEl = document.body;
         const quizContainer = document.getElementById('quizContainer');
         
-        // Сохраняем текущий полный экран (используем requestFullscreen, если доступно, но не обязательно)
-        // но сделаем сам див полноэкранным через фикс позиционирование, мы уже задали .panic-overlay fixed,
-        // но добавим класс fullscreen-mode для надёжности
         panicDiv.classList.add('panic-active');
-        // блокируем прокрутку body
         bodyEl.classList.add('no-scroll');
-        // скрываем контейнер с тестом чисто визуально? нет, лучше чтоб тест был под оверлеем? оверлей поверх всего, так что нормально
         
-        // Эффект мигания фона разными оттенками красного (меняем фон оверлея динамически)
+        // Эффект мигания фона разными оттенками красного
         let bgInterval = setInterval(() => {
             const redShades = ['#8b0000', '#b3001e', '#d1002b', '#ff1a3c', '#a6001a', '#e60026', '#cc0033', '#ff4d4d'];
             const randomRed = redShades[Math.floor(Math.random() * redShades.length)];
             panicDiv.style.backgroundColor = randomRed;
-            // также добавляем контрастный box-shadow для истерики
             panicDiv.style.boxShadow = `inset 0 0 80px ${randomRed}`;
         }, 80);
         
-        // Тряска экрана для оверлея (добавим класс к panicDiv)
         panicDiv.classList.add('screen-shake');
         
-        // Случайные надписи (появление каждые 250-500 мс)
+        // ТРЕБУЕМЫЕ надписи для появления на экране (оставляем именно такие, как просили)
         const errorMessages = [
-            "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", 
-            "КОСТЫЛЬ КОСТЫЛЬ КОСТЫЛЬ КОСТЫЛЬ", "ОКОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅", "МОЗГ ОТСУТСТВУЕТ",
-            "ЗАПРОС ПРОВАЛЕН", "КОСТЯ ИДИ НАХУЙ✅✅✅✅✅✅
+            "КОСТЯ КОСТЯ ЕБЛАН",
+            "ЕБАЛН КОСТЯ ХАРАМ ХАРАМ КОСТЯ ",
+            "КОСТЯ ТРИАНГЛ ПОШЕЛ В ПИЗДУ",
+            "СИСТЕМА НЕ СМОГЛА НАЙТИ МОЗГ"
         ];
         
         let errorInterval = setInterval(() => {
-            // создаём плавающее сообщение в случайном месте экрана
             const msg = document.createElement('div');
             msg.className = 'error-msg';
             const randomMsg = errorMessages[Math.floor(Math.random() * errorMessages.length)];
             msg.innerText = randomMsg;
-            // случайная позиция в пределах окна
             const leftPos = Math.random() * (window.innerWidth - 200);
             const topPos = Math.random() * (window.innerHeight - 80);
             msg.style.position = 'fixed';
@@ -457,13 +446,11 @@
             msg.style.top = topPos + 'px';
             msg.style.zIndex = 10002;
             document.body.appendChild(msg);
-            // удаляем через 1.2 секунды
             setTimeout(() => {
                 if(msg && msg.remove) msg.remove();
             }, 1200);
         }, 280);
         
-        // Дополнительное мигание всего документа? добавим смену цвета body на красный на короткие миги
         let extraFlash = setInterval(() => {
             if (Math.random() > 0.6) {
                 document.body.style.backgroundColor = '#aa2a2a';
@@ -471,12 +458,9 @@
             }
         }, 200);
         
-        // АНИМАЦИЯ 0 IQ — трясется и пульсирует уже есть благодаря классу .zero-iq + анимации, но добавим дополнительное бешенство через js
         const zeroElement = document.getElementById('zeroIqText');
-        let crazyScale = 0;
         const scaleInterval = setInterval(() => {
             if (!zeroElement) return;
-            // дополнительная дикая пульсация, чтобы усилить
             const randomScale = 0.9 + Math.random() * 0.5;
             zeroElement.style.transform = `scale(${randomScale}) rotate(${Math.sin(Date.now() * 0.02) * 5}deg)`;
             setTimeout(() => {
@@ -484,7 +468,6 @@
             }, 80);
         }, 80);
         
-        // важная деталь: текст "ВСТАВЬТЕ ТЕКСТ" тоже пульсирует и меняет цвет?
         const bottomText = document.getElementById('placeholderBottom');
         let colorFlash = setInterval(() => {
             if(bottomText) {
@@ -493,73 +476,47 @@
             }
         }, 300);
         
-        // Через 3-5 секунд завершаем панику, оставляем экран с 0 IQ и текстом внизу, прекращаем мигающие интервалы и убираем эффекты, но оставляем панель видимой!
-        const panicDuration = 3500 + Math.random() * 1500; // от 3.5 до 5 секунд
+        const panicDuration = 3500 + Math.random() * 1500;
         setTimeout(() => {
-            // останавливаем все интервалы паники
             clearInterval(bgInterval);
             clearInterval(errorInterval);
             clearInterval(extraFlash);
             clearInterval(scaleInterval);
             clearInterval(colorFlash);
-            // убираем тряску экрана
             panicDiv.classList.remove('screen-shake');
-            // фиксируем фон на последний стабильный темно-алый
             panicDiv.style.backgroundColor = '#7a0000';
             panicDiv.style.boxShadow = 'none';
-            // удаляем все оставшиеся плавающие сообщения (на всякий)
             const floatingErrors = document.querySelectorAll('.error-msg');
             floatingErrors.forEach(el => el.remove());
-            // НО экран остается с надписью 0 IQ и "ВСТАВЬТЕ ТЕКСТ" - как финал
-            // При этом оставляем полноэкранный режим, не убираем панель
-            // Дополнительно: текст 0 IQ продолжит свою анимацию (она остаётся), но чтобы он не убегал слишком сильно, оставим эффект менее диким?
-            // но можно оставить как есть, так как анимация будет вечно трястись и светиться, что соответствует заданию "после окончания анимации оставить экран с надписью 0 IQ"
-            // Поскольку надпись 0 IQ останется навсегда, анимация тряски/свечения остаётся активной? Да, она через CSS продолжит бесконечно трястись и увеличиваться/уменьшаться
-            // Дополнительно: убираем у zeroElement лишний инлайн-трансформ, который мешал
             if(zeroElement) zeroElement.style.transform = '';
-            // оставляем body без скролла и убираем дополнительные фоновые мигания
             document.body.style.backgroundColor = '';
-            // сообщим, что паника завершена, но контейнер с тестом больше не показываем? по условию "оставить экран с надписью 0 IQ", а тест скрыт под оверлеем
-            // Сделаем так, чтобы контейнер с тестом был скрыт (чтоб не мешал) но это не обязательно, поверх него же оверлей
-            // но можно скрыть для эстетики:
             if(quizContainer) quizContainer.style.opacity = '0';
-            // также дадим пользователю ощущение полного краха
         }, panicDuration);
     }
     
     // Обработка кнопки "Узнать результат"
     function onCheckResult() {
-        // проверка не идет, если уже активен паник-скрин
         const panicDiv = document.getElementById('panicScreen');
         if(panicDiv.classList.contains('panic-active')) return;
         
-        // Неважно, какие ответы выбраны — всё равно 0 IQ.
-        // Но мы можем проверить, есть ли хоть какие-то ответы (для шутки) но это не важно.
-        // Запускаем фальшивую проверку через мгновение
         const btn = document.getElementById('checkResultBtn');
         btn.innerText = "⚠️ АНАЛИЗ МОЗГА... ⚠️";
         btn.disabled = true;
         btn.style.opacity = '0.6';
         
-        // Имитируем задержку подготовки к панике (создаем эффект проверки)
         setTimeout(() => {
-            // перед началом полноэкранной паники убедимся что кнопка восстановится не сразу
             startIqPanic();
-            // через 0.1с возвращаем кнопку обратно, но т.к. оверлей висит, кнопку не видно
             btn.disabled = false;
             btn.innerText = "УЗНАТЬ РЕЗУЛЬТАТ";
             btn.style.opacity = '1';
         }, 200);
     }
     
-    // Инициализация теста + дополнительная подлянка: добавляем случайный визуальный глитч при старте (для рофла)
     function init() {
         renderQuestions();
         const resultBtn = document.getElementById('checkResultBtn');
         resultBtn.addEventListener('click', onCheckResult);
         
-        // небольшой глитч в консоли? не обязательно.
-        // Добавим эффект "тревоги" по наведению на кнопку?
         resultBtn.addEventListener('mouseenter', () => {
             if(!resultBtn.disabled) {
                 resultBtn.style.transform = 'scale(1.02)';
@@ -571,10 +528,10 @@
             resultBtn.style.boxShadow = '';
         });
         
-        // для атмосферы - мерцание границы контейнера
         setInterval(() => {
             const container = document.querySelector('.test-container');
-            if(container && !document.getElementById('panicScreen').classList.contains('panic-active')) {
+            const panicDiv = document.getElementById('panicScreen');
+            if(container && !panicDiv.classList.contains('panic-active')) {
                 const hue = Math.random() * 10 + 330;
                 container.style.borderColor = `hsl(${hue}, 80%, 55%)`;
                 setTimeout(() => {
@@ -585,10 +542,6 @@
     }
     
     init();
-    
-    // дополнительная защита: при появлении панели запрещаем прокрутку, и полноэкранность
-    // также добавим эффект принудительного полного окна через CSS (и так fixed)
-    // добавим случайные мигания фона body при панике - уже есть
 </script>
 </body>
 </html>
