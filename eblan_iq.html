@@ -5,122 +5,269 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IQ Тест для Кости Треугольника</title>
+
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #111;
-    color: white;
-    display: flex;
-    justify-content: center;
-    padding: 30px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.container {
-    background: #222;
-    padding: 25px;
-    border-radius: 15px;
-    width: 600px;
-    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
 }
 
-h1 {
-    text-align: center;
+.container{
+    width:700px;
+    max-width:95%;
+    background:#202020;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 0 40px rgba(255,255,255,.08);
+    animation:appear .8s ease;
 }
 
-.question {
-    margin: 20px 0;
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.9);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
 }
 
-button {
-    background: #4caf50;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 20px;
-    width: 100%;
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    animation:float 3s infinite ease-in-out;
 }
 
-button:hover {
-    background: #45a049;
+@keyframes float{
+    50%{
+        transform:translateY(-5px);
+    }
 }
 
-.result {
-    text-align: center;
-    font-size: 24px;
-    margin-top: 20px;
-    display: none;
+.question{
+    margin-bottom:20px;
+    padding:15px;
+    background:#2a2a2a;
+    border-radius:12px;
+    transition:.3s;
 }
 
-label {
-    display: block;
-    margin: 5px 0;
+.question:hover{
+    transform:scale(1.02);
+}
+
+label{
+    display:block;
+    margin-top:8px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#4caf50;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+
+.flash{
+    position:fixed;
+    inset:0;
+    background:red;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:90px;
+    font-weight:bold;
+    z-index:9999;
+    animation:flash .25s infinite;
+}
+
+@keyframes flash{
+    0%{
+        background:red;
+        color:white;
+    }
+    50%{
+        background:white;
+        color:red;
+    }
+    100%{
+        background:red;
+        color:white;
+    }
+}
+
+.result{
+    display:none;
+    text-align:center;
+    animation:zoom .7s ease;
+}
+
+@keyframes zoom{
+    from{
+        transform:scale(.3) rotate(-10deg);
+        opacity:0;
+    }
+    to{
+        transform:scale(1) rotate(0);
+        opacity:1;
+    }
+}
+
+.iq{
+    font-size:100px;
+    color:red;
+    animation:shake .3s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translateX(-5px);}
+    50%{transform:translateX(5px);}
+    100%{transform:translateX(-5px);}
+}
+
+.skull{
+    font-size:80px;
+    animation:spin 2s linear infinite;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.small{
+    color:#aaa;
+    margin-top:15px;
 }
 </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h1>🧠 IQ Тест для Кости Треугольника</h1>
+<div class="container" id="test">
 
-    <div class="question">
-        <p>1. Сколько будет 2 + 2?</p>
-        <label><input type="radio" name="q1"> 4</label>
-        <label><input type="radio" name="q1"> 5</label>
-        <label><input type="radio" name="q1"> 22</label>
-    </div>
+<h1>🧠 Официальный IQ-тест для Кости Треугольника</h1>
 
-    <div class="question">
-        <p>2. Какого цвета небо?</p>
-        <label><input type="radio" name="q2"> Синее</label>
-        <label><input type="radio" name="q2"> Зелёное</label>
-        <label><input type="radio" name="q2"> Кирпичное</label>
-    </div>
+<div class="question">
+<p>Сколько будет 2 + 2?</p>
+<label><input type="radio"> 4</label>
+<label><input type="radio"> 5</label>
+</div>
 
-    <div class="question">
-        <p>3. Сколько ног у человека?</p>
-        <label><input type="radio" name="q3"> 2</label>
-        <label><input type="radio" name="q3"> 7</label>
-        <label><input type="radio" name="q3"> 48</label>
-    </div>
+<div class="question">
+<p>Какого цвета небо?</p>
+<label><input type="radio"> Синее</label>
+<label><input type="radio"> Красное</label>
+</div>
 
-    <div class="question">
-        <p>4. Продолжи ряд: 1, 2, 3, 4...</p>
-        <label><input type="radio" name="q4"> 5</label>
-        <label><input type="radio" name="q4"> Банан</label>
-        <label><input type="radio" name="q4"> 999</label>
-    </div>
+<div class="question">
+<p>Сколько ног у человека?</p>
+<label><input type="radio"> 2</label>
+<label><input type="radio"> 17</label>
+</div>
 
-    <div class="question">
-        <p>5. Ты уверен в своих ответах?</p>
-        <label><input type="radio" name="q5"> Да</label>
-        <label><input type="radio" name="q5"> Конечно</label>
-        <label><input type="radio" name="q5"> Абсолютно</label>
-    </div>
+<div class="question">
+<p>Продолжи ряд: 1 2 3 4 ...</p>
+<label><input type="radio"> 5</label>
+<label><input type="radio"> Картошка</label>
+</div>
 
-    <button onclick="finishTest()">Узнать IQ</button>
+<button onclick="startCheck()">
+🚀 Проверить IQ
+</button>
 
-    <div id="result" class="result"></div>
 </div>
 
 <script>
-function finishTest() {
-    const result = document.getElementById("result");
+function startCheck(){
 
-    result.style.display = "block";
-    result.innerHTML = `
-        <h2>Проверка ответов...</h2>
-        <p>❌ Вопрос 1 — неправильно</p>
-        <p>❌ Вопрос 2 — неправильно</p>
-        <p>❌ Вопрос 3 — неправильно</p>
-        <p>❌ Вопрос 4 — неправильно</p>
-        <p>❌ Вопрос 5 — неправильно</p>
-        <hr>
-        <h1>Ваш IQ: 0</h1>
-        <p>Поздравляем! Вы установили мировой антирекорд.</p>
-        <p>🧱 Костя Треугольник официально признан гением наоборот.</p>
-    `;
+const flash=document.createElement("div");
+flash.className="flash";
+flash.innerHTML="❌ НЕПРАВИЛЬНО ❌";
+
+document.body.appendChild(flash);
+
+let sounds = [
+"Ошибка!",
+"Неверно!",
+"Провал!",
+"Минус IQ!",
+"Попробуйте стать умнее!"
+];
+
+let i=0;
+
+let interval=setInterval(()=>{
+flash.innerHTML="❌ " + sounds[i%sounds.length] + " ❌";
+i++;
+},250);
+
+setTimeout(()=>{
+
+clearInterval(interval);
+
+document.body.innerHTML=`
+<div class="container result" style="display:block">
+
+<div class="skull">💀</div>
+
+<h1>Результаты проверки</h1>
+
+<p>Вопрос 1 — ❌</p>
+<p>Вопрос 2 — ❌</p>
+<p>Вопрос 3 — ❌</p>
+<p>Вопрос 4 — ❌</p>
+
+<br>
+
+<h2>Итоговый IQ:</h2>
+
+<div class="iq">0</div>
+
+<h2>Поздравляем!</h2>
+
+<p>
+Костя треугольник удали весь свой блоат софт командой /kickme
+</p>
+
+<p>
+Он реально тупой ✅✅✅
+</p>
+
+<p class="small">
+бляяя я хз че тут написать
+</p>
+
+</div>
+`;
+
+},5000);
 }
 </script>
 
