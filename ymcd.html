@@ -5,6 +5,141 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ymcd - artwork and music</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    /* Material Design 3-like */
+    --bg: #e8efe8;
+    --surface: #f6fbf5;
+    --primary: #4f6f52;
+    --on-surface: #1b1c1a;
+    --on-surface-variant: #5f635d;
+    --outline: #c4c9c1;
+    --shadow: rgba(0,0,0,.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Roboto',sans-serif;
+    background:
+        radial-gradient(circle at top left,#dce8dc 0%,transparent 40%),
+        radial-gradient(circle at bottom right,#d2e1d2 0%,transparent 40%),
+        var(--bg);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:24px;
+}
+
+.card{
+    width:min(520px,100%);
+    background:var(--surface);
+    border-radius:28px;
+    padding:40px;
+    box-shadow:
+        0 2px 3px rgba(0,0,0,.08),
+        0 12px 28px var(--shadow);
+    border:1px solid rgba(255,255,255,.7);
+    backdrop-filter:blur(10px);
+    animation:appear .5s ease;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:999px;
+    background:#d8e8d7;
+    color:var(--primary);
+    font-size:.9rem;
+    font-weight:500;
+    margin-bottom:24px;
+}
+
+.title{
+    font-size:2rem;
+    font-weight:500;
+    color:var(--on-surface);
+    margin-bottom:16px;
+    letter-spacing:.3px;
+}
+
+.text{
+    font-size:1.1rem;
+    line-height:1.8;
+    color:var(--on-surface-variant);
+}
+
+.divider{
+    height:1px;
+    background:var(--outline);
+    margin:32px 0 20px;
+}
+
+.footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--on-surface-variant);
+    font-size:.95rem;
+}
+
+.year{
+    color:var(--primary);
+    font-weight:500;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <div class="badge">
+        💀
+    </div>
+
+    <h1 class="title">YMCD</h1>
+
+    <div class="text">
+        YMCD изжил своё.<br><br>
+        В ближайшем будущем планируется полный передел проекта
+        с обновлённым дизайном, структурой и функционалом.
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="footer">
+        <span>Временная страница</span>
+        <span class="year">2025–2026</span>
+    </div>
+</div>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ymcd - artwork and music</title>
+
 <style>
     * {
         margin: 0;
