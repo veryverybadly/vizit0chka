@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>veryverybadly</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexander</title>
 
 <style>
 *{
@@ -13,63 +13,92 @@
 }
 
 body{
-    background:#0f0f0f;
+    background:#0a0a0a;
     color:#fff;
-    font-family:system-ui,sans-serif;
+    font-family:Inter,system-ui,sans-serif;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    min-height:100vh;
-    padding:20px;
+    padding:24px;
 }
 
 .container{
     width:100%;
-    max-width:500px;
+    max-width:520px;
+}
+
+.profile{
+    text-align:center;
+    margin-bottom:32px;
 }
 
 .avatar{
     width:96px;
     height:96px;
     border-radius:50%;
-    display:block;
-    margin:0 auto 20px;
+    margin-bottom:16px;
 }
 
-h1{
-    text-align:center;
-    margin-bottom:4px;
+.name{
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:6px;
 }
 
 .username{
-    text-align:center;
     color:#888;
-    margin-bottom:10px;
+    margin-bottom:6px;
+}
+
+.location{
+    color:#666;
+    font-size:14px;
+    margin-bottom:14px;
 }
 
 .bio{
-    text-align:center;
-    color:#bbb;
-    margin-bottom:30px;
+    color:#bdbdbd;
+    font-size:15px;
 }
 
 .links{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:12px;
 }
 
-.links a{
+.link{
+    background:#141414;
+    border:1px solid #222;
+    border-radius:16px;
+    padding:18px 20px;
     text-decoration:none;
     color:white;
-    background:#1a1a1a;
-    padding:14px 18px;
-    border-radius:12px;
     transition:.2s;
 }
 
-.links a:hover{
-    background:#252525;
+.link:hover{
+    background:#1b1b1b;
+    border-color:#333;
+    transform:translateY(-2px);
+}
+
+.title{
+    font-weight:600;
+}
+
+.subtitle{
+    color:#888;
+    font-size:13px;
+    margin-top:3px;
+}
+
+.footer{
+    text-align:center;
+    color:#555;
+    margin-top:24px;
+    font-size:13px;
 }
 </style>
 </head>
@@ -77,24 +106,60 @@ h1{
 
 <div class="container">
 
-<img
-class="avatar"
-src="https://raw.githubusercontent.com/twitter/twemoji/gh-pages/svg/1f637.svg"
-alt="avatar">
+    <div class="profile">
+        <img
+            class="avatar"
+            src="https://raw.githubusercontent.com/twitter/twemoji/gh-pages/svg/1f637.svg"
+            alt="avatar">
 
-<h1>veryverybadly</h1>
-<div class="username">@veryverybadly</div>
-<div class="bio">эээ... ну... я крутой...</div>
+        <div class="name">Александр</div>
+        <div class="username">@Veryverybadly</div>
+        <div class="location">📍 Moscow</div>
+        <div class="bio">эээ... ну... я крутой...</div>
+    </div>
 
-<div class="links">
-    <a href="/tg">Telegram</a>
-    <a href="https://t.me/x7x7x7x7x7x7x7x7x7x7_bot">Telegram bot</a>
-    <a href="mailto:badlya_bad@xyecoc.com">Email</a>
-    <a href="https://goo.su/Sb7F2uw">GitHub</a>
-    <a href="ymcd">ymcd project</a>
-    <a href="https://veryverybadly.github.io/baadly-site/">Old site</a>
-    <a href="/ip">WATCH UR FCKNG IP</a>
-</div>
+    <div class="links">
+
+        <a class="link" href="/tg">
+            <div class="title">Telegram</div>
+            <div class="subtitle">Основной аккаунт</div>
+        </a>
+
+        <a class="link" href="https://t.me/x7x7x7x7x7x7x7x7x7x7_bot">
+            <div class="title">Telegram Bot</div>
+            <div class="subtitle">Фани бот</div>
+        </a>
+
+        <a class="link" href="mailto:badlya_bad@xyecoc.com">
+            <div class="title">Email</div>
+            <div class="subtitle">Связаться по почте</div>
+        </a>
+
+        <a class="link" href="https://goo.su/Sb7F2uw">
+            <div class="title">GitHub</div>
+            <div class="subtitle">Мои проекты</div>
+        </a>
+
+        <a class="link" href="ymcd">
+            <div class="title">YMCD</div>
+            <div class="subtitle">Проект</div>
+        </a>
+
+        <a class="link" href="https://veryverybadly.github.io/baadly-site/">
+            <div class="title">Old Site</div>
+            <div class="subtitle">Старая версия сайта</div>
+        </a>
+
+        <a class="link" href="/ip">
+            <div class="title">WATCH UR FCKNG IP</div>
+            <div class="subtitle">👁️</div>
+        </a>
+
+    </div>
+
+    <div class="footer">
+        veryverybadly
+    </div>
 
 </div>
 
