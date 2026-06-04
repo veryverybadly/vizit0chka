@@ -95,47 +95,38 @@ body{
 }
 
 .webring-wrapper {
-    margin: 8px 0 4px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 16px;
+    padding: 16px 20px;
 }
-#webring {
-    background:#141414;
-    border:1px solid #222;
-    border-radius:16px;
-    padding:12px 20px;
-    transition: .2s;
+
+.webring-wrapper #webring {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
 }
-#webring:hover {
-    background:#1b1b1b;
-    border-color:#333;
-}
-#webring a {
-    color: #ffffff;
+
+.webring-wrapper #webring a {
+    color: #fff;
     text-decoration: none;
-    font-weight: 500;
     font-size: 14px;
-    background: #1e1e1e;
-    padding: 6px 14px;
-    border-radius: 40px;
+    font-weight: 500;
+    padding: 8px 12px;
+    background: #1f1f1f;
+    border-radius: 20px;
     transition: 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid #2c2c2c;
 }
-#webring a:hover {
+
+.webring-wrapper #webring a:hover {
     background: #2a2a2a;
-    border-color: #4a4a4a;
     transform: translateY(-1px);
 }
-#webring span {
-    color: #ccc;
-    font-size: 13px;
-}
+
 .footer{
     text-align:center;
     color:#555;
@@ -200,6 +191,7 @@ body{
     </div>
 
     <div class="webring-wrapper">
+        <script src="https://veryverybadly.github.io/webring-starter/ring.js"></script>
         <div id="webring"></div>
     </div>
 
@@ -209,6 +201,5 @@ body{
 
 </div>
 
-<script src="https://veryverybadly.github.io/halal-ring/ring.js"></script>
 </body>
 </html>
