@@ -1,1 +1,121 @@
-<b>мы тебя залогинили, но разраб криворукое мудло, поэтому вернись обратно своими руками</b>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>nugopac test oauth system</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f0f0f;
+  color: white;
+  font-family: Arial;
+}
+
+.card {
+  width: 520px;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+}
+
+h2 {
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+
+pre {
+  white-space: pre-wrap;
+  color: #9dff9d;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h2>nugopac test oauth system</h2>
+  <pre id="out">waiting...</pre>
+</div>
+
+<script>
+const BASE = "https://zenusus.serv00.net/dep";
+
+const CLIENT_ID = "PUT_CLIENT_ID_HERE";
+const CLIENT_SECRET = "PUT_CLIENT_SECRET_HERE";
+
+const PROFILE = BASE + "/api/v1/profile.php";
+
+function set(text) {
+  document.getElementById("out").innerText = text;
+}
+
+// читаем параметры
+const params = new URLSearchParams(location.search);
+const code = params.get("code");
+const state = params.get("state");
+
+if (!code) {
+  set("no code");
+} else {
+  exchange(code);
+}
+
+async function exchange(code) {
+  set("exchanging code...");
+
+  try {
+    const res = await fetch(BASE + "/oauth/token.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        grant_type: "authorization_code",
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        code: code,
+        redirect_uri: location.origin + location.pathname
+      })
+    });
+
+    const token = await res.json();
+
+    if (!token.access_token) {
+      set("token error\n" + JSON.stringify(token, null, 2));
+      return;
+    }
+
+    set("token ok\nloading profile...");
+
+    loadProfile(token.access_token);
+
+  } catch (e) {
+    set("error\n" + e.toString());
+  }
+}
+
+async function loadProfile(token) {
+  try {
+    const res = await fetch(PROFILE, {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+
+    const profile = await res.json();
+
+    set(JSON.stringify(profile, null, 2));
+  } catch (e) {
+    set("profile error\n" + e.toString());
+  }
+}
+</script>
+
+</body>
+</html>
