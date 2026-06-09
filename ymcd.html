@@ -90,7 +90,25 @@ body{
     animation:fog 8s ease-in-out infinite alternate;
 }
 
-@keyframes fog{
+.newsite{
+    display:inline-block;
+    margin-top:28px;
+    padding:10px 24px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:999px;
+    color:rgba(255,255,255,.55);
+    text-decoration:none;
+    font-size:14px;
+    letter-spacing:1px;
+    transition:all .25s;
+}
+
+.newsite:hover{
+    border-color:rgba(255,255,255,.5);
+    color:rgba(255,255,255,.9);
+    background:rgba(255,255,255,.06);
+}
+
     from{
         transform:translateX(-20px);
     }
@@ -112,6 +130,7 @@ body{
     </div>
 
     <div class="ground"></div>
+    <a class="newsite" href="https://ymcd.b4dly.ru/" target="_blank">→ новый ymcd</a>
 </div>
 
 </body>
