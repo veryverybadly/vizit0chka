@@ -3,93 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная | Чёрный дизайн</title>
+    <title>Главная</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             background-color: #000000;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+        }
+
+        .nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .nav a:hover {
+            opacity: 1;
+        }
+
+        .center {
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #ffffff;
-        }
-
-        .container {
+            min-height: 100vh;
             text-align: center;
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
         }
 
         h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-            font-weight: 300;
-        }
-
-        .accent-line {
-            width: 80px;
-            height: 2px;
-            background-color: #ffffff;
-            margin: 1.5rem auto;
-            opacity: 0.5;
+            font-size: 48px;
+            font-weight: normal;
+            margin-bottom: 16px;
         }
 
         p {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
+            font-size: 18px;
             opacity: 0.8;
-            line-height: 1.6;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: transparent;
-            color: #ffffff;
-            border: 1px solid #ffffff;
-            padding: 12px 32px;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .btn:hover {
-            background-color: #ffffff;
-            color: #000000;
-            transform: scale(1.05);
-        }
-        .container {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Блог</h1>
-        <div class="accent-line"></div>
-        <p> привет как дела<br>ниже мои статьи</p>
-        <a href="helloworld.html" class="btn">Перейти → Hello World</a>
+
+    <div class="nav">
+        <a href="helloworld.html">Статья</a>
     </div>
+
+    <div class="center">
+        <div>
+            <h1>Чёрный экран</h1>
+            <p>Минимализм. Тишина. Только нужное.</p>
+        </div>
+    </div>
+
 </body>
 </html>
